@@ -1,0 +1,22 @@
+name: Feature request
+description: Propose a collection, harness integration, or workflow improvement.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the task you cannot complete with the current library.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the expected behavior. For a new source, include its repository URL and license information.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Harnesses and alternatives
+      description: List affected harnesses, their versions, and any alternatives you have tried.

@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/oDestroyeRo/skills/security/advisories/new
+    about: Use private vulnerability reporting for security issues.
+  - name: Installation guide
+    url: https://github.com/oDestroyeRo/skills/blob/main/docs/native-install.md
+    about: Find native marketplace and plugin installation instructions.
