@@ -86,7 +86,7 @@ def npm_manifest(config, version):
         "files": [
             "plugin.json", ".claude-plugin", ".codex-plugin", ".cursor-plugin",
             ".antigravity-plugin", "skills", "upstream", "docs",
-            "assets", "opencode.mjs", "sources.lock.json", "LICENSE",
+            "assets", "opencode.mjs", "sources.lock.json", "LICENSE", "THIRD_PARTY_NOTICES.md",
         ],
     })
     return manifest
@@ -171,6 +171,9 @@ def populate_bundle(root, bundle, config, version):
         library = "upstream/" + entry["source"]
         original = root / library / entry["path"]
         _, fields = metadata(original)
+        description = source.get("description_overrides", {}).get(entry["upstream_name"])
+        if description is not None:
+            fields["description"] = "description: " + json.dumps(description, ensure_ascii=False)
         folder = bundle / "skills" / entry["name"]
         folder.mkdir(parents=True)
         text = render_skill(entry["name"], entry["source"], fields,
@@ -189,6 +192,16 @@ def populate_bundle(root, bundle, config, version):
         source_id: source_lock["sources"][source_id]
     }})
     shutil.copy2(root / "LICENSE", bundle / "LICENSE")
+    notices = [path for path in sorted((bundle / "upstream").rglob("*")) if path.is_file() and
+               ("license" in path.name.lower() or "notice" in path.name.lower() or path.name.endswith("-OFL.txt"))]
+    (bundle / "THIRD_PARTY_NOTICES.md").write_text(
+        "# Licenses and upstream notices\n\n"
+        "This bundle's packaging code and adapters use the [MIT license](LICENSE).\n\n"
+        "Upstream skills, assets, and dependencies retain their own terms. "
+        "Their original notices are preserved in the files below.\n\n" +
+        "".join("- [" + path.relative_to(bundle).as_posix() + "](" + path.relative_to(bundle).as_posix() + ")\n"
+                for path in notices)
+    )
     for relative, value in plugin_manifests(config, version).items():
         write_json(bundle / relative, value)
     (bundle / "README.md").write_text(
@@ -199,6 +212,7 @@ def populate_bundle(root, bundle, config, version):
         "Follow the [installation guide](docs/native-install.md) and "
         "[publishing guide](docs/native-publishing.md). See the "
         "[harness adapter](docs/harnesses.md) for runtime capabilities.\n\n"
+        "See [licenses and upstream notices](THIRD_PARTY_NOTICES.md). "
         "Upstream copyright and license notices remain under `upstream/`. "
         "`sources.lock.json` records the original Git revisions. Source symlinks "
         "are materialized as regular files for archive installation.\n"

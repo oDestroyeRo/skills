@@ -1,14 +1,17 @@
 # Install the native plugins
 
-The `odestroyero-skills` marketplace contains three independent plugins. Install the collections you want:
+The `odestroyero-skills` marketplace contains four independent plugins. Install the collections you want:
 
 ```text
 plugins/mattpocock/    Matt Pocock's published skills
 plugins/pstack/        pstack's published skills
 plugins/tstack/        Theo Browne's tstack skills
+plugins/agent-examples/     Anthropic's redistributable skills
 ```
 
 Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Skill names retain their collection prefixes across harnesses, such as `mattpocock-tdd` and `pstack-tdd`.
+
+The Anthropic plugin includes only skills with approved redistribution terms. Its document skills and unlicensed `doc-coauthoring` skill are excluded. See the [Anthropic runtime notes](harnesses.md#anthropic-workflows).
 
 The remote commands below become available after the repository is pushed. Local folder installs work from the generated checkout. Choose one delivery method per harness to avoid duplicate workflows.
 
@@ -21,18 +24,20 @@ claude plugin marketplace add oDestroyeRo/skills
 claude plugin install mattpocock@odestroyero-skills
 claude plugin install pstack@odestroyero-skills
 claude plugin install tstack@odestroyero-skills
+claude plugin install agent-examples@odestroyero-skills
 ```
 
 For local testing, use `claude plugin marketplace add /absolute/path/to/skills` for the first command.
 
 Open `/plugin`, select **Marketplaces**, select `odestroyero-skills`, then select **Enable auto-update**. Third-party marketplaces have automatic updates disabled by default. Updated files load in the next session, or after `/reload-plugins` in a running session.
 
-Invoke a skill as `/mattpocock:mattpocock-code-review`, `/pstack:pstack-poteto-mode`, or `/tstack:tstack-full-stop`. For manual updates:
+Invoke a skill as `/mattpocock:mattpocock-code-review`, `/pstack:pstack-poteto-mode`, `/tstack:tstack-full-stop`, or `/agent-examples:anthropic-frontend-design`. For manual updates:
 
 ```sh
 claude plugin update mattpocock@odestroyero-skills
 claude plugin update pstack@odestroyero-skills
 claude plugin update tstack@odestroyero-skills
+claude plugin update agent-examples@odestroyero-skills
 ```
 
 See [Claude Code installation and updates](https://code.claude.com/docs/en/discover-plugins#keep-plugins-updated).
@@ -46,6 +51,7 @@ codex plugin marketplace add oDestroyeRo/skills
 codex plugin add mattpocock@odestroyero-skills
 codex plugin add pstack@odestroyero-skills
 codex plugin add tstack@odestroyero-skills
+codex plugin add agent-examples@odestroyero-skills
 ```
 
 Use `codex plugin marketplace add /absolute/path/to/skills` for local testing. The catalog at `.agents/plugins/marketplace.json` points to each generated folder. Each has a portable `plugin.json` and a Codex compatibility manifest.
@@ -60,7 +66,7 @@ Automatic refresh of custom marketplaces depends on the Codex host and version. 
 
 ## Cursor
 
-On Teams or Enterprise, open **Dashboard → Plugins & MCPs → Team Marketplaces → Add Marketplace**. Choose **Import from Repo** and enter `https://github.com/oDestroyeRo/skills`. Select `mattpocock`, `pstack`, and/or `tstack` in **Customize**.
+On Teams or Enterprise, open **Dashboard → Plugins & MCPs → Team Marketplaces → Add Marketplace**. Choose **Import from Repo** and enter `https://github.com/oDestroyeRo/skills`. Select the collections you want in **Customize**: `mattpocock`, `pstack`, `tstack`, or `agent-examples`.
 
 Enable **Auto Refresh** in the marketplace settings and grant the Cursor GitHub App access to this repository. Import the whole repository so refresh also reads catalog changes. Existing Cloud Agents keep their starting versions; start a new agent after an update.
 
@@ -70,6 +76,7 @@ For local testing, copy each complete folder into Cursor's local-plugin director
 plugins/mattpocock/ → ~/.cursor/plugins/local/mattpocock/
 plugins/pstack/     → ~/.cursor/plugins/local/pstack/
 plugins/tstack/     → ~/.cursor/plugins/local/tstack/
+plugins/agent-examples/ → ~/.cursor/plugins/local/agent-examples/
 ```
 
 Reload Cursor after copying. A symlink to a checkout outside that local-plugin directory is not a supported substitute. Public Marketplace listing requires submission and review. See [Cursor installation and refresh](https://cursor.com/docs/plugins#keep-plugins-up-to-date).
@@ -82,6 +89,7 @@ Install the per-collection local packages from a checkout:
 pi install /absolute/path/to/skills/plugins/mattpocock
 pi install /absolute/path/to/skills/plugins/pstack
 pi install /absolute/path/to/skills/plugins/tstack
+pi install /absolute/path/to/skills/plugins/agent-examples
 ```
 
 Each package's `pi.skills` entry selects only that collection. Local packages load from their folder. A scheduled `python3 scripts/skills.py update` keeps the checkout current; run `/reload` in Pi if the session has stale skills.
@@ -92,6 +100,7 @@ After publishing the separate npm packages, you can install them from the regist
 pi install npm:@odestroyero/mattpocock-skills
 pi install npm:@odestroyero/pstack-skills
 pi install npm:@odestroyero/tstack-skills
+pi install npm:@odestroyero/anthropic-skills
 pi update --extensions
 ```
 
@@ -105,6 +114,7 @@ Install the Git subdirectory packages you want:
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/mattpocock'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/pstack'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/tstack'
+opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/agent-examples'
 ```
 
 For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
@@ -114,7 +124,8 @@ For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
   "plugins": [
     "/absolute/path/to/skills/plugins/mattpocock",
     "/absolute/path/to/skills/plugins/pstack",
-    "/absolute/path/to/skills/plugins/tstack"
+    "/absolute/path/to/skills/plugins/tstack",
+    "/absolute/path/to/skills/plugins/agent-examples"
   ]
 }
 ```
@@ -141,6 +152,8 @@ agy plugin validate --strict /absolute/path/to/skills/plugins/pstack
 agy plugin install /absolute/path/to/skills/plugins/pstack
 agy plugin validate --strict /absolute/path/to/skills/plugins/tstack
 agy plugin install /absolute/path/to/skills/plugins/tstack
+agy plugin validate --strict /absolute/path/to/skills/plugins/agent-examples
+agy plugin install /absolute/path/to/skills/plugins/agent-examples
 agy plugin list
 ```
 

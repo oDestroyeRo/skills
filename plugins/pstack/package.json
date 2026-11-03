@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/pstack-skills",
-  "version": "1.0.9",
+  "version": "1.0.14",
   "description": "pstack engineering workflows and principles, with upstream updates.",
   "type": "module",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "assets",
     "opencode.mjs",
     "sources.lock.json",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ]
 }

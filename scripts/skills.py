@@ -93,6 +93,30 @@ def sources():
         for path in excluded:
             if relative_path(path) == PurePosixPath("."):
                 raise SkillError("Cannot exclude an entire source: " + name)
+        overrides = source.get("description_overrides", {})
+        if not isinstance(overrides, dict) or not all(
+            SLUG.fullmatch(key) and isinstance(value, str) and 0 < len(value) <= 1024
+            for key, value in overrides.items()
+        ):
+            raise SkillError("Expected skill description overrides of at most 1024 characters: " + name)
+        policy = source.get("license_filter")
+        if "license_filter" in source:
+            if "skill_roots" not in source or "skills_manifest" in source or not isinstance(policy, dict):
+                raise SkillError("License filtering requires explicit skill_roots: " + name)
+            if not isinstance(policy["file"], str) or len(relative_path(policy["file"]).parts) != 1:
+                raise SkillError("Expected a skill-level license filename: " + name)
+            hashes = policy["allowed_sha256"]
+            if not isinstance(hashes, list) or not hashes or not all(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes):
+                raise SkillError("Expected approved license SHA256 hashes: " + name)
+            support_paths = policy["support_paths"]
+            if not isinstance(support_paths, list) or not all(isinstance(path, str) for path in support_paths):
+                raise SkillError("Expected a list of license support paths: " + name)
+            for path in support_paths:
+                support = relative_path(path)
+                for root in source["skill_roots"]:
+                    root = relative_path(root)
+                    if support.is_relative_to(root) or root.is_relative_to(support):
+                        raise SkillError("License support paths must stay outside skill roots: " + name)
         if not source["repository"] or source["repository"].startswith("-"):
             raise SkillError("Invalid source repository: " + name)
         if not source["ref"] or source["ref"].startswith("-"):
@@ -144,6 +168,47 @@ def extract_snapshot(archive, destination, root):
                 raise SkillError("Unsupported archive entry: " + member.name)
 
 
+def licensed_archive_paths(source, checkout, commit):
+    policy = source["license_filter"]
+    prefix = relative_path(source["root"])
+    scope = [] if source["root"] == "." else [source["root"]]
+    paths = git("--literal-pathspecs", "ls-tree", "-r", "-z", "--name-only", commit, "--", *scope, cwd=checkout)
+    files = {relative_path(path.decode()).relative_to(prefix) for path in paths.split(b"\0") if path}
+    roots = [relative_path(root) for root in source["skill_roots"]]
+    license_names = {policy["file"].lower(), "license", "license.txt", "license.md", "copying", "copying.txt"}
+    license_hashes = {}
+
+    def approved_license(path):
+        if path not in license_hashes:
+            content = git("show", commit + ":" + str(prefix / path), cwd=checkout)
+            license_hashes[path] = hashlib.sha256(content).hexdigest()
+        return license_hashes[path] in policy["allowed_sha256"]
+
+    candidates = sorted((path.parent for path in files if path.name == "SKILL.md" and
+                         any(path.is_relative_to(root) for root in roots)), key=lambda path: (len(path.parts), str(path)))
+    visited, approved, omitted = [], [], []
+    for folder in candidates:
+        if any(folder.is_relative_to(parent) for parent in visited):
+            continue
+        visited.append(folder)
+        license_file = folder / policy["file"]
+        if license_file not in files:
+            omitted.append({"path": str(folder), "reason": "missing license file"})
+            continue
+        if not approved_license(license_file):
+            omitted.append({"path": str(folder), "reason": "unapproved license"})
+            continue
+        nested = sorted(path for path in files if path != license_file and path.is_relative_to(folder) and
+                        path.name.lower() in license_names)
+        blocked = next((path for path in nested if not approved_license(path)), None)
+        if blocked is not None:
+            omitted.append({"path": str(folder), "reason": "unapproved nested license", "license": str(blocked)})
+            continue
+        approved.append(folder)
+    support = [relative_path(path) for path in policy["support_paths"] if relative_path(path) in files]
+    return [str(prefix / path) for path in [*support, *approved]], omitted
+
+
 def fetch_source(source, destination, locked_commit=None):
     with tempfile.TemporaryDirectory(prefix="skills-fetch-") as temporary:
         checkout = Path(temporary) / "repo"
@@ -157,19 +222,29 @@ def fetch_source(source, destination, locked_commit=None):
             revision = "FETCH_HEAD"
         commit = git("rev-parse", revision, cwd=checkout).decode().strip()
         paths = [] if source["root"] == "." else [source["root"]]
-        archive = git("archive", "--format=tar", commit, "--", *paths, cwd=checkout)
-        extract_snapshot(archive, destination, source["root"])
+        omitted = []
+        if "license_filter" in source:
+            paths, omitted = licensed_archive_paths(source, checkout, commit)
+        if paths or "license_filter" not in source:
+            archive = git("--literal-pathspecs", "archive", "--format=tar", commit, "--", *paths, cwd=checkout)
+            extract_snapshot(archive, destination, source["root"])
+        else:
+            destination.mkdir(parents=True)
         for relative in source.get("exclude_paths", []):
             path = destination / relative
             if path.is_symlink() or path.is_file():
                 path.unlink()
             elif path.is_dir():
                 shutil.rmtree(path)
-        return {
+        saved = {
             "repository": source["repository"], "ref": source["ref"],
             "root": source["root"], "commit": commit, "sha256": tree_hash(destination),
             "exclude_paths": source.get("exclude_paths", []),
         }
+        if "license_filter" in source:
+            saved.update({"license_filter": source["license_filter"], "omitted_skills": omitted})
+            print("License filter for {} omitted {} skills without approved terms.".format(source["id"], len(omitted)), flush=True)
+        return saved
 
 
 def metadata(file):
@@ -362,6 +437,8 @@ def check(check_distribution=True):
             raise SkillError("Source configuration changed; run sync: " + source["id"])
         if source.get("exclude_paths", []) != saved.get("exclude_paths", []):
             raise SkillError("Source exclusions changed; run sync: " + source["id"])
+        if source.get("license_filter") != saved.get("license_filter"):
+            raise SkillError("Source license filter changed; run sync: " + source["id"])
         if tree_hash(ROOT / "upstream" / source["id"]) != saved["sha256"]:
             raise SkillError("Missing or modified upstream source: " + source["id"])
     if (ROOT / "skills").exists() or (ROOT / "skills").is_symlink():

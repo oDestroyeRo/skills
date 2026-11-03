@@ -41,6 +41,7 @@ class NativePackagingTest(unittest.TestCase):
         text = (self.bundle / "skills/pstack-tdd/SKILL.md").read_text()
         self.assertIn("../../upstream/pstack/skills/tdd/SKILL.md", text)
         self.assertTrue((self.bundle / "LICENSE").is_file())
+        self.assertIn("upstream/pstack/LICENSE", (self.bundle / "THIRD_PARTY_NOTICES.md").read_text())
         self.assertFalse((self.bundle / ".cache").exists())
         root_package = json.loads((self.repo / "package.json").read_text())
         self.assertTrue(root_package["private"])
@@ -102,6 +103,107 @@ class NativePackagingTest(unittest.TestCase):
             self.fixture.write_config()
             self.fixture.command("sync", success=False)
             self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
+
+    def test_license_filter_tracks_approved_skills_and_never_copies_restricted_material(self):
+        checkout = self.fixture.upstreams["mattpocock"]
+        approved = b"Approved fixture license.\n"
+        skill = checkout / "skills/tdd"
+        (skill / "LICENSE.txt").write_bytes(approved)
+        template = skill / "templates/example"
+        template.mkdir(parents=True)
+        (template / "SKILL.md").write_text("An embedded template, not a separate skill.\n")
+        literal = checkout / "skills/*"
+        literal.mkdir()
+        (literal / "SKILL.md").write_text("---\nname: literal-path\ndescription: An approved literal path.\n---\n\nWorkflow.\n")
+        (literal / "LICENSE.txt").write_bytes(approved)
+        for name in ("restricted", "unlicensed"):
+            folder = checkout / "skills" / name
+            folder.mkdir()
+            (folder / "SKILL.md").write_text("---\nname: " + name + "\ndescription: Unapproved workflow.\n---\n\nDo not redistribute.\n")
+            if name == "restricted":
+                (folder / "LICENSE.txt").write_text("Distribution prohibited.\n")
+        source = self.fixture.config["sources"][0]
+        source["license_filter"] = {"file": "LICENSE.txt", "allowed_sha256": [hashlib.sha256(approved).hexdigest()],
+                                    "support_paths": ["LICENSE"]}
+        source["description_overrides"] = {"tdd": "An approved workflow with a compact description."}
+        self.fixture.write_config()
+        config_file = self.repo / "distribution.json"
+        config = json.loads(config_file.read_text())
+        config["plugins"][0]["license"] = "SEE LICENSE IN THIRD_PARTY_NOTICES.md"
+        config_file.write_text(json.dumps(config))
+        self.fixture.commit(checkout, "publish mixed license collection")
+        target = self.fixture.base / "installed"
+        self.fixture.command("sync")
+        self.fixture.command("install", "--directory", str(target))
+        bundle = self.repo / "plugins/mattpocock"
+        self.assertIn('description: "An approved workflow with a compact description."',
+                      (bundle / "skills/mattpocock-tdd/SKILL.md").read_text())
+        self.assertIn("description: Test a public behavior.", (bundle / "upstream/mattpocock/skills/tdd/SKILL.md").read_text())
+        for snapshot in (self.repo / "upstream/mattpocock", bundle / "upstream/mattpocock"):
+            self.assertFalse((snapshot / "skills/restricted").exists())
+            self.assertFalse((snapshot / "skills/unlicensed").exists())
+            self.assertEqual((snapshot / "skills/tdd/LICENSE.txt").read_bytes(), approved)
+            self.assertTrue((snapshot / "skills/tdd/templates/example/SKILL.md").is_file())
+            self.assertTrue((snapshot / "skills/*/SKILL.md").is_file())
+        lock = json.loads((self.repo / "sources.lock.json").read_text())["sources"]["mattpocock"]
+        self.assertEqual({entry["path"] for entry in lock["omitted_skills"]}, {"skills/restricted", "skills/unlicensed"})
+        self.assertIn("upstream/mattpocock/skills/tdd/LICENSE.txt", (bundle / "THIRD_PARTY_NOTICES.md").read_text())
+        added = checkout / "skills/added"
+        added.mkdir()
+        (added / "SKILL.md").write_text("---\nname: added\ndescription: A newly approved workflow.\n---\n\nWorkflow.\n")
+        (added / "LICENSE.txt").write_bytes(approved)
+        (skill / "LICENSE.txt").write_text("Distribution prohibited.\n")
+        self.fixture.commit(checkout, "add approved skill and change earlier license")
+        self.fixture.command("sync")
+        self.fixture.command("check")
+        self.assertTrue((target / "mattpocock-added/SKILL.md").is_file())
+        self.assertFalse((target / "mattpocock-tdd").is_symlink())
+        self.assertFalse((bundle / "upstream/mattpocock/skills/tdd").exists())
+        shutil.rmtree(added)
+        shutil.rmtree(literal)
+        source["license_filter"]["support_paths"] = []
+        self.fixture.write_config()
+        self.fixture.commit(checkout, "retire the last approved skill")
+        self.fixture.command("sync")
+        self.fixture.command("check")
+        self.assertEqual(json.loads((bundle / "skills/catalog.json").read_text()), [])
+        self.assertEqual(list((self.repo / "upstream/mattpocock").iterdir()), [])
+        before = (self.repo / "sources.lock.json").read_bytes()
+        source["license_filter"]["support_paths"] = ["skills"]
+        self.fixture.write_config()
+        self.fixture.command("sync", success=False)
+        self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
+
+    def test_nested_unapproved_licenses_block_an_otherwise_approved_archive(self):
+        checkout = self.fixture.upstreams["mattpocock"]
+        approved = b"Approved fixture license.\n"
+        (checkout / "skills/SKILL.md").write_text("---\nname: parent\ndescription: A parent workflow.\n---\n\nWorkflow.\n")
+        (checkout / "skills/LICENSE.txt").write_bytes(approved)
+        (checkout / "skills/tdd/LICENSE.txt").write_bytes(approved)
+        restricted = checkout / "skills/restricted"
+        restricted.mkdir()
+        (restricted / "SKILL.md").write_text("---\nname: restricted\ndescription: Restricted.\n---\n\nDo not redistribute.\n")
+        (restricted / "LICENSE.txt").write_text("Distribution prohibited.\n")
+        source = self.fixture.config["sources"][0]
+        source["license_filter"] = {"file": "LICENSE.txt", "allowed_sha256": [hashlib.sha256(approved).hexdigest()],
+                                    "support_paths": ["LICENSE"]}
+        self.fixture.write_config()
+        self.fixture.commit(checkout, "add restricted child inside an approved parent")
+        self.fixture.command("sync")
+        snapshot = self.repo / "upstream/mattpocock"
+        self.assertFalse((snapshot / "skills").exists())
+        lock = json.loads((self.repo / "sources.lock.json").read_text())["sources"]["mattpocock"]
+        self.assertEqual(lock["omitted_skills"][0]["reason"], "unapproved nested license")
+        (checkout / "skills/SKILL.md").unlink()
+        (checkout / "skills/LICENSE.txt").unlink()
+        vendor = checkout / "skills/tdd/vendor"
+        vendor.mkdir()
+        (vendor / "LICENSE").write_text("Distribution prohibited.\n")
+        self.fixture.commit(checkout, "add a restricted component without its own skill file")
+        self.fixture.command("sync")
+        self.fixture.command("check")
+        self.assertFalse((snapshot / "skills/tdd").exists())
+        self.assertEqual(json.loads((self.repo / "plugins/mattpocock/skills/catalog.json").read_text()), [])
 
     def test_additions_and_removals_bump_versions_and_remove_retired_bundle_files(self):
         original = self.lock()["package_version"]

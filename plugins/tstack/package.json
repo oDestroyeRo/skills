@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/tstack-skills",
-  "version": "1.0.9",
+  "version": "1.0.14",
   "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
   "type": "module",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "assets",
     "opencode.mjs",
     "sources.lock.json",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ]
 }

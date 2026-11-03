@@ -20,6 +20,14 @@ Its PR workflows require an authenticated GitHub CLI (`gh`). The bundled `babysi
 
 Read a workflow before invoking it. `full-send` includes pushing branches, filing PRs, and merging them. `full-stop` performs the preparation and review, then leaves the PR open for the user to merge. Follow the user's scope and the current session's authorization rules for those actions. See the [tstack README](https://github.com/t3dotgg/tstack#readme) for upstream workflow requirements.
 
+## Anthropic workflows
+
+The `agent-examples` plugin includes skills with approved Apache 2.0 license files. Its source snapshot and bundle omit the restricted document skills and the unlicensed `doc-coauthoring` skill. The bundle's `THIRD_PARTY_NOTICES.md` links to the original skill licenses, dependency notices, and font notices. Preserve those files when redistributing a bundle.
+
+Use the current provider's equivalent tools when an upstream workflow names Claude-specific tools. Some helpers require additional software: Python and Playwright for web testing, Node/npm tooling for web artifacts, Python imaging libraries and FFmpeg for GIF workflows, and the Claude CLI for skill-creator's description optimization. Follow the selected workflow's dependency instructions. The packaged helper archive and font files are resources for those workflows. Adapt example paths such as `/mnt/user-data/outputs/` to the current environment.
+
+The `claude-api` skill documents Anthropic's API and SDKs. It does not add a provider connection or API credentials to the current environment. Native Claude commands use names such as `/agent-examples:anthropic-frontend-design`; folder installs use `/anthropic-frontend-design`. See the [upstream overview](https://github.com/anthropics/skills#readme).
+
 ## T3 Code
 
 T3 uses its selected provider's discovery paths. The `t3` install profile installs the same library for Codex, Claude Code, Pi, OpenCode, Cursor, and Antigravity, including Antigravity CLI's additional path. There is no invented `~/.t3/skills` directory.

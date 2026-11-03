@@ -1,0 +1,86 @@
+[
+  {
+    "name": "anthropic-academy-guide",
+    "source": "anthropic",
+    "upstream_name": "academy-guide",
+    "path": "skills/academy-guide/SKILL.md"
+  },
+  {
+    "name": "anthropic-algorithmic-art",
+    "source": "anthropic",
+    "upstream_name": "algorithmic-art",
+    "path": "skills/algorithmic-art/SKILL.md"
+  },
+  {
+    "name": "anthropic-brand-guidelines",
+    "source": "anthropic",
+    "upstream_name": "brand-guidelines",
+    "path": "skills/brand-guidelines/SKILL.md"
+  },
+  {
+    "name": "anthropic-canvas-design",
+    "source": "anthropic",
+    "upstream_name": "canvas-design",
+    "path": "skills/canvas-design/SKILL.md"
+  },
+  {
+    "name": "anthropic-claude-api",
+    "source": "anthropic",
+    "upstream_name": "claude-api",
+    "path": "skills/claude-api/SKILL.md"
+  },
+  {
+    "name": "anthropic-discernment-nudge",
+    "source": "anthropic",
+    "upstream_name": "discernment-nudge",
+    "path": "skills/discernment-nudge/SKILL.md"
+  },
+  {
+    "name": "anthropic-frontend-design",
+    "source": "anthropic",
+    "upstream_name": "frontend-design",
+    "path": "skills/frontend-design/SKILL.md"
+  },
+  {
+    "name": "anthropic-internal-comms",
+    "source": "anthropic",
+    "upstream_name": "internal-comms",
+    "path": "skills/internal-comms/SKILL.md"
+  },
+  {
+    "name": "anthropic-mcp-builder",
+    "source": "anthropic",
+    "upstream_name": "mcp-builder",
+    "path": "skills/mcp-builder/SKILL.md"
+  },
+  {
+    "name": "anthropic-skill-creator",
+    "source": "anthropic",
+    "upstream_name": "skill-creator",
+    "path": "skills/skill-creator/SKILL.md"
+  },
+  {
+    "name": "anthropic-slack-gif-creator",
+    "source": "anthropic",
+    "upstream_name": "slack-gif-creator",
+    "path": "skills/slack-gif-creator/SKILL.md"
+  },
+  {
+    "name": "anthropic-theme-factory",
+    "source": "anthropic",
+    "upstream_name": "theme-factory",
+    "path": "skills/theme-factory/SKILL.md"
+  },
+  {
+    "name": "anthropic-web-artifacts-builder",
+    "source": "anthropic",
+    "upstream_name": "web-artifacts-builder",
+    "path": "skills/web-artifacts-builder/SKILL.md"
+  },
+  {
+    "name": "anthropic-webapp-testing",
+    "source": "anthropic",
+    "upstream_name": "webapp-testing",
+    "path": "skills/webapp-testing/SKILL.md"
+  }
+]

@@ -1,6 +1,6 @@
 # Build and distribute native plugins
 
-Generate one marketplace with `mattpocock`, `pstack`, and `tstack` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
+Generate one marketplace with `mattpocock`, `pstack`, `tstack`, and `agent-examples` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
 
 Run these commands from the source checkout, which contains `scripts/`. Installed and extracted plugins contain runtime resources rather than the source build tools. Generation writes local artifacts; publishing and installations are separate actions.
 
@@ -18,14 +18,15 @@ The first build uses `initial_version`, currently `1.0.0`. Later builds incremen
 The generated layout is:
 
 ```text
-.agents/plugins/marketplace.json       Three Codex entries
-.claude-plugin/marketplace.json        Three Claude Code entries
-.cursor-plugin/marketplace.json        Three Cursor entries
+.agents/plugins/marketplace.json       Four Codex entries
+.claude-plugin/marketplace.json        Four Claude Code entries
+.cursor-plugin/marketplace.json        Four Cursor entries
 package.json                           Private development workspace
 plugins/
   mattpocock/                          Matt's native plugin and npm package
   pstack/                             pstack's native plugin and npm package
   tstack/                             tstack's native plugin and npm package
+  agent-examples/                Anthropic's community plugin and npm package
 dist/
   mattpocock-<version>.zip
   mattpocock-<version>.tar.gz
@@ -33,9 +34,11 @@ dist/
   pstack-<version>.tar.gz
   tstack-<version>.zip
   tstack-<version>.tar.gz
+  agent-examples-<version>.zip
+  agent-examples-<version>.tar.gz
 ```
 
-Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `skills/`, its own `upstream/` source, guides, a logo, and MIT notices. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
+Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `skills/`, its own `upstream/` source, guides, a logo, and a `THIRD_PARTY_NOTICES.md` license index. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
 
 Bundles use regular files with materialized copies of source symlinks. Skill links resolve within their own bundle. ZIP contents start at the plugin root; tarballs contain a directory named for the plugin. Workstation installation records, Git credentials, dependency installations, and build caches are excluded.
 
@@ -50,6 +53,7 @@ python3 -m unittest discover -s tests -v
 claude plugin validate --strict --profile directory plugins/mattpocock
 claude plugin validate --strict --profile directory plugins/pstack
 claude plugin validate --strict --profile directory plugins/tstack
+claude plugin validate --strict --profile directory plugins/agent-examples
 claude plugin validate --strict .claude-plugin/marketplace.json
 ```
 
@@ -61,13 +65,13 @@ node --test tests/opencode.test.mjs
 npm pack --ignore-scripts --workspaces --pack-destination dist
 ```
 
-The npm packages are `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, and `@odestroyero/tstack-skills`. Registry publication requires ownership of that scope. The repo's code and packages use MIT; original upstream notices remain in each bundle's `upstream/` folder.
+The npm packages are `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, and `@odestroyero/anthropic-skills`. Registry publication requires ownership of that scope. The repo's packaging code uses MIT. Upstream terms remain in each bundle's `upstream/` folder and are linked from its notice index. Anthropic's npm license field points to that index because its skills and assets have separate terms.
 
 If Antigravity is installed, validate each folder with `agy plugin validate --strict`. Check skill names and versions in each target client. Schema and SDK checks do not prove live discovery or workflow execution across every client.
 
 ## Update the Git marketplaces
 
-The daily workflow runs `sync`, which reads each upstream's configured manifest or skill roots, rebuilds each plugin, and updates the release version when inputs change. It checks the result and runs tests before committing generated updates. Additions and removals update the appropriate plugin without a second skill list. tstack uses its `skills/` directory directly, so newly added or removed skills are picked up automatically.
+The daily workflow runs `sync`, which reads each upstream's configured manifest or skill roots, rebuilds each plugin, and updates the release version when inputs change. It checks the result and runs tests before committing generated updates. Additions and removals update the appropriate plugin without a second skill list. tstack uses its `skills/` directory directly, so newly added or removed skills are picked up automatically. Anthropic also uses that directory, with a license-file hash filter applied before archiving. New skills with approved terms are included; missing or changed terms are omitted and recorded in `sources.lock.json`. Review license changes before extending the hash list.
 
 For a manual release, review and commit source and generated changes through your normal process. Include `distribution.lock.json`, `plugins/`, the three catalogs, and root `package.json`. Push to the branch tracked by your marketplaces. Keep `dist/`, `node_modules/`, and `.cache/` out of commits.
 
@@ -82,7 +86,7 @@ npm pack --ignore-scripts --workspaces --pack-destination dist
 npm publish --workspaces --access public --ignore-scripts
 ```
 
-The private root workspace is excluded. You can publish a single collection with `--workspace plugins/mattpocock`, `--workspace plugins/pstack`, or `--workspace plugins/tstack` instead of `--workspaces`.
+The private root workspace is excluded. You can publish a single collection with `--workspace plugins/mattpocock`, `--workspace plugins/pstack`, `--workspace plugins/tstack`, or `--workspace plugins/agent-examples` instead of `--workspaces`.
 
 The daily workflow updates Git consumers and marketplaces; it does not publish npm releases. Publish each release separately if consumers track npm packages.
 
