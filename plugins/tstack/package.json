@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/tstack-skills",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
   "type": "module",
   "license": "MIT",
@@ -36,7 +36,6 @@
     ".antigravity-plugin",
     "skills",
     "upstream",
-    "local",
     "docs",
     "assets",
     "opencode.mjs",

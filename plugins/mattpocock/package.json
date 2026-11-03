@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/mattpocock-skills",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
   "type": "module",
   "license": "MIT",
@@ -36,7 +36,6 @@
     ".antigravity-plugin",
     "skills",
     "upstream",
-    "local",
     "docs",
     "assets",
     "opencode.mjs",

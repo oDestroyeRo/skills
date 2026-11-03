@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -27,19 +28,22 @@ class CheckedInLibraryTest(unittest.TestCase):
                 result = subprocess.run([sys.executable, str(checkout / "scripts/skills.py"), *args],
                                         cwd=checkout, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            catalog = json.loads((checkout / "skills/catalog.json").read_text())
+            self.assertFalse((checkout / "skills").exists())
+            folders = {}
+            for file in (checkout / "plugins").glob("*/skills/catalog.json"):
+                for entry in json.loads(file.read_text()):
+                    folders[entry["name"]] = file.parent / entry["name"]
             targets = [".agents/skills", ".claude/skills", ".pi/agent/skills", ".gemini/config/skills",
                        ".gemini/antigravity-cli/skills", ".config/opencode/skills", ".cursor/skills"]
             for relative in targets:
                 directory = home / relative
-                self.assertEqual({path.name for path in directory.iterdir()}, {entry["name"] for entry in catalog})
-                for entry in catalog:
-                    installed = directory / entry["name"]
-                    package = checkout / ("local" if entry["source"] == "local" else "upstream/" + entry["source"])
-                    self.assertEqual(installed.resolve(), (checkout / "skills" / entry["name"]).resolve())
-                    self.assertEqual((installed / "source/SKILL.md").resolve(), (package / entry["path"]).resolve())
-                    self.assertEqual((installed / "library").resolve(), package.resolve())
-                    self.assertTrue((installed / "harness.md").is_file())
+                self.assertEqual({path.name for path in directory.iterdir()}, set(folders))
+                for name, folder in folders.items():
+                    installed = directory / name
+                    self.assertEqual(installed.resolve(), folder.resolve())
+                    text = (installed / "SKILL.md").read_text()
+                    for link in re.findall(r'\]\(([^)]+)\)', text):
+                        self.assertTrue((installed.resolve() / link).exists(), (name, link))
             self.assertEqual(registry.read_bytes() if registry.exists() else None, previous_registry)
 
 

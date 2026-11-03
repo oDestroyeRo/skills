@@ -35,7 +35,7 @@ dist/
   tstack-<version>.tar.gz
 ```
 
-Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `skills/`, its own `upstream/` source, guides, a logo, and MIT notices. The root workspace is private. Personal `local/` skills stay available through the shared installer.
+Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `skills/`, its own `upstream/` source, guides, a logo, and MIT notices. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
 
 Bundles use regular files with materialized copies of source symlinks. Skill links resolve within their own bundle. ZIP contents start at the plugin root; tarballs contain a directory named for the plugin. Workstation installation records, Git credentials, dependency installations, and build caches are excluded.
 
@@ -67,7 +67,7 @@ If Antigravity is installed, validate each folder with `agy plugin validate --st
 
 ## Update the Git marketplaces
 
-The daily workflow runs `sync`, which reads each upstream's configured manifest or skill roots, rebuilds the shared library and native folders, and updates the release version when inputs change. It checks the result and runs tests before committing generated updates. Additions and removals update the appropriate plugin without a second skill list. tstack uses its `skills/` directory directly, so newly added or removed skills are picked up automatically.
+The daily workflow runs `sync`, which reads each upstream's configured manifest or skill roots, rebuilds each plugin, and updates the release version when inputs change. It checks the result and runs tests before committing generated updates. Additions and removals update the appropriate plugin without a second skill list. tstack uses its `skills/` directory directly, so newly added or removed skills are picked up automatically.
 
 For a manual release, review and commit source and generated changes through your normal process. Include `distribution.lock.json`, `plugins/`, the three catalogs, and root `package.json`. Push to the branch tracked by your marketplaces. Keep `dist/`, `node_modules/`, and `.cache/` out of commits.
 

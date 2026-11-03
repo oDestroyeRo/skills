@@ -119,7 +119,7 @@ For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
 }
 ```
 
-Each adapter targets `@opencode/plugin` 2.2.5 and registers only its collection through the v2 skill transform API. Upstream agents, hooks, and services still require their own configuration. OpenCode v1 has a different plugin API; use the shared installer there.
+Each adapter targets `@opencode/plugin` 2.2.5 and registers only its collection through the v2 skill transform API. Upstream agents, hooks, and services still require their own configuration. OpenCode v1 has a different plugin API; use the folder installer there.
 
 Check and apply package updates with:
 
@@ -146,7 +146,7 @@ agy plugin list
 
 Each folder has the Antigravity manifest, logo, suggested prompt, skills, and resources for that collection. Its standalone ZIP or tar.gz can also be extracted and installed as a local plugin.
 
-After refreshing the checkout, re-run the local install and check the version with `agy plugin list`. Automatic updates for arbitrary Git or local installs have not been verified. Use shared folder installs with a scheduled repository updater when you need the existing automatic-refresh path.
+After refreshing the checkout, re-run the local install and check the version with `agy plugin list`. Automatic updates for arbitrary Git or local installs have not been verified. Use folder installs with a scheduled repository updater when you need the existing automatic-refresh path.
 
 For marketplace delivery, submit each standalone plugin through Antigravity's official intake after validation. See [plugin authoring](https://antigravity.google/docs/build-plugins) and [marketplace installation](https://antigravity.google/docs/marketplace).
 
@@ -154,10 +154,10 @@ For marketplace delivery, submit each standalone plugin through Antigravity's of
 
 Install the collections through the provider you use in T3. Codex and Claude Code use the marketplace entries; Pi and OpenCode use their per-collection packages. Start a new provider session or refresh its picker after installation.
 
-T3's provider integration determines native plugin discovery. If it does not expose a package, the shared installer can link the separate skills into provider folders:
+T3's provider integration determines native plugin discovery. If it does not expose a package, the folder installer can link the separate skills into provider folders:
 
 ```sh
 python3 scripts/skills.py install --agent t3 --global
 ```
 
-Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. Personal `local/` skills use the shared installer; each native plugin mirrors its named upstream collection.
+Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. The folder installer links directly to each plugin's `skills/` directory. Custom collections use their own source and plugin entries.

@@ -36,7 +36,10 @@ for (const { name: collection, source } of collections) {
 
 test("all configured collections coexist without skill-name collisions", async () => {
   const names = new Set();
+  const expected = [];
   for (const { name: collection } of collections) {
+    const catalog = JSON.parse(await readFile(new URL(`../plugins/${collection}/skills/catalog.json`, import.meta.url), "utf8"));
+    expected.push(...catalog.map(({ name }) => name));
     const { default: plugin } = await import(new URL(`../plugins/${collection}/opencode.mjs`, import.meta.url));
     await plugin.setup({
       skill: {
@@ -51,7 +54,5 @@ test("all configured collections coexist without skill-name collisions", async (
       },
     });
   }
-  const catalog = JSON.parse(await readFile(new URL("../skills/catalog.json", import.meta.url), "utf8"));
-  const sources = new Set(collections.map(({ source }) => source));
-  assert.deepEqual([...names].sort(), catalog.filter(({ source }) => sources.has(source)).map(({ name }) => name).sort());
+  assert.deepEqual([...names].sort(), expected.sort());
 });

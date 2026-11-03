@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync upstream Agent Skills and link one library into supported harnesses."""
+"""Sync source plugins and link their skills into supported harnesses."""
 
 import argparse
 from contextlib import contextmanager
@@ -202,7 +202,7 @@ def skill_roots(source, package):
     return roots
 
 
-def render_skill(name, source_id, fields, source_file="source/SKILL.md", library="library", adapter="harness.md"):
+def render_skill(name, source_id, fields, source_file, library, adapter):
     header = ["name: " + name, fields["description"]]
     for field in ("disable-model-invocation", "user-invocable"):
         if field in fields:
@@ -231,12 +231,10 @@ def copy_agent_metadata(source, destination, original_name, invocation_name):
         config.write_text(text)
 
 
-def make_library(vendor, destination, configured_sources):
-    destination.mkdir(parents=True)
+def discover_skills(vendor, configured_sources):
     catalog = []
+    names = set()
     collections = [(s["id"], vendor / s["id"], skill_roots(s, vendor / s["id"])) for s in configured_sources]
-    if (ROOT / "local").is_dir():
-        collections.append(("local", ROOT / "local", ["."]))
     for source_id, package, roots in collections:
         skill_files = set()
         for root in roots:
@@ -246,38 +244,41 @@ def make_library(vendor, destination, configured_sources):
                     skill_files.add(Path(directory) / "SKILL.md")
                     children.clear()
         for file in sorted(skill_files):
-            original, fields = metadata(file)
+            original, _ = metadata(file)
             name = source_id + "-" + original
-            if len(name) > 64 or (destination / name).exists():
+            if len(name) > 64 or name in names:
                 raise SkillError("Duplicate or overlong skill name: " + name)
-            folder = destination / name
-            folder.mkdir()
+            names.add(name)
             source_path = file.parent.relative_to(package)
-            real_package = ROOT / ("local" if source_id == "local" else "upstream/" + source_id)
-            for link_name, target in {
-                "source": real_package / source_path,
-                "library": real_package,
-                "harness.md": ROOT / "docs/harnesses.md",
-            }.items():
-                link_base = ROOT / "skills" / name
-                (folder / link_name).symlink_to(os.path.relpath(target, link_base))
-            if (file.parent / "agents").is_dir():
-                copy_agent_metadata(file.parent / "agents", folder / "agents", original, name)
-            (folder / "SKILL.md").write_text(render_skill(name, source_id, fields))
             catalog.append({"name": name, "source": source_id, "upstream_name": original,
                             "path": (source_path / "SKILL.md").as_posix()})
-    write_json(destination / "catalog.json", catalog)
     return catalog
 
 
+def plugin_skills():
+    from package_skills import configuration
+    entries = {}
+    for plugin in configuration(ROOT)["plugins"]:
+        directory = ROOT / "plugins" / plugin["name"] / "skills"
+        for entry in read_json(directory / "catalog.json"):
+            name = entry["name"]
+            if not SLUG.fullmatch(name) or name in entries:
+                raise SkillError("Invalid or duplicate packaged skill: " + name)
+            entries[name] = directory / name
+    return entries
+
+
 def protect_generated(lock):
+    legacy = ROOT / "skills"
+    if legacy.is_symlink() or (legacy.exists() and not legacy.is_dir()):
+        raise SkillError("Unmanaged root skills path preserved; move it before syncing")
     for directory, expected in [
         *[(ROOT / "upstream" / key, value["sha256"]) for key, value in lock.get("sources", {}).items()],
         (ROOT / "skills", lock.get("skills_sha256")),
     ]:
         actual = tree_hash(directory)
         if actual is not None and actual != expected:
-            raise SkillError("Local changes preserved in " + str(directory) + "; move custom skills to local/ before syncing")
+            raise SkillError("Local changes preserved in " + str(directory) + "; restore generated files before syncing")
     known = set(lock.get("sources", {}))
     upstream = ROOT / "upstream"
     if upstream.is_dir() and any(item.name not in known for item in upstream.iterdir()):
@@ -297,12 +298,12 @@ def replace_directory(staged, destination, backups):
 
 
 def sync(locked=False):
+    from package_skills import build_package, preflight_package
     configured = sources()
     lock = read_json(ROOT / "sources.lock.json", {"sources": {}})
     protect_generated(lock)
-    if (ROOT / "distribution.json").is_file():
-        from package_skills import preflight_package
-        preflight_package(ROOT)
+    preflight_package(ROOT)
+    previous_plugins = managed_plugin_names()
     with tempfile.TemporaryDirectory(prefix=".skills-stage-", dir=ROOT) as temporary:
         stage = Path(temporary)
         vendor = stage / "upstream"
@@ -315,21 +316,39 @@ def sync(locked=False):
                 raise SkillError("No locked commit for " + name)
             print("Fetching " + name + (" at " + commit[:12] if commit else " (" + source["ref"] + ")"), flush=True)
             entries[name] = fetch_source(source, vendor / name, commit)
-        make_library(vendor, stage / "skills", configured)
-        new_lock = {"version": 1, "sources": entries, "skills_sha256": tree_hash(stage / "skills")}
+        catalog = discover_skills(vendor, configured)
+        new_lock = {"version": 1, "sources": entries}
         protect_generated(lock)
-        if (ROOT / "distribution.json").is_file():
-            preflight_package(ROOT)
+        distribution = preflight_package(ROOT)
+        plugins = {plugin["source"]: plugin["name"] for plugin in distribution["plugins"]}
+        prospective = {entry["name"]: ROOT / "plugins" / plugins[entry["source"]] / "skills" / entry["name"]
+                       for entry in catalog}
+        remembered = [Path(path) for path in read_json(ROOT / ".cache/installations.json", [])]
+        installation_changes(remembered, prospective, previous_plugins)
         backups = stage / "previous"
         backups.mkdir()
+        lock_file = ROOT / "sources.lock.json"
+        previous_lock = lock_file.read_bytes() if lock_file.exists() else None
         replace_directory(vendor, ROOT / "upstream", backups)
-        replace_directory(stage / "skills", ROOT / "skills", backups)
-        write_json(ROOT / "sources.lock.json", new_lock)
-    if (ROOT / "distribution.json").is_file():
-        from package_skills import build_package
-        build_package(ROOT)
-    refresh()
-    print("Synced upstream sources and shared skills.")
+        try:
+            legacy = ROOT / "skills"
+            if legacy.exists():
+                legacy.rename(backups / "skills")
+            write_json(lock_file, new_lock)
+            build_package(ROOT)
+        except Exception:
+            (ROOT / "upstream").rename(stage / "failed-upstream")
+            if (backups / "upstream").exists():
+                (backups / "upstream").rename(ROOT / "upstream")
+            if (backups / "skills").exists():
+                (backups / "skills").rename(ROOT / "skills")
+            if previous_lock is None:
+                lock_file.unlink(missing_ok=True)
+            else:
+                lock_file.write_bytes(previous_lock)
+            raise
+    refresh(previous_plugins)
+    print("Synced upstream sources and per-collection plugins.")
 
 
 def check(check_distribution=True):
@@ -345,18 +364,11 @@ def check(check_distribution=True):
             raise SkillError("Source exclusions changed; run sync: " + source["id"])
         if tree_hash(ROOT / "upstream" / source["id"]) != saved["sha256"]:
             raise SkillError("Missing or modified upstream source: " + source["id"])
-    with tempfile.TemporaryDirectory(prefix="skills-check-") as temporary:
-        generated = Path(temporary) / "skills"
-        catalog = make_library(ROOT / "upstream", generated, configured)
-        if tree_hash(generated) != tree_hash(ROOT / "skills") or tree_hash(generated) != lock["skills_sha256"]:
-            raise SkillError("Generated skills are out of date; run sync")
-    for entry in catalog:
-        folder = ROOT / "skills" / entry["name"]
-        for file in (folder / "source/SKILL.md", folder / "harness.md"):
-            if not file.is_file():
-                raise SkillError("Broken skill reference: " + str(file))
+    if (ROOT / "skills").exists() or (ROOT / "skills").is_symlink():
+        raise SkillError("Legacy root skills/ directory found; run sync to migrate to plugin folders")
+    catalog = discover_skills(ROOT / "upstream", configured)
     print("Verified {} skills and {} upstream snapshots.".format(len(catalog), len(configured)))
-    if check_distribution and (ROOT / "distribution.json").is_file():
+    if check_distribution:
         from package_skills import check_package
         check_package(ROOT)
 
@@ -375,29 +387,55 @@ def target_directories(agents, home, project):
     return sorted(directories)
 
 
-def install(directories, remember=True):
-    catalog = read_json(ROOT / "skills/catalog.json")
-    names = {entry["name"] for entry in catalog}
+def managed_plugin_names():
+    config = read_json(ROOT / "distribution.json")
+    lock = read_json(ROOT / "distribution.lock.json", {})
+    return {plugin["name"] for plugin in config["plugins"]} | set(lock.get("bundle_hashes", {}))
+
+
+def owned_skill_link(file, plugins):
+    if not file.is_symlink():
+        return False
+    target = file.resolve()
+    if target == ROOT / "skills" / file.name:
+        return True
+    try:
+        parts = target.relative_to(ROOT / "plugins").parts
+    except ValueError:
+        return False
+    return len(parts) == 3 and parts[0] in plugins and parts[1] == "skills" and parts[2] == file.name
+
+
+def installation_changes(directories, entries, plugins):
+    names = set(entries)
     changes = []
     for directory in directories:
         directory = directory.expanduser().absolute()
-        if directory.resolve() == (ROOT / "skills").resolve():
-            raise SkillError("Install into a harness directory, not the shared library itself")
+        if directory.resolve().is_relative_to(ROOT / "plugins") or directory.resolve() == ROOT / "skills":
+            raise SkillError("Install into a harness directory, not a generated plugin directory")
         for name in sorted(names):
             destination = directory / name
-            target = ROOT / "skills" / name
+            target = entries[name]
             if destination.is_symlink() and destination.resolve() == target.resolve():
                 continue
-            if destination.exists() or destination.is_symlink():
+            if (destination.exists() or destination.is_symlink()) and not owned_skill_link(destination, plugins):
                 raise SkillError("Existing skill preserved: " + str(destination))
             changes.append((destination, target))
         if directory.is_dir():
             for old in directory.iterdir():
-                if old.is_symlink() and old.resolve().parent == (ROOT / "skills").resolve() and old.name not in names:
+                if owned_skill_link(old, plugins) and old.name not in names:
                     changes.append((old, None))
+    return changes
+
+
+def install(directories, remember=True, previous_plugins=()):
+    entries = plugin_skills()
+    changes = installation_changes(directories, entries, managed_plugin_names() | set(previous_plugins))
     for destination, target in changes:
-        if target is None:
+        if destination.is_symlink():
             destination.unlink()
+        if target is None:
+            continue
         else:
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.symlink_to(target, target_is_directory=True)
@@ -405,21 +443,22 @@ def install(directories, remember=True):
         registry = ROOT / ".cache/installations.json"
         previous = read_json(registry, [])
         write_json(registry, sorted(set(previous) | {str(d.expanduser().absolute()) for d in directories}))
-    print("Linked {} skills into {} directories.".format(len(names), len(directories)))
+    print("Linked {} skills into {} directories.".format(len(entries), len(directories)))
 
 
-def refresh():
+def refresh(previous_plugins=()):
     directories = read_json(ROOT / ".cache/installations.json", [])
     if directories:
-        install([Path(directory) for directory in directories], remember=False)
+        install([Path(directory) for directory in directories], remember=False, previous_plugins=previous_plugins)
 
 
 def update():
     if git("status", "--porcelain", "--untracked-files=no").strip():
         raise SkillError("Local tracked changes preserved; commit or move them before updating")
+    previous_plugins = managed_plugin_names()
     git("pull", "--ff-only")
     check()
-    refresh()
+    refresh(previous_plugins)
     print("Updated from the repository's tracking branch and refreshed installations.")
 
 
@@ -438,14 +477,14 @@ def mutation_lock():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    sync_parser = commands.add_parser("sync", help="Fetch upstreams, preserve source files, and generate shared entry points")
+    sync_parser = commands.add_parser("sync", help="Fetch upstreams, preserve source files, and generate per-collection plugins")
     sync_parser.add_argument("--locked", action="store_true", help="Fetch the exact commits in sources.lock.json")
     commands.add_parser("check", help="Check source hashes, generated skills, and reference paths")
     commands.add_parser("list", help="List available namespaced skills")
     commands.add_parser("update", help="Fast-forward this checkout and refresh saved installations")
     package_parser = commands.add_parser("package", help="Generate native plugin packages and bump the version when inputs change")
     package_parser.add_argument("--archive", action="store_true", help="Also write standalone ZIP and tar.gz bundles to dist/")
-    install_parser = commands.add_parser("install", help="Symlink shared skills into harness discovery directories")
+    install_parser = commands.add_parser("install", help="Link plugin skills into harness discovery directories")
     install_parser.add_argument("--agent", action="append", choices=AGENTS, default=[])
     scope = install_parser.add_mutually_exclusive_group()
     scope.add_argument("--global", dest="global_scope", action="store_true")
@@ -458,8 +497,8 @@ def main():
     if args.command == "check":
         check()
     elif args.command == "list":
-        for entry in read_json(ROOT / "skills/catalog.json"):
-            print(entry["name"])
+        for name in sorted(plugin_skills()):
+            print(name)
     else:
         with mutation_lock():
             if args.command == "sync":

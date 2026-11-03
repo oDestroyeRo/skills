@@ -2,13 +2,13 @@
 
 One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), and [tstack](https://github.com/t3dotgg/tstack).
 
-Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Shared installs link to one checkout; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's package and SDK checks use Node.js **22+**.
+Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Each collection's entry points live in `plugins/<name>/skills/`. Folder installs link directly to those entries; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's package and SDK checks use Node.js **22+**.
 
 ## Install
 
 The native marketplace contains three independent plugins: **mattpocock**, **pstack**, and **tstack**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
 
-Use the shared installer below when you want one linked checkout across harnesses:
+Use the folder installer below to link plugin skills from one checkout across harnesses:
 
 Clone this repository, then run:
 
@@ -33,6 +33,15 @@ python3 scripts/skills.py install --directory /custom/config/skills
 ```
 
 The installer remembers target directories in ignored `.cache/installations.json`. Updates add new links and remove obsolete links owned by this checkout. Keep the checkout in place; moving or deleting it breaks its installed links. To uninstall, remove only the links pointing to this checkout and remove that destination from `.cache/installations.json` so a later update does not restore them.
+
+For an existing clone of the first release, pull this repository before running its updated installer:
+
+```sh
+git pull --ff-only
+python3 scripts/skills.py update
+```
+
+The updated installer retargets remembered links to the plugin folders. A manual `sync` also removes an unchanged legacy root folder and migrates remembered links. Local edits stop that migration for review.
 
 ## Automatic updates
 
@@ -76,17 +85,17 @@ python3 -m unittest discover -s tests -v
 
 Matt's manifest currently publishes the stable engineering and productivity collections. tstack has no plugin manifest, so its `skills/` directory is discovered directly on every sync. `sources.lock.json` records exact commits, excluded paths, and content hashes.
 
-`upstream/` keeps the source skill trees, supporting resources, guides, manifests, and licenses. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. `skills/` is generated.
+`upstream/` keeps the source skill trees, supporting resources, guides, manifests, and licenses. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Generated entry points and catalogs live only in `plugins/<name>/skills/`.
 
 Local edits to snapshots or generated skills stop a sync so custom work is preserved. All sources are downloaded and their exports validated before a new library is published. Failed downloads or invalid manifests leave the previous snapshots and exports in place.
 
-Put your own skills at `local/<name>/SKILL.md`, then run `sync`. They are exported as `local-<name>` and stay separate from upstream updates. Add another upstream through `sources.json`. To adopt library changes into the hosted repository, review the result and use your normal commit/push process; `sync` itself never commits or pushes. Use the scheduled `update` command for an installed machine rather than `sync`, which intentionally creates local snapshot changes.
+To add a custom collection, put its skills in a Git repository, add that source to `sources.json`, and add its plugin entry to `distribution.json`. A local Git repository can use a `file:///absolute/path/to/repo` source URL. Each source has one plugin. To adopt library changes into the hosted repository, review the result and use your normal commit/push process; `sync` itself never commits or pushes. Use the scheduled `update` command for an installed machine rather than `sync`, which intentionally creates local snapshot changes.
 
 Every sync also rebuilds each native plugin folder and its marketplace entries. A changed skill set or package input increments the release version; an unchanged build keeps it. Additions and removals update their own collection's bundle. All bundles contain regular files and preserve the source layout. The root npm file is a private development workspace with no combined skill package.
 
 ## Compatibility and verification
 
-The shared installer exposes folder skills; native packages register skills through their plugin format. Both methods use the available tools of the current harness. Some pstack and tstack workflows need subagents, selected models, services, or other plugins. tstack's PR workflows also need an authenticated GitHub CLI, and its PR wait helper needs Python 3. The [harness adapter](docs/harnesses.md) describes those boundaries and how T3 delegation fits. Existing plugin installations may also expose duplicate workflows under their original names.
+The folder installer and native packages use the same per-plugin skill files. Both methods use the available tools of the current harness. Some pstack and tstack workflows need subagents, selected models, services, or other plugins. tstack's PR workflows also need an authenticated GitHub CLI, and its PR wait helper needs Python 3. The [harness adapter](docs/harnesses.md) describes those boundaries and how T3 delegation fits. Existing plugin installations may also expose duplicate workflows under their original names.
 
 The tests exercise real local Git repositories, source advances, locked revisions, update failures, protected local edits, file references, name collisions, and isolated installs for every profile. `check` verifies the actual library. These checks establish filesystem and updater behavior; live discovery and every upstream workflow across all installed harness versions still need client-level verification. In particular, Antigravity's documented discovery paths are used, but its symlink discovery has not been exercised in a running client.
 

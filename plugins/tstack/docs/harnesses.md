@@ -2,15 +2,15 @@
 
 Resolve this adapter file to its real path before following its relative links.
 
-Each entry point opens the original workflow under `upstream/`. Read that source before acting, and resolve its file references from its real location. For example, `pstack-poteto-mode` opens `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
+Each entry point lives under `plugins/<collection>/skills/` and opens the original workflow under that plugin's `upstream/` directory. Folder installations link to the same entry points. Resolve the entry point to its real path before following its links. Read the original workflow before acting, and resolve its file references from its real location. For example, `pstack-poteto-mode` opens the plugin's `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
 
-The entry point's collection prefix resolves name collisions. A reference to `tdd` inside a pstack workflow means `pstack-tdd`; inside Matt's workflow it means `mattpocock-tdd`. tstack's references follow the same rule: `full-send` means `tstack-full-send`, for example. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata for all exports are in `skills/catalog.json`.
+The entry point's collection prefix resolves name collisions. A reference to `tdd` inside a pstack workflow means `pstack-tdd`; inside Matt's workflow it means `mattpocock-tdd`. tstack's references follow the same rule: `full-send` means `tstack-full-send`, for example. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata are in each plugin's `skills/catalog.json`.
 
 ## Shared capabilities
 
 Use the current harness's actual tool schemas and the user's saved settings. Map an action such as searching files, asking a question, or running a command to the available equivalent. A skill cannot register an agent type, install a hook, add MCP tools, or make a provider's model available. If a required capability is missing, report that step and its effect on completion. Preserve the user's scope and authorization for external actions.
 
-When pstack names `poteto-agent` or `comment-sicko`, read the matching prompt under the pstack library's `agents/` directory. The shared install links that library as `library/`; the native entry point links to its packaged `upstream/pstack/` directory. Supply those instructions to a supported delegate rather than passing an unregistered agent type. If delegation is unavailable, say so; do not claim an independent review ran. Cursor Automations, Bugbot, and cloud agents still require those services.
+When pstack names `poteto-agent` or `comment-sicko`, read the matching prompt under the packaged `upstream/pstack/agents/` directory. Follow the entry point's upstream-library link to find it. Supply those instructions to a supported delegate rather than passing an unregistered agent type. If delegation is unavailable, say so; do not claim an independent review ran. Cursor Automations, Bugbot, and cloud agents still require those services.
 
 ## tstack workflows
 

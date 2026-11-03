@@ -18,15 +18,6 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.setUp()
         self.addCleanup(self.fixture.doCleanups)
         self.repo = self.fixture.repo
-        for relative in ["distribution.json", "LICENSE", "scripts/package_skills.py",
-                         "docs/native-install.md", "docs/native-publishing.md"]:
-            shutil.copy2(ROOT / relative, self.repo / relative)
-        config = json.loads((self.repo / "distribution.json").read_text())
-        config["plugins"] = [plugin for plugin in config["plugins"] if plugin["source"] in self.fixture.upstreams]
-        (self.repo / "distribution.json").write_text(json.dumps(config))
-        for relative in ["assets", "adapters"]:
-            shutil.copytree(ROOT / relative, self.repo / relative)
-        (self.repo / "README.md").write_text("Native package fixture.\n")
         script = self.fixture.upstreams["pstack"] / "pstack/skills/tdd/tool.sh"
         script.write_text("#!/bin/sh\nexit 0\n")
         script.chmod(0o755)
@@ -141,7 +132,7 @@ class NativePackagingTest(unittest.TestCase):
 
     def test_native_conflict_stops_sync_before_shared_state_or_installed_links_change(self):
         before_lock = (self.repo / "sources.lock.json").read_bytes()
-        before_catalog = (self.repo / "skills/catalog.json").read_bytes()
+        before_catalog = (self.bundle / "skills/catalog.json").read_bytes()
         before_version = self.lock()
         target = self.fixture.base / "installed"
         self.fixture.command("install", "--directory", str(target))
@@ -150,10 +141,10 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.add_skill()
         self.fixture.command("sync", success=False)
         self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before_lock)
-        self.assertEqual((self.repo / "skills/catalog.json").read_bytes(), before_catalog)
+        self.assertEqual((self.bundle / "skills/catalog.json").read_bytes(), before_catalog)
         self.assertEqual(self.lock(), before_version)
         self.assertFalse((target / "pstack-new-skill").exists())
-        self.assertTrue((target / "pstack-tdd/source/SKILL.md").is_file())
+        self.assertTrue((target / "pstack-tdd/SKILL.md").is_file())
 
     def test_archives_preserve_existing_symlinks_files_and_symlinked_directories(self):
         self.fixture.command("package", "--archive")
@@ -248,10 +239,10 @@ class NativePackagingTest(unittest.TestCase):
         self.assertEqual({item.name for item in (bundle / "upstream").iterdir()}, {"tstack"})
         self.assertEqual((bundle / "upstream/tstack/LICENSE").read_text(), "MIT tstack fixture notice\n")
         self.assertTrue((bundle / "upstream/tstack/skills/full-stop/scripts/pr-wait").stat().st_mode & 0o111)
-        self.assertTrue((target / "tstack-full-stop/source/SKILL.md").is_file())
+        self.assertTrue((target / "tstack-full-stop/SKILL.md").is_file())
         self.assertIn("$tstack-full-stop", (target / "tstack-full-stop/agents/openai.yaml").read_text())
         native_ui = (bundle / "skills/tstack-full-stop/agents/openai.yaml").read_text()
-        self.assertIn("$tstack:tstack-full-stop", native_ui)
+        self.assertIn("$tstack-full-stop", native_ui)
         self.assertIn("allow_implicit_invocation: false", native_ui)
         self.assertEqual((self.repo / "upstream/tstack/skills/full-stop/agents/openai.yaml").read_text(), original_ui)
         for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json"]:
@@ -265,7 +256,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("sync")
         self.fixture.command("check")
         self.assertFalse((target / "tstack-full-stop").is_symlink())
-        self.assertTrue((target / "tstack-review/source/SKILL.md").is_file())
+        self.assertTrue((target / "tstack-review/SKILL.md").is_file())
         self.assertFalse((bundle / "skills/tstack-full-stop").exists())
         self.assertFalse((bundle / "upstream/tstack/skills/full-stop").exists())
         self.assertEqual([entry["name"] for entry in json.loads((bundle / "skills/catalog.json").read_text())],

@@ -11,7 +11,7 @@ import tarfile
 import tempfile
 import zipfile
 
-from skills import SkillError, SLUG, copy_agent_metadata, metadata, read_json, render_skill, tree_hash, write_json
+from skills import SkillError, SLUG, copy_agent_metadata, discover_skills, metadata, read_json, render_skill, tree_hash, write_json
 
 
 PORTABLE_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
@@ -28,6 +28,7 @@ def configuration(root):
     if not re.fullmatch(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)", config["initial_version"]):
         raise SkillError("initial_version must be a three-part release version")
     names = set()
+    published_sources = set()
     source_ids = {source["id"] for source in read_json(root / "sources.json")["sources"]}
     if not config.get("plugins"):
         raise SkillError("distribution.json must declare its native plugins")
@@ -36,9 +37,14 @@ def configuration(root):
             raise SkillError("Invalid or duplicate native plugin name")
         if plugin["source"] not in source_ids:
             raise SkillError("Native plugin references an unknown source: " + plugin["source"])
+        if plugin["source"] in published_sources:
+            raise SkillError("Each source must have exactly one plugin: " + plugin["source"])
         if not re.fullmatch(r"(?:@[a-z0-9-]+/)?[a-z0-9-]+", plugin["npm_name"]):
             raise SkillError("Invalid npm package name: " + plugin["name"])
         names.add(plugin["name"])
+        published_sources.add(plugin["source"])
+    if published_sources != source_ids:
+        raise SkillError("Every source in sources.json must have a plugin in distribution.json")
     return config
 
 
@@ -46,7 +52,7 @@ def input_hash(root):
     digest = hashlib.sha256()
     for relative in (
         "distribution.json", "sources.json", "sources.lock.json", "README.md", "LICENSE",
-        "skills", "upstream", "local", "docs", "assets", "adapters",
+        "upstream", "docs", "assets", "adapters",
         "scripts/skills.py", "scripts/package_skills.py",
     ):
         path = root / relative
@@ -54,8 +60,6 @@ def input_hash(root):
             value = tree_hash(path)
         elif path.is_file():
             value = hashlib.sha256(path.read_bytes()).hexdigest()
-        elif relative == "local":
-            continue
         else:
             raise SkillError("Missing package input: " + relative)
         digest.update((relative + "\0" + value + "\n").encode())
@@ -81,7 +85,7 @@ def npm_manifest(config, version):
         "exports": {".": "./opencode.mjs"}, "pi": {"skills": ["./skills"]},
         "files": [
             "plugin.json", ".claude-plugin", ".codex-plugin", ".cursor-plugin",
-            ".antigravity-plugin", "skills", "upstream", "local", "docs",
+            ".antigravity-plugin", "skills", "upstream", "docs",
             "assets", "opencode.mjs", "sources.lock.json", "LICENSE",
         ],
     })
@@ -161,9 +165,10 @@ def populate_bundle(root, bundle, config, version):
     source_id = config["source"]
     (bundle / "upstream").mkdir()
     copy_materialized(root / "upstream" / source_id, bundle / "upstream" / source_id)
-    catalog = [entry for entry in read_json(root / "skills/catalog.json") if entry["source"] == source_id]
+    source = next(source for source in read_json(root / "sources.json")["sources"] if source["id"] == source_id)
+    catalog = discover_skills(root / "upstream", [source])
     for entry in catalog:
-        library = "local" if entry["source"] == "local" else "upstream/" + entry["source"]
+        library = "upstream/" + entry["source"]
         original = root / library / entry["path"]
         _, fields = metadata(original)
         folder = bundle / "skills" / entry["name"]
@@ -176,7 +181,7 @@ def populate_bundle(root, bundle, config, version):
         (folder / "SKILL.md").write_text(text)
         if (original.parent / "agents").is_dir():
             copy_agent_metadata(original.parent / "agents", folder / "agents", entry["upstream_name"],
-                                config["name"] + ":" + entry["name"])
+                                entry["name"])
     write_json(bundle / "skills/catalog.json", catalog)
     shutil.copy2(root / "adapters/opencode.mjs", bundle / "opencode.mjs")
     source_lock = read_json(root / "sources.lock.json")
@@ -230,6 +235,7 @@ def preflight_package(root):
     lock = read_json(root / "distribution.lock.json", {})
     version = lock.get("package_version", config["initial_version"])
     protect_outputs(root, config, lock, marketplace_files(config, version))
+    return config
 
 
 def build_package(root):

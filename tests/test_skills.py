@@ -1,3 +1,4 @@
+import importlib.util
 import json
 from pathlib import Path
 import shutil
@@ -18,9 +19,12 @@ class SharedSkillsTest(unittest.TestCase):
         self.repo = self.base / "library"
         (self.repo / "scripts").mkdir(parents=True)
         shutil.copy2(SCRIPT, self.repo / "scripts/skills.py")
-        (self.repo / "docs").mkdir()
-        (self.repo / "docs/harnesses.md").write_text("Use the tools of the current harness.\n")
-        (self.repo / ".gitignore").write_text(".cache/\n.skills-stage-*/\n")
+        shutil.copy2(SCRIPT.parent / "package_skills.py", self.repo / "scripts/package_skills.py")
+        for name in ("docs", "assets", "adapters"):
+            shutil.copytree(SCRIPT.parent.parent / name, self.repo / name)
+        for name in ("LICENSE", ".gitignore"):
+            shutil.copy2(SCRIPT.parent.parent / name, self.repo / name)
+        (self.repo / "README.md").write_text("Plugin library fixture.\n")
         self.upstreams = {}
         for name, root in [("mattpocock", "."), ("pstack", "pstack")]:
             checkout = self.base / name
@@ -42,6 +46,37 @@ class SharedSkillsTest(unittest.TestCase):
             for name, checkout in self.upstreams.items()
         ]}
         self.write_config()
+        distribution = json.loads((SCRIPT.parent.parent / "distribution.json").read_text())
+        distribution["plugins"] = [plugin for plugin in distribution["plugins"] if plugin["source"] in self.upstreams]
+        (self.repo / "distribution.json").write_text(json.dumps(distribution))
+
+    def skill(self, name):
+        return self.repo / "plugins" / name.partition("-")[0] / "skills" / name
+
+    def resource(self, name, relative):
+        skill = self.skill(name)
+        catalog = json.loads((skill.parent / "catalog.json").read_text())
+        entry = next(entry for entry in catalog if entry["name"] == name)
+        return skill.parents[1] / "upstream" / entry["source"] / Path(entry["path"]).parent / relative
+
+    def catalog(self):
+        return [entry for file in sorted((self.repo / "plugins").glob("*/skills/catalog.json"))
+                for entry in json.loads(file.read_text())]
+
+    def legacy_root(self):
+        legacy = self.repo / "skills"
+        shutil.copytree(self.repo / "plugins/pstack/skills", legacy)
+        retired = legacy / "pstack-retired"
+        retired.mkdir()
+        (retired / "SKILL.md").write_text("Retired legacy entry.\n")
+        spec = importlib.util.spec_from_file_location("legacy_hash", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        file = self.repo / "sources.lock.json"
+        lock = json.loads(file.read_text())
+        lock["skills_sha256"] = module.tree_hash(legacy)
+        file.write_text(json.dumps(lock))
+        return legacy
 
     def git(self, *args, cwd=None):
         result = subprocess.run(
@@ -88,10 +123,11 @@ class SharedSkillsTest(unittest.TestCase):
             for name in ["mattpocock-tdd", "pstack-tdd"]:
                 folder = home / relative / name
                 self.assertTrue(folder.is_symlink())
-                self.assertEqual(folder.resolve(), (self.repo / "skills" / name).resolve())
+                self.assertEqual(folder.resolve(), self.skill(name).resolve())
                 self.assertIn("name: " + name, (folder / "SKILL.md").read_text())
-                self.assertTrue((folder / "harness.md").is_file())
-                self.assertIn("Original example", (folder / "source/examples.md").read_text())
+                self.assertTrue((folder.resolve().parents[1] / "docs/harnesses.md").is_file())
+                self.assertIn("Original example", self.resource(name, "examples.md").read_text())
+        self.assertFalse((self.repo / "skills").exists())
         self.command("install", "--agent", "t3", "--global", "--home", str(home))
         project = self.base / "consumer project"
         self.command("install", "--agent", "all", "--project", str(project))
@@ -113,8 +149,8 @@ class SharedSkillsTest(unittest.TestCase):
         self.add_skill()
         self.command("sync")
         self.assertFalse((target / "pstack-tdd").is_symlink())
-        self.assertTrue((target / "pstack-new-skill/source/SKILL.md").is_file())
-        self.assertEqual((target / "mattpocock-tdd/source/examples.md").read_text(), "Updated upstream example\n")
+        self.assertTrue((target / "pstack-new-skill/SKILL.md").is_file())
+        self.assertEqual(self.resource("mattpocock-tdd", "examples.md").read_text(), "Updated upstream example\n")
         self.assertEqual((unrelated / "SKILL.md").read_text(), "My existing skill\n")
         self.command("check")
         lock = (self.repo / "sources.lock.json").read_bytes()
@@ -132,10 +168,124 @@ class SharedSkillsTest(unittest.TestCase):
         self.assertFalse((home / ".agents/skills/mattpocock-tdd").exists())
         self.assertFalse((self.repo / ".cache/installations.json").exists())
 
+    def test_sync_removes_legacy_root_and_retargets_remembered_links(self):
+        self.command("sync")
+        legacy = self.legacy_root()
+        target = self.base / "installed"
+        target.mkdir()
+        for name in ("pstack-tdd", "pstack-retired"):
+            (target / name).symlink_to(legacy / name)
+        (target / "personal").mkdir()
+        (self.repo / ".cache/installations.json").write_text(json.dumps([str(target)]))
+        self.command("sync")
+        self.command("check")
+        self.assertFalse(legacy.exists())
+        self.assertNotIn("skills_sha256", json.loads((self.repo / "sources.lock.json").read_text()))
+        self.assertEqual((target / "pstack-tdd").resolve(), self.skill("pstack-tdd").resolve())
+        self.assertFalse((target / "pstack-retired").is_symlink())
+        self.assertTrue((target / "personal").is_dir())
+        before = (self.repo / "distribution.lock.json").read_bytes()
+        self.command("sync")
+        self.assertEqual((self.repo / "distribution.lock.json").read_bytes(), before)
+
+    def test_sync_preserves_local_edits_in_legacy_root(self):
+        self.command("sync")
+        legacy = self.legacy_root()
+        file = legacy / "pstack-tdd/SKILL.md"
+        file.write_text(file.read_text() + "\nKeep my edit.\n")
+        before = (self.repo / "sources.lock.json").read_bytes()
+        self.add_skill()
+        self.command("sync", success=False)
+        self.assertIn("Keep my edit.", file.read_text())
+        self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
+        self.assertFalse(self.skill("pstack-new-skill").exists())
+
+    def test_install_conflict_stops_migration_before_legacy_links_break(self):
+        self.command("sync")
+        legacy = self.legacy_root()
+        target = self.base / "installed"
+        target.mkdir()
+        (target / "pstack-tdd").symlink_to(legacy / "pstack-tdd")
+        (target / "pstack-new-skill").mkdir()
+        (self.repo / ".cache/installations.json").write_text(json.dumps([str(target)]))
+        before = (self.repo / "sources.lock.json").read_bytes()
+        self.add_skill()
+        self.command("sync", success=False)
+        self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
+        self.assertTrue((target / "pstack-tdd/SKILL.md").is_file())
+        self.assertTrue(legacy.is_dir())
+        self.assertTrue((target / "pstack-new-skill").is_dir())
+
+    def test_install_retargets_broken_legacy_links_after_a_repository_update(self):
+        self.command("sync")
+        target = self.base / "installed"
+        target.mkdir()
+        (target / "pstack-tdd").symlink_to(self.repo / "skills/pstack-tdd")
+        (target / "pstack-retired").symlink_to(self.repo / "skills/pstack-retired")
+        outside = self.base / "unrelated-skill"
+        outside.mkdir()
+        (target / "unrelated").symlink_to(outside)
+        self.command("install", "--directory", str(target))
+        self.assertEqual((target / "pstack-tdd").resolve(), self.skill("pstack-tdd").resolve())
+        self.assertFalse((target / "pstack-retired").is_symlink())
+        self.assertEqual((target / "unrelated").resolve(), outside.resolve())
+
+    def test_unmanaged_root_skill_paths_and_plugin_links_are_preserved(self):
+        self.command("sync")
+        root_path = self.repo / "skills"
+        root_path.write_text("Unrelated file.\n")
+        self.command("sync", success=False)
+        self.assertEqual(root_path.read_text(), "Unrelated file.\n")
+        root_path.unlink()
+        manual = self.repo / "plugins/manual/skills/hand-authored"
+        manual.mkdir(parents=True)
+        (manual / "SKILL.md").write_text("Personal instructions.\n")
+        target = self.base / "installed"
+        target.mkdir()
+        (target / "hand-authored").symlink_to(manual)
+        self.command("install", "--directory", str(target))
+        self.assertEqual((target / "hand-authored").resolve(), manual.resolve())
+
+    def test_plugin_directory_rename_retargets_installed_skills(self):
+        self.command("sync")
+        target = self.base / "installed"
+        self.command("install", "--directory", str(target))
+        file = self.repo / "distribution.json"
+        config = json.loads(file.read_text())
+        next(plugin for plugin in config["plugins"] if plugin["source"] == "pstack")["name"] = "renamed-pstack"
+        file.write_text(json.dumps(config))
+        self.command("sync")
+        self.command("check")
+        self.assertEqual((target / "pstack-tdd").resolve(),
+                         (self.repo / "plugins/renamed-pstack/skills/pstack-tdd").resolve())
+        self.assertFalse((self.repo / "plugins/pstack").exists())
+        config["plugins"] = [plugin for plugin in config["plugins"] if plugin["source"] != "pstack"]
+        file.write_text(json.dumps(config))
+        self.config["sources"] = [source for source in self.config["sources"] if source["id"] != "pstack"]
+        self.write_config()
+        self.command("sync")
+        self.command("check")
+        self.assertFalse((target / "pstack-tdd").is_symlink())
+        self.assertTrue((target / "mattpocock-tdd/SKILL.md").is_file())
+
+    def test_failed_bundle_build_preserves_sources_and_can_be_retried(self):
+        self.command("sync")
+        before = (self.repo / "sources.lock.json").read_bytes()
+        native_before = (self.repo / "distribution.lock.json").read_bytes()
+        self.add_skill()
+        (self.repo / "assets").rename(self.base / "saved-assets")
+        self.command("sync", success=False)
+        self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
+        self.assertEqual((self.repo / "distribution.lock.json").read_bytes(), native_before)
+        self.assertFalse((self.repo / "upstream/pstack/skills/new-skill").exists())
+        (self.base / "saved-assets").rename(self.repo / "assets")
+        self.command("sync")
+        self.assertTrue((self.skill("pstack-new-skill") / "SKILL.md").is_file())
+
     def test_local_edits_in_sources_and_exports_are_preserved(self):
         self.command("sync")
         lock = (self.repo / "sources.lock.json").read_bytes()
-        for relative in ["upstream/pstack/skills/tdd/SKILL.md", "skills/pstack-tdd/SKILL.md"]:
+        for relative in ["upstream/pstack/skills/tdd/SKILL.md", "plugins/pstack/skills/pstack-tdd/SKILL.md"]:
             file = self.repo / relative
             original = file.read_text()
             file.write_text(original + "\nUser's local edit\n")
@@ -162,9 +312,9 @@ class SharedSkillsTest(unittest.TestCase):
         self.add_skill()
         self.command("sync", "--locked")
         self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
-        self.assertFalse((self.repo / "skills/pstack-new-skill").exists())
+        self.assertFalse(self.skill("pstack-new-skill").exists())
         self.command("sync")
-        self.assertTrue((self.repo / "skills/pstack-new-skill/SKILL.md").is_file())
+        self.assertTrue((self.skill("pstack-new-skill") / "SKILL.md").is_file())
 
     def test_upstream_manifest_can_publish_a_new_category_and_retire_an_existing_skill(self):
         checkout = self.upstreams["mattpocock"]
@@ -184,7 +334,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.commit(checkout, "publish new category and retire old skill")
         self.command("sync")
         self.command("check")
-        self.assertTrue((target / "mattpocock-new-workflow/source/SKILL.md").is_file())
+        self.assertTrue((target / "mattpocock-new-workflow/SKILL.md").is_file())
         self.assertFalse((target / "mattpocock-tdd").is_symlink())
         self.assertTrue((self.repo / "upstream/mattpocock/skills/tdd/SKILL.md").is_file())
         manifest.write_text(json.dumps({"skills": []}))
@@ -203,11 +353,11 @@ class SharedSkillsTest(unittest.TestCase):
         self.command("sync")
         self.command("check")
         self.assertFalse((target / "pstack-tdd").is_symlink())
-        self.assertTrue((target / "mattpocock-tdd/source/SKILL.md").is_file())
+        self.assertTrue((target / "mattpocock-tdd/SKILL.md").is_file())
         (checkout / "pstack/skills").mkdir()
         self.add_skill()
         self.command("sync")
-        self.assertTrue((target / "pstack-new-skill/source/SKILL.md").is_file())
+        self.assertTrue((target / "pstack-new-skill/SKILL.md").is_file())
 
     def test_skill_move_preserves_its_name_and_skill_rename_replaces_its_link(self):
         self.command("sync")
@@ -218,15 +368,15 @@ class SharedSkillsTest(unittest.TestCase):
         (checkout / "pstack/skills/tdd").rename(moved)
         self.commit(checkout, "move skill folder")
         self.command("sync")
-        self.assertTrue((target / "pstack-tdd/source/examples.md").is_file())
-        self.assertEqual((target / "pstack-tdd/source").resolve().name, "moved-folder")
+        self.assertTrue(self.resource("pstack-tdd", "examples.md").is_file())
+        self.assertEqual(self.resource("pstack-tdd", "examples.md").parent.name, "moved-folder")
         file = moved / "SKILL.md"
         file.write_text(file.read_text().replace("name: tdd\n", "name: renamed\n"))
         self.commit(checkout, "rename skill")
         self.command("sync")
         self.command("check")
         self.assertFalse((target / "pstack-tdd").is_symlink())
-        self.assertTrue((target / "pstack-renamed/source/examples.md").is_file())
+        self.assertTrue(self.resource("pstack-renamed", "examples.md").is_file())
 
     def test_invalid_manifest_does_not_replace_previous_library(self):
         checkout = self.upstreams["mattpocock"]
@@ -242,16 +392,29 @@ class SharedSkillsTest(unittest.TestCase):
         self.commit(checkout, "invalid published path")
         self.command("sync", success=False)
         self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
-        self.assertTrue((self.repo / "skills/mattpocock-tdd/source/SKILL.md").is_file())
+        self.assertTrue((self.skill("mattpocock-tdd") / "SKILL.md").is_file())
 
-    def test_custom_skill_is_exported_without_editing_upstream(self):
-        folder = self.repo / "local/example"
+    def test_custom_collection_is_exported_through_its_own_plugin(self):
+        checkout = self.base / "custom"
+        folder = checkout / "skills/example"
         folder.mkdir(parents=True)
-        (folder / "SKILL.md").write_text("---\nname: example\ndescription: >-\n  A local workflow\n  with a folded description.\n---\n\nLocal instructions.\n")
+        (folder / "SKILL.md").write_text("---\nname: example\ndescription: >-\n  A custom workflow\n  with a folded description.\n---\n\nCustom instructions.\n")
+        (checkout / "LICENSE").write_text("MIT custom fixture license\n")
+        self.git("init", "--quiet", "--initial-branch=main", cwd=checkout)
+        self.commit(checkout, "publish custom collection")
+        self.config["sources"].append({"id": "custom", "repository": checkout.as_uri(),
+                                       "ref": "main", "root": ".", "skill_roots": ["skills"]})
+        self.write_config()
+        file = self.repo / "distribution.json"
+        config = json.loads(file.read_text())
+        config["plugins"].append({**config["plugins"][0], "source": "custom", "name": "custom",
+                                   "npm_name": "@odestroyero/custom-skills"})
+        file.write_text(json.dumps(config))
         self.command("sync")
         self.command("check")
-        self.assertTrue((self.repo / "skills/local-example/source/SKILL.md").is_file())
-        self.assertEqual((folder / "SKILL.md").read_bytes(), (self.repo / "skills/local-example/source/SKILL.md").read_bytes())
+        self.assertTrue((self.skill("custom-example") / "SKILL.md").is_file())
+        self.assertEqual((folder / "SKILL.md").read_bytes(), self.resource("custom-example", "SKILL.md").read_bytes())
+        self.assertFalse((self.repo / "skills").exists())
 
     def test_embedded_skill_template_is_a_resource_not_a_second_export(self):
         checkout = self.upstreams["pstack"]
@@ -261,9 +424,9 @@ class SharedSkillsTest(unittest.TestCase):
         self.commit(checkout, "add embedded template")
         self.command("sync")
         self.command("check")
-        catalog = json.loads((self.repo / "skills/catalog.json").read_text())
+        catalog = self.catalog()
         self.assertEqual({entry["name"] for entry in catalog}, {"mattpocock-tdd", "pstack-tdd"})
-        self.assertTrue((self.repo / "skills/pstack-tdd/source/templates/example/SKILL.md").is_file())
+        self.assertTrue(self.resource("pstack-tdd", "templates/example/SKILL.md").is_file())
 
     def test_archive_cannot_write_through_escaping_symlink(self):
         self.command("sync")
@@ -294,7 +457,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.commit(publisher, "sync upstream")
         self.git("push", "--quiet", cwd=publisher)
         self.command("update")
-        self.assertTrue((target / "pstack-new-skill/source/SKILL.md").is_file())
+        self.assertTrue((target / "pstack-new-skill/SKILL.md").is_file())
         self.assertEqual(self.git("rev-parse", "HEAD"), self.git("rev-parse", "HEAD", cwd=publisher))
         source = self.repo / "sources.json"
         source.write_text(source.read_text() + "\n")
