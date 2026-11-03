@@ -1,0 +1,29 @@
+{
+  "name": "odestroyero-skills",
+  "owner": {
+    "name": "oDestroyeRo"
+  },
+  "metadata": {
+    "description": "Matt Pocock, pstack, and tstack skills for coding agents."
+  },
+  "plugins": [
+    {
+      "name": "mattpocock",
+      "source": "./plugins/mattpocock",
+      "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
+      "version": "1.0.8"
+    },
+    {
+      "name": "pstack",
+      "source": "./plugins/pstack",
+      "description": "pstack engineering workflows and principles, with upstream updates.",
+      "version": "1.0.8"
+    },
+    {
+      "name": "tstack",
+      "source": "./plugins/tstack",
+      "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
+      "version": "1.0.8"
+    }
+  ]
+}

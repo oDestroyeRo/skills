@@ -1,0 +1,23 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "pstack",
+  "version": "1.0.8",
+  "description": "pstack engineering workflows and principles, with upstream updates.",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "repository": "https://github.com/oDestroyeRo/skills",
+  "license": "MIT",
+  "displayName": "pstack Skills",
+  "skills": "./skills/",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Use pstack-poteto-mode to plan and verify a change."
+  ],
+  "keywords": [
+    "skills",
+    "engineering"
+  ]
+}

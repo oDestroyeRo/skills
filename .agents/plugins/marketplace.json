@@ -1,0 +1,44 @@
+{
+  "name": "odestroyero-skills",
+  "interface": {
+    "displayName": "Shared Agent Skills"
+  },
+  "plugins": [
+    {
+      "name": "mattpocock",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mattpocock"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "pstack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/pstack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "tstack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/tstack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

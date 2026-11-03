@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "sources": {
+    "mattpocock": {
+      "repository": "https://github.com/mattpocock/skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "sha256": "22ac8778a95a923719b86637bb7ef0d1f4d8a2ebcdca3e3becea34c517e383ee",
+      "exclude_paths": [
+        ".agents",
+        ".changeset",
+        ".github",
+        ".gitignore",
+        ".out-of-scope",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GLOSSARY.md",
+        "SCOPE.md",
+        "package.json",
+        "package-lock.json",
+        "scripts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "odestroyero-skills-workspace",
+  "version": "1.0.8",
+  "private": true,
+  "license": "MIT",
+  "pi": {
+    "skills": []
+  },
+  "files": [],
+  "workspaces": [
+    "plugins/mattpocock",
+    "plugins/pstack",
+    "plugins/tstack"
+  ],
+  "devDependencies": {
+    "@opencode/plugin": "2.2.5",
+    "yaml": "2.8.1"
+  }
+}

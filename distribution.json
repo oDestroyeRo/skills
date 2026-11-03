@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "marketplace": "odestroyero-skills",
+  "display_name": "Shared Agent Skills",
+  "description": "Matt Pocock, pstack, and tstack skills for coding agents.",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "repository": "https://github.com/oDestroyeRo/skills",
+  "initial_version": "1.0.0",
+  "license": "MIT",
+  "plugins": [
+    {
+      "source": "mattpocock",
+      "name": "mattpocock",
+      "npm_name": "@odestroyero/mattpocock-skills",
+      "display_name": "Matt Pocock Skills",
+      "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
+      "suggested_prompts": ["Use mattpocock-code-review to review my changes."]
+    },
+    {
+      "source": "pstack",
+      "name": "pstack",
+      "npm_name": "@odestroyero/pstack-skills",
+      "display_name": "pstack Skills",
+      "description": "pstack engineering workflows and principles, with upstream updates.",
+      "suggested_prompts": ["Use pstack-poteto-mode to plan and verify a change."]
+    },
+    {
+      "source": "tstack",
+      "name": "tstack",
+      "npm_name": "@odestroyero/tstack-skills",
+      "display_name": "tstack Skills",
+      "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
+      "suggested_prompts": ["Use tstack-full-stop to prepare and verify a pull request."]
+    }
+  ]
+}

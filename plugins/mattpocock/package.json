@@ -1,0 +1,46 @@
+{
+  "name": "@odestroyero/mattpocock-skills",
+  "version": "1.0.8",
+  "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oDestroyeRo/skills.git"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.2.5",
+    "yaml": "2.8.1"
+  },
+  "exports": {
+    ".": "./opencode.mjs"
+  },
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "files": [
+    "plugin.json",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".cursor-plugin",
+    ".antigravity-plugin",
+    "skills",
+    "upstream",
+    "local",
+    "docs",
+    "assets",
+    "opencode.mjs",
+    "sources.lock.json",
+    "LICENSE"
+  ]
+}

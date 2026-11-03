@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "sources": {
+    "pstack": {
+      "repository": "https://github.com/cursor/plugins.git",
+      "ref": "main",
+      "root": "pstack",
+      "commit": "ae5650febf4320793844c12c4adaa937f417f8da",
+      "sha256": "72af3188b0c5a2ed7d4f43127521603e576227e274bf2794f44d90a02ed65f97",
+      "exclude_paths": [
+        ".gitignore"
+      ]
+    }
+  }
+}

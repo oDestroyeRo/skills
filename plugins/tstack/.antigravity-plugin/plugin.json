@@ -1,0 +1,23 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "tstack",
+  "version": "1.0.8",
+  "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "repository": "https://github.com/oDestroyeRo/skills",
+  "license": "MIT",
+  "displayName": "tstack Skills",
+  "skills": "./skills/",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Use tstack-full-stop to prepare and verify a pull request."
+  ],
+  "keywords": [
+    "skills",
+    "engineering"
+  ]
+}

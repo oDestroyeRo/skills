@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "sources": {
+    "mattpocock": {
+      "repository": "https://github.com/mattpocock/skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "sha256": "22ac8778a95a923719b86637bb7ef0d1f4d8a2ebcdca3e3becea34c517e383ee",
+      "exclude_paths": [
+        ".agents",
+        ".changeset",
+        ".github",
+        ".gitignore",
+        ".out-of-scope",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "CHANGELOG.md",
+        "CONTRIBUTING.md",
+        "GLOSSARY.md",
+        "SCOPE.md",
+        "package.json",
+        "package-lock.json",
+        "scripts"
+      ]
+    },
+    "pstack": {
+      "repository": "https://github.com/cursor/plugins.git",
+      "ref": "main",
+      "root": "pstack",
+      "commit": "ae5650febf4320793844c12c4adaa937f417f8da",
+      "sha256": "72af3188b0c5a2ed7d4f43127521603e576227e274bf2794f44d90a02ed65f97",
+      "exclude_paths": [
+        ".gitignore"
+      ]
+    },
+    "tstack": {
+      "repository": "https://github.com/t3dotgg/tstack.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "1085050f3baed1ac724caa4a8166145fb2ac88af",
+      "sha256": "cc60cfa1c1659225d8855f61de26d73dd6c51a0322b4e0080c6d03815b8173d8",
+      "exclude_paths": []
+    }
+  },
+  "skills_sha256": "cfdc05a5214cf09d586709028ee7c7697c94ceee931094ce4d4c95ec40c355c6"
+}

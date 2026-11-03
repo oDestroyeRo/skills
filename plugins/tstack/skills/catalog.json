@@ -1,0 +1,56 @@
+[
+  {
+    "name": "tstack-babysit-pr",
+    "source": "tstack",
+    "upstream_name": "babysit-pr",
+    "path": "skills/babysit-pr/SKILL.md"
+  },
+  {
+    "name": "tstack-council",
+    "source": "tstack",
+    "upstream_name": "council",
+    "path": "skills/council/SKILL.md"
+  },
+  {
+    "name": "tstack-file-pr",
+    "source": "tstack",
+    "upstream_name": "file-pr",
+    "path": "skills/file-pr/SKILL.md"
+  },
+  {
+    "name": "tstack-full-send",
+    "source": "tstack",
+    "upstream_name": "full-send",
+    "path": "skills/full-send/SKILL.md"
+  },
+  {
+    "name": "tstack-full-stop",
+    "source": "tstack",
+    "upstream_name": "full-stop",
+    "path": "skills/full-stop/SKILL.md"
+  },
+  {
+    "name": "tstack-leaving-pr-comments",
+    "source": "tstack",
+    "upstream_name": "leaving-pr-comments",
+    "path": "skills/leaving-pr-comments/SKILL.md"
+  },
+  {
+    "name": "tstack-modernize",
+    "source": "tstack",
+    "upstream_name": "modernize",
+    "path": "skills/modernize/SKILL.md"
+  },
+  {
+    "name": "tstack-sol-loop",
+    "source": "tstack",
+    "upstream_name": "sol-loop",
+    "path": "skills/sol-loop/SKILL.md"
+  },
+  {
+    "name": "tstack-takeover",
+    "source": "tstack",
+    "upstream_name": "takeover",
+    "path": "skills/takeover/SKILL.md"
+  }
+]

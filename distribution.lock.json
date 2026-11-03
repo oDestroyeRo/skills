@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "package_version": "1.0.8",
+  "input_sha256": "a097c57543f7fabc8be32f8c301a39eecd07e1cce3decceae282c291b9e631f3",
+  "bundle_hashes": {
+    "mattpocock": "fbd6fb04d4a5d650ab1c3acf3b3bce0c10dd3d5a07ef15b455e53e5c7fa3c326",
+    "pstack": "8773e4d843bb5c3ec35ca4bb784a940000e6c6e21a3b4ab171f4247ed9fa707d",
+    "tstack": "944a72129bb5c3eae7241b4f2e652d5e43a2301edff5cfc4fcd9e0cb4481869b"
+  },
+  "generated_files": {
+    ".claude-plugin/marketplace.json": "dd7ba39115d1f730924593e68a471b54b2d1b3a83a780d1aacd723f95f54b108",
+    ".cursor-plugin/marketplace.json": "dd7ba39115d1f730924593e68a471b54b2d1b3a83a780d1aacd723f95f54b108",
+    ".agents/plugins/marketplace.json": "13c0ad105adf919a53fa681255bde2279cd090e8ae8ba5eeb2c2f79213e2eea0",
+    "package.json": "1d4fa6c97b93aa7c4186576df46056203b033c7472eae50b313d556cae0de324"
+  }
+}

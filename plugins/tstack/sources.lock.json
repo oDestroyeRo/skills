@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "sources": {
+    "tstack": {
+      "repository": "https://github.com/t3dotgg/tstack.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "1085050f3baed1ac724caa4a8166145fb2ac88af",
+      "sha256": "cc60cfa1c1659225d8855f61de26d73dd6c51a0322b4e0080c6d03815b8173d8",
+      "exclude_paths": []
+    }
+  }
+}

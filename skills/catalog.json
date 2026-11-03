@@ -1,0 +1,566 @@
+[
+  {
+    "name": "mattpocock-ask-matt",
+    "source": "mattpocock",
+    "upstream_name": "ask-matt",
+    "path": "skills/engineering/ask-matt/SKILL.md"
+  },
+  {
+    "name": "mattpocock-code-review",
+    "source": "mattpocock",
+    "upstream_name": "code-review",
+    "path": "skills/engineering/code-review/SKILL.md"
+  },
+  {
+    "name": "mattpocock-codebase-design",
+    "source": "mattpocock",
+    "upstream_name": "codebase-design",
+    "path": "skills/engineering/codebase-design/SKILL.md"
+  },
+  {
+    "name": "mattpocock-diagnosing-bugs",
+    "source": "mattpocock",
+    "upstream_name": "diagnosing-bugs",
+    "path": "skills/engineering/diagnosing-bugs/SKILL.md"
+  },
+  {
+    "name": "mattpocock-domain-modeling",
+    "source": "mattpocock",
+    "upstream_name": "domain-modeling",
+    "path": "skills/engineering/domain-modeling/SKILL.md"
+  },
+  {
+    "name": "mattpocock-grill-with-docs",
+    "source": "mattpocock",
+    "upstream_name": "grill-with-docs",
+    "path": "skills/engineering/grill-with-docs/SKILL.md"
+  },
+  {
+    "name": "mattpocock-implement",
+    "source": "mattpocock",
+    "upstream_name": "implement",
+    "path": "skills/engineering/implement/SKILL.md"
+  },
+  {
+    "name": "mattpocock-implement-spec",
+    "source": "mattpocock",
+    "upstream_name": "implement-spec",
+    "path": "skills/engineering/implement-spec/SKILL.md"
+  },
+  {
+    "name": "mattpocock-improve-codebase-architecture",
+    "source": "mattpocock",
+    "upstream_name": "improve-codebase-architecture",
+    "path": "skills/engineering/improve-codebase-architecture/SKILL.md"
+  },
+  {
+    "name": "mattpocock-pr",
+    "source": "mattpocock",
+    "upstream_name": "pr",
+    "path": "skills/engineering/pr/SKILL.md"
+  },
+  {
+    "name": "mattpocock-prototype",
+    "source": "mattpocock",
+    "upstream_name": "prototype",
+    "path": "skills/engineering/prototype/SKILL.md"
+  },
+  {
+    "name": "mattpocock-research",
+    "source": "mattpocock",
+    "upstream_name": "research",
+    "path": "skills/engineering/research/SKILL.md"
+  },
+  {
+    "name": "mattpocock-retro",
+    "source": "mattpocock",
+    "upstream_name": "retro",
+    "path": "skills/engineering/retro/SKILL.md"
+  },
+  {
+    "name": "mattpocock-setup-matt-pocock-skills",
+    "source": "mattpocock",
+    "upstream_name": "setup-matt-pocock-skills",
+    "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md"
+  },
+  {
+    "name": "mattpocock-tdd",
+    "source": "mattpocock",
+    "upstream_name": "tdd",
+    "path": "skills/engineering/tdd/SKILL.md"
+  },
+  {
+    "name": "mattpocock-to-spec",
+    "source": "mattpocock",
+    "upstream_name": "to-spec",
+    "path": "skills/engineering/to-spec/SKILL.md"
+  },
+  {
+    "name": "mattpocock-to-tickets",
+    "source": "mattpocock",
+    "upstream_name": "to-tickets",
+    "path": "skills/engineering/to-tickets/SKILL.md"
+  },
+  {
+    "name": "mattpocock-triage",
+    "source": "mattpocock",
+    "upstream_name": "triage",
+    "path": "skills/engineering/triage/SKILL.md"
+  },
+  {
+    "name": "mattpocock-wayfinder",
+    "source": "mattpocock",
+    "upstream_name": "wayfinder",
+    "path": "skills/engineering/wayfinder/SKILL.md"
+  },
+  {
+    "name": "mattpocock-wizard",
+    "source": "mattpocock",
+    "upstream_name": "wizard",
+    "path": "skills/engineering/wizard/SKILL.md"
+  },
+  {
+    "name": "mattpocock-grill-me",
+    "source": "mattpocock",
+    "upstream_name": "grill-me",
+    "path": "skills/productivity/grill-me/SKILL.md"
+  },
+  {
+    "name": "mattpocock-grilling",
+    "source": "mattpocock",
+    "upstream_name": "grilling",
+    "path": "skills/productivity/grilling/SKILL.md"
+  },
+  {
+    "name": "mattpocock-handoff",
+    "source": "mattpocock",
+    "upstream_name": "handoff",
+    "path": "skills/productivity/handoff/SKILL.md"
+  },
+  {
+    "name": "mattpocock-teach",
+    "source": "mattpocock",
+    "upstream_name": "teach",
+    "path": "skills/productivity/teach/SKILL.md"
+  },
+  {
+    "name": "mattpocock-to-questionnaire",
+    "source": "mattpocock",
+    "upstream_name": "to-questionnaire",
+    "path": "skills/productivity/to-questionnaire/SKILL.md"
+  },
+  {
+    "name": "mattpocock-wait-what",
+    "source": "mattpocock",
+    "upstream_name": "wait-what",
+    "path": "skills/productivity/wait-what/SKILL.md"
+  },
+  {
+    "name": "mattpocock-writing-for-agents",
+    "source": "mattpocock",
+    "upstream_name": "writing-for-agents",
+    "path": "skills/productivity/writing-for-agents/SKILL.md"
+  },
+  {
+    "name": "pstack-architect",
+    "source": "pstack",
+    "upstream_name": "architect",
+    "path": "skills/architect/SKILL.md"
+  },
+  {
+    "name": "pstack-arena",
+    "source": "pstack",
+    "upstream_name": "arena",
+    "path": "skills/arena/SKILL.md"
+  },
+  {
+    "name": "pstack-automate-me",
+    "source": "pstack",
+    "upstream_name": "automate-me",
+    "path": "skills/automate-me/SKILL.md"
+  },
+  {
+    "name": "pstack-benchmark-checklist",
+    "source": "pstack",
+    "upstream_name": "benchmark-checklist",
+    "path": "skills/benchmark-checklist/SKILL.md"
+  },
+  {
+    "name": "pstack-blast-radius",
+    "source": "pstack",
+    "upstream_name": "blast-radius",
+    "path": "skills/blast-radius/SKILL.md"
+  },
+  {
+    "name": "pstack-bro",
+    "source": "pstack",
+    "upstream_name": "bro",
+    "path": "skills/bro/SKILL.md"
+  },
+  {
+    "name": "pstack-correct",
+    "source": "pstack",
+    "upstream_name": "correct",
+    "path": "skills/correct/SKILL.md"
+  },
+  {
+    "name": "pstack-create-formal-verification-skill",
+    "source": "pstack",
+    "upstream_name": "create-formal-verification-skill",
+    "path": "skills/create-formal-verification-skill/SKILL.md"
+  },
+  {
+    "name": "pstack-create-verification-skill",
+    "source": "pstack",
+    "upstream_name": "create-verification-skill",
+    "path": "skills/create-verification-skill/SKILL.md"
+  },
+  {
+    "name": "pstack-figure-it-out",
+    "source": "pstack",
+    "upstream_name": "figure-it-out",
+    "path": "skills/figure-it-out/SKILL.md"
+  },
+  {
+    "name": "pstack-how",
+    "source": "pstack",
+    "upstream_name": "how",
+    "path": "skills/how/SKILL.md"
+  },
+  {
+    "name": "pstack-in-your-own-words",
+    "source": "pstack",
+    "upstream_name": "in-your-own-words",
+    "path": "skills/in-your-own-words/SKILL.md"
+  },
+  {
+    "name": "pstack-interrogate",
+    "source": "pstack",
+    "upstream_name": "interrogate",
+    "path": "skills/interrogate/SKILL.md"
+  },
+  {
+    "name": "pstack-ketchup",
+    "source": "pstack",
+    "upstream_name": "ketchup",
+    "path": "skills/ketchup/SKILL.md"
+  },
+  {
+    "name": "pstack-ketchup-video",
+    "source": "pstack",
+    "upstream_name": "ketchup-video",
+    "path": "skills/ketchup-video/SKILL.md"
+  },
+  {
+    "name": "pstack-maintain-formal-verification-skill",
+    "source": "pstack",
+    "upstream_name": "maintain-formal-verification-skill",
+    "path": "skills/maintain-formal-verification-skill/SKILL.md"
+  },
+  {
+    "name": "pstack-maintain-verification-skill",
+    "source": "pstack",
+    "upstream_name": "maintain-verification-skill",
+    "path": "skills/maintain-verification-skill/SKILL.md"
+  },
+  {
+    "name": "pstack-make-bot-ui",
+    "source": "pstack",
+    "upstream_name": "make-bot-ui",
+    "path": "skills/make-bot-ui/SKILL.md"
+  },
+  {
+    "name": "pstack-no-comments",
+    "source": "pstack",
+    "upstream_name": "no-comments",
+    "path": "skills/no-comments/SKILL.md"
+  },
+  {
+    "name": "pstack-poteto-help",
+    "source": "pstack",
+    "upstream_name": "poteto-help",
+    "path": "skills/poteto-help/SKILL.md"
+  },
+  {
+    "name": "pstack-poteto-mode",
+    "source": "pstack",
+    "upstream_name": "poteto-mode",
+    "path": "skills/poteto-mode/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-attack-the-premise",
+    "source": "pstack",
+    "upstream_name": "principle-attack-the-premise",
+    "path": "skills/principle-attack-the-premise/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-boundary-discipline",
+    "source": "pstack",
+    "upstream_name": "principle-boundary-discipline",
+    "path": "skills/principle-boundary-discipline/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-build-the-lever",
+    "source": "pstack",
+    "upstream_name": "principle-build-the-lever",
+    "path": "skills/principle-build-the-lever/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-encode-lessons-in-structure",
+    "source": "pstack",
+    "upstream_name": "principle-encode-lessons-in-structure",
+    "path": "skills/principle-encode-lessons-in-structure/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-exhaust-the-design-space",
+    "source": "pstack",
+    "upstream_name": "principle-exhaust-the-design-space",
+    "path": "skills/principle-exhaust-the-design-space/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-experience-first",
+    "source": "pstack",
+    "upstream_name": "principle-experience-first",
+    "path": "skills/principle-experience-first/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-explain-the-number",
+    "source": "pstack",
+    "upstream_name": "principle-explain-the-number",
+    "path": "skills/principle-explain-the-number/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-fix-root-causes",
+    "source": "pstack",
+    "upstream_name": "principle-fix-root-causes",
+    "path": "skills/principle-fix-root-causes/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-foundational-thinking",
+    "source": "pstack",
+    "upstream_name": "principle-foundational-thinking",
+    "path": "skills/principle-foundational-thinking/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-guard-the-context-window",
+    "source": "pstack",
+    "upstream_name": "principle-guard-the-context-window",
+    "path": "skills/principle-guard-the-context-window/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-laziness-protocol",
+    "source": "pstack",
+    "upstream_name": "principle-laziness-protocol",
+    "path": "skills/principle-laziness-protocol/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-make-operations-idempotent",
+    "source": "pstack",
+    "upstream_name": "principle-make-operations-idempotent",
+    "path": "skills/principle-make-operations-idempotent/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-migrate-callers-then-delete-legacy-apis",
+    "source": "pstack",
+    "upstream_name": "principle-migrate-callers-then-delete-legacy-apis",
+    "path": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-minimize-reader-load",
+    "source": "pstack",
+    "upstream_name": "principle-minimize-reader-load",
+    "path": "skills/principle-minimize-reader-load/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-model-the-domain",
+    "source": "pstack",
+    "upstream_name": "principle-model-the-domain",
+    "path": "skills/principle-model-the-domain/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-never-block-on-the-human",
+    "source": "pstack",
+    "upstream_name": "principle-never-block-on-the-human",
+    "path": "skills/principle-never-block-on-the-human/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-outcome-oriented-execution",
+    "source": "pstack",
+    "upstream_name": "principle-outcome-oriented-execution",
+    "path": "skills/principle-outcome-oriented-execution/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-prove-it-works",
+    "source": "pstack",
+    "upstream_name": "principle-prove-it-works",
+    "path": "skills/principle-prove-it-works/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-redesign-from-first-principles",
+    "source": "pstack",
+    "upstream_name": "principle-redesign-from-first-principles",
+    "path": "skills/principle-redesign-from-first-principles/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-separate-before-serializing-shared-state",
+    "source": "pstack",
+    "upstream_name": "principle-separate-before-serializing-shared-state",
+    "path": "skills/principle-separate-before-serializing-shared-state/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-sequence-verifiable-units",
+    "source": "pstack",
+    "upstream_name": "principle-sequence-verifiable-units",
+    "path": "skills/principle-sequence-verifiable-units/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-subtract-before-you-add",
+    "source": "pstack",
+    "upstream_name": "principle-subtract-before-you-add",
+    "path": "skills/principle-subtract-before-you-add/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-test-behavior-not-implementation",
+    "source": "pstack",
+    "upstream_name": "principle-test-behavior-not-implementation",
+    "path": "skills/principle-test-behavior-not-implementation/SKILL.md"
+  },
+  {
+    "name": "pstack-principle-type-system-discipline",
+    "source": "pstack",
+    "upstream_name": "principle-type-system-discipline",
+    "path": "skills/principle-type-system-discipline/SKILL.md"
+  },
+  {
+    "name": "pstack-recall",
+    "source": "pstack",
+    "upstream_name": "recall",
+    "path": "skills/recall/SKILL.md"
+  },
+  {
+    "name": "pstack-reflect",
+    "source": "pstack",
+    "upstream_name": "reflect",
+    "path": "skills/reflect/SKILL.md"
+  },
+  {
+    "name": "pstack-setup-pstack",
+    "source": "pstack",
+    "upstream_name": "setup-pstack",
+    "path": "skills/setup-pstack/SKILL.md"
+  },
+  {
+    "name": "pstack-sharpen",
+    "source": "pstack",
+    "upstream_name": "sharpen",
+    "path": "skills/sharpen/SKILL.md"
+  },
+  {
+    "name": "pstack-show-me-your-work",
+    "source": "pstack",
+    "upstream_name": "show-me-your-work",
+    "path": "skills/show-me-your-work/SKILL.md"
+  },
+  {
+    "name": "pstack-statechart",
+    "source": "pstack",
+    "upstream_name": "statechart",
+    "path": "skills/statechart/SKILL.md"
+  },
+  {
+    "name": "pstack-swarm",
+    "source": "pstack",
+    "upstream_name": "swarm",
+    "path": "skills/swarm/SKILL.md"
+  },
+  {
+    "name": "pstack-tdd",
+    "source": "pstack",
+    "upstream_name": "tdd",
+    "path": "skills/tdd/SKILL.md"
+  },
+  {
+    "name": "pstack-teach",
+    "source": "pstack",
+    "upstream_name": "teach",
+    "path": "skills/teach/SKILL.md"
+  },
+  {
+    "name": "pstack-technical-writing",
+    "source": "pstack",
+    "upstream_name": "technical-writing",
+    "path": "skills/technical-writing/SKILL.md"
+  },
+  {
+    "name": "pstack-typescript-best-practices",
+    "source": "pstack",
+    "upstream_name": "typescript-best-practices",
+    "path": "skills/typescript-best-practices/SKILL.md"
+  },
+  {
+    "name": "pstack-unslop",
+    "source": "pstack",
+    "upstream_name": "unslop",
+    "path": "skills/unslop/SKILL.md"
+  },
+  {
+    "name": "pstack-why",
+    "source": "pstack",
+    "upstream_name": "why",
+    "path": "skills/why/SKILL.md"
+  },
+  {
+    "name": "tstack-babysit-pr",
+    "source": "tstack",
+    "upstream_name": "babysit-pr",
+    "path": "skills/babysit-pr/SKILL.md"
+  },
+  {
+    "name": "tstack-council",
+    "source": "tstack",
+    "upstream_name": "council",
+    "path": "skills/council/SKILL.md"
+  },
+  {
+    "name": "tstack-file-pr",
+    "source": "tstack",
+    "upstream_name": "file-pr",
+    "path": "skills/file-pr/SKILL.md"
+  },
+  {
+    "name": "tstack-full-send",
+    "source": "tstack",
+    "upstream_name": "full-send",
+    "path": "skills/full-send/SKILL.md"
+  },
+  {
+    "name": "tstack-full-stop",
+    "source": "tstack",
+    "upstream_name": "full-stop",
+    "path": "skills/full-stop/SKILL.md"
+  },
+  {
+    "name": "tstack-leaving-pr-comments",
+    "source": "tstack",
+    "upstream_name": "leaving-pr-comments",
+    "path": "skills/leaving-pr-comments/SKILL.md"
+  },
+  {
+    "name": "tstack-modernize",
+    "source": "tstack",
+    "upstream_name": "modernize",
+    "path": "skills/modernize/SKILL.md"
+  },
+  {
+    "name": "tstack-sol-loop",
+    "source": "tstack",
+    "upstream_name": "sol-loop",
+    "path": "skills/sol-loop/SKILL.md"
+  },
+  {
+    "name": "tstack-takeover",
+    "source": "tstack",
+    "upstream_name": "takeover",
+    "path": "skills/takeover/SKILL.md"
+  }
+]

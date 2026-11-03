@@ -1,0 +1,13 @@
+{
+  "name": "mattpocock",
+  "version": "1.0.8",
+  "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "repository": "https://github.com/oDestroyeRo/skills",
+  "license": "MIT",
+  "skills": "./skills/"
+}
