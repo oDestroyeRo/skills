@@ -168,6 +168,14 @@ def extract_snapshot(archive, destination, root):
                 raise SkillError("Unsupported archive entry: " + member.name)
 
 
+def copy_materialized(source, target):
+    boundary = source.resolve()
+    for path in source.rglob("*"):
+        if path.is_symlink() and not path.resolve().is_relative_to(boundary):
+            raise SkillError("Package resource points outside its source: " + str(path))
+    shutil.copytree(source, target, symlinks=False)
+
+
 def licensed_archive_paths(source, checkout, commit):
     policy = source["license_filter"]
     prefix = relative_path(source["root"])
@@ -238,7 +246,7 @@ def fetch_source(source, destination, locked_commit=None):
                 shutil.rmtree(path)
         # Bundles store regular files, so the locked hash must describe the materialized tree.
         materialized = destination.with_name(destination.name + ".files")
-        shutil.copytree(destination, materialized)
+        copy_materialized(destination, materialized)
         shutil.rmtree(destination)
         materialized.rename(destination)
         saved = {
