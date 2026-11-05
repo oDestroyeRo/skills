@@ -48,11 +48,16 @@ def configuration(root):
     return config
 
 
+def bundle_snapshots(root):
+    return {plugin["source"]: root / "plugins" / plugin["name"] / "upstream" / plugin["source"]
+            for plugin in configuration(root)["plugins"]}
+
+
 def input_hash(root):
     digest = hashlib.sha256()
     for relative in (
         "distribution.json", "sources.json", "sources.lock.json", "README.md", "LICENSE",
-        "upstream", "docs", "assets", "adapters",
+        "docs", "assets", "adapters",
         "scripts/skills.py", "scripts/package_skills.py",
     ):
         path = root / relative
@@ -158,18 +163,17 @@ def copy_materialized(source, target):
     shutil.copytree(source, target, symlinks=False)
 
 
-def populate_bundle(root, bundle, config, version):
+def populate_bundle(root, bundle, config, version, snapshot):
     bundle.mkdir(parents=True)
     for relative in ("docs", "assets"):
         copy_materialized(root / relative, bundle / relative)
     source_id = config["source"]
-    (bundle / "upstream").mkdir()
-    copy_materialized(root / "upstream" / source_id, bundle / "upstream" / source_id)
+    copy_materialized(snapshot, bundle / "upstream" / source_id)
     source = next(source for source in read_json(root / "sources.json")["sources"] if source["id"] == source_id)
-    catalog = discover_skills(root / "upstream", [source])
+    catalog = discover_skills({source_id: snapshot}, [source])
     for entry in catalog:
         library = "upstream/" + entry["source"]
-        original = root / library / entry["path"]
+        original = snapshot / entry["path"]
         _, fields = metadata(original)
         description = source.get("description_overrides", {}).get(entry["upstream_name"])
         if description is not None:
@@ -252,8 +256,10 @@ def preflight_package(root):
     return config
 
 
-def build_package(root):
+def build_package(root, snapshots=None):
     config = configuration(root)
+    if snapshots is None:
+        snapshots = bundle_snapshots(root)
     lock = read_json(root / "distribution.lock.json", {})
     digest = input_hash(root)
     version = lock.get("package_version", config["initial_version"])
@@ -266,7 +272,8 @@ def build_package(root):
         stage = Path(temporary)
         staged = stage / "bundles"
         for plugin in config["plugins"]:
-            populate_bundle(root, staged / plugin["name"], {**config, **plugin}, version)
+            populate_bundle(root, staged / plugin["name"], {**config, **plugin}, version,
+                            snapshots[plugin["source"]])
         if input_hash(root) != digest:
             raise SkillError("Package inputs changed while building; retry after edits finish")
         protect_outputs(root, config, lock, files)
@@ -321,10 +328,12 @@ def check_package(root):
     for relative, value in files.items():
         if not (root / relative).is_file() or (root / relative).read_text() != json_text(value):
             raise SkillError("Missing or outdated native manifest: " + relative)
+    snapshots = bundle_snapshots(root)
     with tempfile.TemporaryDirectory(prefix="native-check-") as temporary:
         for plugin in config["plugins"]:
             expected = Path(temporary) / plugin["name"]
-            populate_bundle(root, expected, {**config, **plugin}, lock["package_version"])
+            populate_bundle(root, expected, {**config, **plugin}, lock["package_version"],
+                            snapshots[plugin["source"]])
             bundle = root / "plugins" / plugin["name"]
             if tree_hash(expected) != tree_hash(bundle):
                 raise SkillError("Native bundle " + plugin["name"] + " is missing or outdated; run package")

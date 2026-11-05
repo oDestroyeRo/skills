@@ -13,7 +13,7 @@ Create a branch named `<type>/<short-kebab-description>` and keep each pull requ
 | Bundled documentation or assets | `README.md`, `docs/`, `assets/` | `python3 scripts/skills.py package` |
 | GitHub automation or community files | `.github/` | No plugin rebuild |
 
-`upstream/`, `plugins/`, the marketplace catalogs, root `package.json`, and the lock files are generated. Submit skill-content fixes to the relevant upstream project, then sync the accepted revision here. Preserve upstream license notices. Review changed license terms before adding a hash to an allowlist.
+`plugins/`, the marketplace catalogs, root `package.json`, and the lock files are generated. Submit skill-content fixes to the relevant upstream project, then sync the accepted revision here. Preserve upstream license notices. Review changed license terms before adding a hash to an allowlist.
 
 To reproduce the recorded source revisions, run `python3 scripts/skills.py sync --locked`.
 

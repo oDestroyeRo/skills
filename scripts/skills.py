@@ -236,6 +236,11 @@ def fetch_source(source, destination, locked_commit=None):
                 path.unlink()
             elif path.is_dir():
                 shutil.rmtree(path)
+        # Bundles store regular files, so the locked hash must describe the materialized tree.
+        materialized = destination.with_name(destination.name + ".files")
+        shutil.copytree(destination, materialized)
+        shutil.rmtree(destination)
+        materialized.rename(destination)
         saved = {
             "repository": source["repository"], "ref": source["ref"],
             "root": source["root"], "commit": commit, "sha256": tree_hash(destination),
@@ -306,10 +311,10 @@ def copy_agent_metadata(source, destination, original_name, invocation_name):
         config.write_text(text)
 
 
-def discover_skills(vendor, configured_sources):
+def discover_skills(snapshots, configured_sources):
     catalog = []
     names = set()
-    collections = [(s["id"], vendor / s["id"], skill_roots(s, vendor / s["id"])) for s in configured_sources]
+    collections = [(s["id"], snapshots[s["id"]], skill_roots(s, snapshots[s["id"]])) for s in configured_sources]
     for source_id, package, roots in collections:
         skill_files = set()
         for root in roots:
@@ -347,29 +352,9 @@ def protect_generated(lock):
     legacy = ROOT / "skills"
     if legacy.is_symlink() or (legacy.exists() and not legacy.is_dir()):
         raise SkillError("Unmanaged root skills path preserved; move it before syncing")
-    for directory, expected in [
-        *[(ROOT / "upstream" / key, value["sha256"]) for key, value in lock.get("sources", {}).items()],
-        (ROOT / "skills", lock.get("skills_sha256")),
-    ]:
-        actual = tree_hash(directory)
-        if actual is not None and actual != expected:
-            raise SkillError("Local changes preserved in " + str(directory) + "; restore generated files before syncing")
-    known = set(lock.get("sources", {}))
-    upstream = ROOT / "upstream"
-    if upstream.is_dir() and any(item.name not in known for item in upstream.iterdir()):
-        raise SkillError("Unmanaged files preserved in upstream/")
-
-
-def replace_directory(staged, destination, backups):
-    if destination.exists():
-        destination.rename(backups / destination.name)
-    try:
-        staged.rename(destination)
-    except OSError:
-        previous = backups / destination.name
-        if previous.exists():
-            previous.rename(destination)
-        raise
+    actual = tree_hash(legacy)
+    if actual is not None and actual != lock.get("skills_sha256"):
+        raise SkillError("Local changes preserved in " + str(legacy) + "; restore generated files before syncing")
 
 
 def sync(locked=False):
@@ -381,8 +366,7 @@ def sync(locked=False):
     previous_plugins = managed_plugin_names()
     with tempfile.TemporaryDirectory(prefix=".skills-stage-", dir=ROOT) as temporary:
         stage = Path(temporary)
-        vendor = stage / "upstream"
-        vendor.mkdir()
+        snapshots = {source["id"]: stage / "upstream" / source["id"] for source in configured}
         entries = {}
         for source in configured:
             name = source["id"]
@@ -390,12 +374,12 @@ def sync(locked=False):
             if locked and not commit:
                 raise SkillError("No locked commit for " + name)
             print("Fetching " + name + (" at " + commit[:12] if commit else " (" + source["ref"] + ")"), flush=True)
-            entry = fetch_source(source, vendor / name, commit)
+            entry = fetch_source(source, snapshots[name], commit)
             previous = lock["sources"].get(name)
             # Unrelated upstream commits must not publish a new package version.
             unchanged = previous and {**previous, "commit": None} == {**entry, "commit": None}
             entries[name] = previous if unchanged else entry
-        catalog = discover_skills(vendor, configured)
+        catalog = discover_skills(snapshots, configured)
         new_lock = {"version": 1, "sources": entries}
         protect_generated(lock)
         distribution = preflight_package(ROOT)
@@ -408,17 +392,13 @@ def sync(locked=False):
         backups.mkdir()
         lock_file = ROOT / "sources.lock.json"
         previous_lock = lock_file.read_bytes() if lock_file.exists() else None
-        replace_directory(vendor, ROOT / "upstream", backups)
         try:
             legacy = ROOT / "skills"
             if legacy.exists():
                 legacy.rename(backups / "skills")
             write_json(lock_file, new_lock)
-            build_package(ROOT)
+            build_package(ROOT, snapshots)
         except Exception:
-            (ROOT / "upstream").rename(stage / "failed-upstream")
-            if (backups / "upstream").exists():
-                (backups / "upstream").rename(ROOT / "upstream")
             if (backups / "skills").exists():
                 (backups / "skills").rename(ROOT / "skills")
             if previous_lock is None:
@@ -431,10 +411,12 @@ def sync(locked=False):
 
 
 def check(check_distribution=True):
+    from package_skills import bundle_snapshots, check_package
     configured = sources()
     lock = read_json(ROOT / "sources.lock.json")
     if set(lock["sources"]) != {source["id"] for source in configured}:
         raise SkillError("sources.json and sources.lock.json disagree; run sync")
+    snapshots = bundle_snapshots(ROOT)
     for source in configured:
         saved = lock["sources"][source["id"]]
         if any(source[key] != saved[key] for key in ("repository", "ref", "root")):
@@ -443,14 +425,13 @@ def check(check_distribution=True):
             raise SkillError("Source exclusions changed; run sync: " + source["id"])
         if source.get("license_filter") != saved.get("license_filter"):
             raise SkillError("Source license filter changed; run sync: " + source["id"])
-        if tree_hash(ROOT / "upstream" / source["id"]) != saved["sha256"]:
-            raise SkillError("Missing or modified upstream source: " + source["id"])
+        if tree_hash(snapshots[source["id"]]) != saved["sha256"]:
+            raise SkillError("Missing or modified upstream source: " + source["id"] + "; restore it or run sync --locked")
     if (ROOT / "skills").exists() or (ROOT / "skills").is_symlink():
         raise SkillError("Legacy root skills/ directory found; run sync to migrate to plugin folders")
-    catalog = discover_skills(ROOT / "upstream", configured)
+    catalog = discover_skills(snapshots, configured)
     print("Verified {} skills and {} upstream snapshots.".format(len(catalog), len(configured)))
     if check_distribution:
-        from package_skills import check_package
         check_package(ROOT)
 
 
