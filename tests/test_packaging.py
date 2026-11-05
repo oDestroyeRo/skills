@@ -62,6 +62,16 @@ class NativePackagingTest(unittest.TestCase):
             self.assertEqual(len(entries), 2)
         self.assertFalse((self.repo / "plugins/shared-skills").exists())
 
+    def test_source_symlinks_are_stored_as_regular_files_that_check_accepts(self):
+        checkout = self.fixture.upstreams["pstack"]
+        (checkout / "pstack/skills/tdd/alias.md").symlink_to("examples.md")
+        self.fixture.commit(checkout, "add relative symlink")
+        self.fixture.command("sync")
+        self.fixture.command("check")
+        alias = self.bundle / "upstream/pstack/skills/tdd/alias.md"
+        self.assertFalse(alias.is_symlink())
+        self.assertEqual(alias.read_text(), "Original example for pstack\n")
+
     def test_unchanged_build_keeps_its_version_and_archives_are_reproducible(self):
         self.fixture.command("package", "--archive")
         original = self.lock()
@@ -83,13 +93,13 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.commit(checkout, "add upstream maintenance files")
         self.fixture.command("sync")
         self.fixture.command("check")
-        for snapshot in (self.repo / "upstream/pstack", self.bundle / "upstream/pstack"):
-            self.assertFalse((snapshot / ".github").exists())
-            self.assertFalse((snapshot / "package.json").exists())
-            self.assertEqual((snapshot / "LICENSE").read_bytes(), (package / "LICENSE").read_bytes())
-            self.assertEqual((snapshot / "skills/tdd/examples.md").read_bytes(),
-                             (package / "skills/tdd/examples.md").read_bytes())
-            self.assertTrue((snapshot / "skills/tdd/tool.sh").stat().st_mode & 0o111)
+        snapshot = self.bundle / "upstream/pstack"
+        self.assertFalse((snapshot / ".github").exists())
+        self.assertFalse((snapshot / "package.json").exists())
+        self.assertEqual((snapshot / "LICENSE").read_bytes(), (package / "LICENSE").read_bytes())
+        self.assertEqual((snapshot / "skills/tdd/examples.md").read_bytes(),
+                         (package / "skills/tdd/examples.md").read_bytes())
+        self.assertTrue((snapshot / "skills/tdd/tool.sh").stat().st_mode & 0o111)
         source["exclude_paths"] = [".github"]
         self.fixture.write_config()
         self.assertIn("exclusions changed", self.fixture.command("check", success=False).stderr)
@@ -139,12 +149,12 @@ class NativePackagingTest(unittest.TestCase):
         self.assertIn('description: "An approved workflow with a compact description."',
                       (bundle / "skills/mattpocock-tdd/SKILL.md").read_text())
         self.assertIn("description: Test a public behavior.", (bundle / "upstream/mattpocock/skills/tdd/SKILL.md").read_text())
-        for snapshot in (self.repo / "upstream/mattpocock", bundle / "upstream/mattpocock"):
-            self.assertFalse((snapshot / "skills/restricted").exists())
-            self.assertFalse((snapshot / "skills/unlicensed").exists())
-            self.assertEqual((snapshot / "skills/tdd/LICENSE.txt").read_bytes(), approved)
-            self.assertTrue((snapshot / "skills/tdd/templates/example/SKILL.md").is_file())
-            self.assertTrue((snapshot / "skills/*/SKILL.md").is_file())
+        snapshot = bundle / "upstream/mattpocock"
+        self.assertFalse((snapshot / "skills/restricted").exists())
+        self.assertFalse((snapshot / "skills/unlicensed").exists())
+        self.assertEqual((snapshot / "skills/tdd/LICENSE.txt").read_bytes(), approved)
+        self.assertTrue((snapshot / "skills/tdd/templates/example/SKILL.md").is_file())
+        self.assertTrue((snapshot / "skills/*/SKILL.md").is_file())
         lock = json.loads((self.repo / "sources.lock.json").read_text())["sources"]["mattpocock"]
         self.assertEqual({entry["path"] for entry in lock["omitted_skills"]}, {"skills/restricted", "skills/unlicensed"})
         self.assertIn("upstream/mattpocock/skills/tdd/LICENSE.txt", (bundle / "THIRD_PARTY_NOTICES.md").read_text())
@@ -167,7 +177,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("sync")
         self.fixture.command("check")
         self.assertEqual(json.loads((bundle / "skills/catalog.json").read_text()), [])
-        self.assertEqual(list((self.repo / "upstream/mattpocock").iterdir()), [])
+        self.assertEqual(list(snapshot.iterdir()), [])
         before = (self.repo / "sources.lock.json").read_bytes()
         source["license_filter"]["support_paths"] = ["skills"]
         self.fixture.write_config()
@@ -190,7 +200,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.write_config()
         self.fixture.commit(checkout, "add restricted child inside an approved parent")
         self.fixture.command("sync")
-        snapshot = self.repo / "upstream/mattpocock"
+        snapshot = self.repo / "plugins/mattpocock/upstream/mattpocock"
         self.assertFalse((snapshot / "skills").exists())
         lock = json.loads((self.repo / "sources.lock.json").read_text())["sources"]["mattpocock"]
         self.assertEqual(lock["omitted_skills"][0]["reason"], "unapproved nested license")
@@ -346,7 +356,7 @@ class NativePackagingTest(unittest.TestCase):
         native_ui = (bundle / "skills/tstack-full-stop/agents/openai.yaml").read_text()
         self.assertIn("$tstack-full-stop", native_ui)
         self.assertIn("allow_implicit_invocation: false", native_ui)
-        self.assertEqual((self.repo / "upstream/tstack/skills/full-stop/agents/openai.yaml").read_text(), original_ui)
+        self.assertEqual((bundle / "upstream/tstack/skills/full-stop/agents/openai.yaml").read_text(), original_ui)
         for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json"]:
             entries = json.loads((self.repo / path).read_text())["plugins"]
             self.assertEqual({entry["name"] for entry in entries}, {"mattpocock", "pstack", "tstack"})

@@ -128,6 +128,7 @@ class SharedSkillsTest(unittest.TestCase):
                 self.assertTrue((folder.resolve().parents[1] / "docs/harnesses.md").is_file())
                 self.assertIn("Original example", self.resource(name, "examples.md").read_text())
         self.assertFalse((self.repo / "skills").exists())
+        self.assertFalse((self.repo / "upstream").exists())
         self.command("install", "--agent", "t3", "--global", "--home", str(home))
         project = self.base / "consumer project"
         self.command("install", "--agent", "all", "--project", str(project))
@@ -277,7 +278,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.command("sync", success=False)
         self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before)
         self.assertEqual((self.repo / "distribution.lock.json").read_bytes(), native_before)
-        self.assertFalse((self.repo / "upstream/pstack/skills/new-skill").exists())
+        self.assertFalse((self.repo / "plugins/pstack/upstream/pstack/skills/new-skill").exists())
         (self.base / "saved-assets").rename(self.repo / "assets")
         self.command("sync")
         self.assertTrue((self.skill("pstack-new-skill") / "SKILL.md").is_file())
@@ -285,7 +286,7 @@ class SharedSkillsTest(unittest.TestCase):
     def test_local_edits_in_sources_and_exports_are_preserved(self):
         self.command("sync")
         lock = (self.repo / "sources.lock.json").read_bytes()
-        for relative in ["upstream/pstack/skills/tdd/SKILL.md", "plugins/pstack/skills/pstack-tdd/SKILL.md"]:
+        for relative in ["plugins/pstack/upstream/pstack/skills/tdd/SKILL.md", "plugins/pstack/skills/pstack-tdd/SKILL.md"]:
             file = self.repo / relative
             original = file.read_text()
             file.write_text(original + "\nUser's local edit\n")
@@ -304,7 +305,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.write_config()
         self.command("sync", success=False)
         self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
-        self.assertNotIn("Changed", (self.repo / "upstream/mattpocock/skills/tdd/examples.md").read_text())
+        self.assertNotIn("Changed", self.resource("mattpocock-tdd", "examples.md").read_text())
 
     def test_upstream_commit_outside_the_source_root_keeps_the_locked_commit_and_version(self):
         self.command("sync")
@@ -351,7 +352,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.command("check")
         self.assertTrue((target / "mattpocock-new-workflow/SKILL.md").is_file())
         self.assertFalse((target / "mattpocock-tdd").is_symlink())
-        self.assertTrue((self.repo / "upstream/mattpocock/skills/tdd/SKILL.md").is_file())
+        self.assertTrue((self.repo / "plugins/mattpocock/upstream/mattpocock/skills/tdd/SKILL.md").is_file())
         manifest.write_text(json.dumps({"skills": []}))
         self.commit(checkout, "unpublish all skills")
         self.command("sync")
