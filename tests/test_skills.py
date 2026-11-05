@@ -455,6 +455,21 @@ class SharedSkillsTest(unittest.TestCase):
         self.assertFalse(outside.exists())
         self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
 
+    def test_chained_symlinks_cannot_copy_a_file_from_outside_the_source(self):
+        self.command("sync")
+        lock = (self.repo / "sources.lock.json").read_bytes()
+        (self.repo / "SECRET.txt").write_text("Library secret\n")
+        package = self.upstreams["pstack"] / "pstack"
+        (package / "v").mkdir()
+        (package / "v/keep.txt").write_text("Kept\n")
+        (package / "w/x/y").mkdir(parents=True)
+        (package / "w/x/y/q").symlink_to("../../../v")
+        (package / "a-leak.txt").symlink_to("w/x/y/q/../../../../SECRET.txt")
+        self.commit(self.upstreams["pstack"], "chain symlinks out of the source")
+        self.command("sync", success=False)
+        self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
+        self.assertFalse((self.repo / "plugins/pstack/upstream/pstack/a-leak.txt").exists())
+
     def test_repository_update_refreshes_installations_and_refuses_dirty_work(self):
         self.command("sync")
         self.git("init", "--quiet", "--initial-branch=main")

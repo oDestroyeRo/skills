@@ -11,7 +11,7 @@ import tarfile
 import tempfile
 import zipfile
 
-from skills import SkillError, SLUG, copy_agent_metadata, discover_skills, metadata, read_json, render_skill, tree_hash, write_json
+from skills import SkillError, SLUG, copy_agent_metadata, copy_materialized, discover_skills, metadata, read_json, render_skill, tree_hash, write_json
 
 
 PORTABLE_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
@@ -153,14 +153,6 @@ def marketplace_files(config, version):
         },
         "package.json": workspace_manifest(config, version),
     }
-
-
-def copy_materialized(source, target):
-    boundary = source.resolve()
-    for path in source.rglob("*"):
-        if path.is_symlink() and not path.resolve().is_relative_to(boundary):
-            raise SkillError("Package resource points outside its source: " + str(path))
-    shutil.copytree(source, target, symlinks=False)
 
 
 def populate_bundle(root, bundle, config, version, snapshot):
