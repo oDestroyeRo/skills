@@ -2,7 +2,7 @@
 
 Theo Browne's tstack review and pull request workflows, with upstream updates.
 
-Version 1.0.15. This bundle contains 9 namespaced skills.
+Version 1.0.17. This bundle contains 9 namespaced skills.
 
 Install in Claude Code with `claude plugin install tstack --marketplace oDestroyeRo/skills`.
 
