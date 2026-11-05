@@ -2,7 +2,7 @@
 
 Matt Pocock engineering and productivity skills, with upstream updates.
 
-Version 1.0.15. This bundle contains 27 namespaced skills.
+Version 1.0.16. This bundle contains 27 namespaced skills.
 
 Install in Claude Code with `claude plugin install mattpocock --marketplace oDestroyeRo/skills`.
 

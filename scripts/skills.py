@@ -390,7 +390,11 @@ def sync(locked=False):
             if locked and not commit:
                 raise SkillError("No locked commit for " + name)
             print("Fetching " + name + (" at " + commit[:12] if commit else " (" + source["ref"] + ")"), flush=True)
-            entries[name] = fetch_source(source, vendor / name, commit)
+            entry = fetch_source(source, vendor / name, commit)
+            previous = lock["sources"].get(name)
+            # Unrelated upstream commits must not publish a new package version.
+            unchanged = previous and {**previous, "commit": None} == {**entry, "commit": None}
+            entries[name] = previous if unchanged else entry
         catalog = discover_skills(vendor, configured)
         new_lock = {"version": 1, "sources": entries}
         protect_generated(lock)

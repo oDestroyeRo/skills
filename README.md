@@ -83,7 +83,7 @@ python3 -m unittest discover -s tests -v
 
 `sources.json` owns upstream URLs, branches, package roots, and skill manifests. Each sync reads the current upstream plugin manifest to discover its published skills. New skills and newly published categories are included automatically; removed or unpublished skills lose their exports and managed installation links. A rename is handled as a removal and an addition. An empty collection is allowed, and unrelated installed skills stay in place. Sources without a plugin manifest can use explicit `skill_roots` instead.
 
-Matt's manifest currently publishes the stable engineering and productivity collections. tstack has no plugin manifest, so its `skills/` directory is discovered directly on every sync. `sources.lock.json` records exact commits, excluded paths, and content hashes.
+Matt's manifest currently publishes the stable engineering and productivity collections. tstack has no plugin manifest, so its `skills/` directory is discovered directly on every sync. `sources.lock.json` records exact commits, excluded paths, and content hashes. An upstream commit that leaves a snapshot unchanged keeps the recorded commit and the package version.
 
 `upstream/` keeps the source skill trees, supporting resources, guides, manifests, and licenses. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Generated entry points and catalogs live only in `plugins/<name>/skills/`.
 

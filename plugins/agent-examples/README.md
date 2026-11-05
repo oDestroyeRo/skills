@@ -2,7 +2,7 @@
 
 Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.
 
-Version 1.0.15. This bundle contains 14 namespaced skills.
+Version 1.0.16. This bundle contains 14 namespaced skills.
 
 Install in Claude Code with `claude plugin install agent-examples --marketplace oDestroyeRo/skills`.
 

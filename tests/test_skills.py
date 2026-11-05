@@ -306,6 +306,21 @@ class SharedSkillsTest(unittest.TestCase):
         self.assertEqual(lock, (self.repo / "sources.lock.json").read_bytes())
         self.assertNotIn("Changed", (self.repo / "upstream/mattpocock/skills/tdd/examples.md").read_text())
 
+    def test_upstream_commit_outside_the_source_root_keeps_the_locked_commit_and_version(self):
+        self.command("sync")
+        sources_lock = (self.repo / "sources.lock.json").read_bytes()
+        distribution_lock = (self.repo / "distribution.lock.json").read_bytes()
+        checkout = self.upstreams["pstack"]
+        (checkout / "README.md").write_text("Notes outside the pstack root.\n")
+        self.commit(checkout, "change the monorepo outside the source root")
+        self.command("sync")
+        self.assertEqual(sources_lock, (self.repo / "sources.lock.json").read_bytes())
+        self.assertEqual(distribution_lock, (self.repo / "distribution.lock.json").read_bytes())
+        self.add_skill()
+        self.command("sync")
+        lock = json.loads((self.repo / "sources.lock.json").read_text())
+        self.assertEqual(lock["sources"]["pstack"]["commit"], self.git("rev-parse", "HEAD", cwd=checkout))
+
     def test_locked_sync_uses_exact_revision_after_upstream_advances(self):
         self.command("sync")
         lock = (self.repo / "sources.lock.json").read_bytes()
