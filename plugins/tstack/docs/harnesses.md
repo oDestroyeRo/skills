@@ -28,6 +28,14 @@ Use the current provider's equivalent tools when an upstream workflow names Clau
 
 The `claude-api` skill documents Anthropic's API and SDKs. It does not add a provider connection or API credentials to the current environment. Native Claude commands use names such as `/agent-examples:anthropic-frontend-design`; folder installs use `/anthropic-frontend-design`. See the [upstream overview](https://github.com/anthropics/skills#readme).
 
+## MongoDB workflows
+
+The `mongodb` plugin mirrors the skills in [mongodb/agent-skills](https://github.com/mongodb/agent-skills) under Apache 2.0. Upstream names already start with `mongodb-`, so the collection prefix produces names such as `mongodb-mongodb-query-optimizer` and `mongodb-mongodb-schema-design`. Native Claude commands use `/mongodb:mongodb-mongodb-query-optimizer`; folder installs use `/mongodb-mongodb-query-optimizer`.
+
+These packages register skills only. MongoDB's upstream plugins also configure an MCP server, but this mirror does not. Configure the server separately for skills that need MongoDB tools. The [upstream installation guide](https://github.com/mongodb/agent-skills#installing-the-skills-directly) covers hosted Atlas and self-managed deployments. Read each skill's required tools and setup instructions before invoking it.
+
+The source snapshot retains the skill tree, references, scripts, README files, assets, and license. It omits upstream contributor tooling, tests, and duplicate native plugin copies. New skills under `skills/` are discovered on each sync.
+
 ## T3 Code
 
 T3 uses its selected provider's discovery paths. The `t3` install profile installs the same library for Codex, Claude Code, Pi, OpenCode, Cursor, and Antigravity, including Antigravity CLI's additional path. There is no invented `~/.t3/skills` directory.

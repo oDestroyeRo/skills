@@ -2,7 +2,7 @@
   "version": 1,
   "marketplace": "odestroyero-skills",
   "display_name": "Shared Agent Skills",
-  "description": "Matt Pocock, pstack, tstack, and Anthropic skills for coding agents.",
+  "description": "Matt Pocock, pstack, tstack, Anthropic, and MongoDB skills for coding agents.",
   "author": {
     "name": "oDestroyeRo",
     "url": "https://github.com/oDestroyeRo"
@@ -43,6 +43,15 @@
       "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
       "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
       "suggested_prompts": ["Use anthropic-frontend-design to build a polished interface."]
+    },
+    {
+      "source": "mongodb",
+      "name": "mongodb",
+      "npm_name": "@odestroyero/mongodb-skills",
+      "display_name": "MongoDB Skills (Community Mirror)",
+      "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
+      "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
+      "suggested_prompts": ["Use mongodb-mongodb-query-optimizer to optimize a MongoDB query."]
     }
   ]
 }

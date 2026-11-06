@@ -1,12 +1,12 @@
 # Shared agent skills
 
-One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), and [Anthropic's redistributable skills](https://github.com/anthropics/skills).
+One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
 
 Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Each collection's entry points live in `plugins/<name>/skills/`. Folder installs link directly to those entries; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's package and SDK checks use Node.js **22+**.
 
 ## Install
 
-The native marketplace contains four independent plugins: **mattpocock**, **pstack**, **tstack**, and **agent-examples**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
+The native marketplace contains five independent plugins: **mattpocock**, **pstack**, **tstack**, **agent-examples**, and **mongodb**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
 
 Use the folder installer below to link plugin skills from one checkout across harnesses:
 
@@ -91,6 +91,8 @@ Anthropic's source uses a `license_filter` with approved license-file SHA256 has
 
 `description_overrides` can shorten an exported description without changing the original skill. Anthropic's `claude-api` entry uses this to stay within the 1024-character skill description limit.
 
+MongoDB's source discovers `skills/` directly and preserves its Apache 2.0 license, references, and scripts. The `mongodb` plugin is a community mirror of those skills. The collection prefix applies to upstream names that already start with `mongodb-`, so exported names include `mongodb-mongodb-query-optimizer` and `mongodb-mongodb-schema-design`. These packages install skills only. Configure the MongoDB MCP server separately when a workflow needs it. See the [MongoDB runtime notes](docs/harnesses.md#mongodb-workflows).
+
 Local edits to snapshots or generated skills stop a sync so custom work is preserved. All sources are downloaded and their exports validated before a new library is published. Failed downloads or invalid manifests leave the previous snapshots and exports in place.
 
 To add a custom collection, put its skills in a Git repository, add that source to `sources.json`, and add its plugin entry to `distribution.json`. A local Git repository can use a `file:///absolute/path/to/repo` source URL. Each source has one plugin. To adopt library changes into the hosted repository, review the result and use your normal commit/push process; `sync` itself never commits or pushes. Use the scheduled `update` command for an installed machine rather than `sync`, which intentionally creates local snapshot changes.
@@ -103,6 +105,6 @@ The folder installer and native packages use the same per-plugin skill files. Bo
 
 The tests exercise real local Git repositories, source advances, locked revisions, update failures, protected local edits, file references, name collisions, and isolated installs for every profile. `check` verifies the actual library. These checks establish filesystem and updater behavior; live discovery and every upstream workflow across all installed harness versions still need client-level verification. In particular, Antigravity's documented discovery paths are used, but its symlink discovery has not been exercised in a running client.
 
-The [harness notes](docs/harnesses.md) and [installation guide](docs/native-install.md) link to official documentation. Upstream license notices remain in [Matt's snapshot](plugins/mattpocock/upstream/mattpocock/LICENSE), [pstack's snapshot](plugins/pstack/upstream/pstack/LICENSE), [tstack's snapshot](plugins/tstack/upstream/tstack/LICENSE), and [Anthropic's bundle notice index](plugins/agent-examples/THIRD_PARTY_NOTICES.md). Those terms govern their respective content and assets.
+The [harness notes](docs/harnesses.md) and [installation guide](docs/native-install.md) link to official documentation. Upstream license notices remain in [Matt's snapshot](plugins/mattpocock/upstream/mattpocock/LICENSE), [pstack's snapshot](plugins/pstack/upstream/pstack/LICENSE), [tstack's snapshot](plugins/tstack/upstream/tstack/LICENSE), [Anthropic's bundle notice index](plugins/agent-examples/THIRD_PARTY_NOTICES.md), and [MongoDB's snapshot](plugins/mongodb/upstream/mongodb/LICENSE). Those terms govern their respective content and assets.
 
 This repo's code and packaging use the [MIT license](LICENSE).
