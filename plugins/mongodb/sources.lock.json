@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "sources": {
+    "mongodb": {
+      "repository": "https://github.com/mongodb/agent-skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "155bb9c4b42a9a3e019f47be0669de0e4547d1ea",
+      "sha256": "6c600bb651f8f12ca67069ce74848dbd248f74a449005a9e455b140b03e2ed15",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".cursor-plugin",
+        ".gitattributes",
+        ".github",
+        ".gitignore",
+        ".grok-plugin",
+        "CONTRIBUTING.md",
+        "GEMINI.md",
+        "gemini-extension.json",
+        "plugins",
+        "testing",
+        "tools"
+      ]
+    }
+  }
+}

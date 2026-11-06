@@ -1,17 +1,18 @@
 {
   "version": 2,
-  "package_version": "1.0.18",
-  "input_sha256": "239135b923d0055ed11a7b876f0b6508571260c180cc28a044b63c075fad06e1",
+  "package_version": "1.0.19",
+  "input_sha256": "7a6778034bb41803cf881db7fb4ad323029089b0654a06095760f64f21294064",
   "bundle_hashes": {
-    "mattpocock": "0e9ae9c21810bf16850da34efe9ed499126fd8b5987374b5e949c784aa1a7fa5",
-    "pstack": "c6791e9ef3cde02c4f60bf07468c2481b7c1c69a128dabbec4b589bc148a0d57",
-    "tstack": "621582ae37c304f39dd2f01d0971ac7f412e52767f2b7e272b8cc057080b2032",
-    "agent-examples": "74928139a854f73cf082737e6fca8551feaa3e269787a2d19fd1733978304fab"
+    "mattpocock": "a577dfefc71adefa28b03bbd53e4efd22e95dd89cfdc46ffa0b5f35c93d52294",
+    "pstack": "ed5b96b74c33d96f7829f615fecf2f2607abcf2d8b0f82e7dbefac95113bd2b9",
+    "tstack": "9ace4eed45c82b669c155509be95c9b2f0a3974be29057f73dc41407986a40cb",
+    "agent-examples": "696899840caa8e14eec2318c99c336f455cb177ae49d1575ec7075281fb0f85e",
+    "mongodb": "d2545a6eec69552467c8edba5eb76a2b1f7c2faa09d6b8c470e2f720c9dcaee0"
   },
   "generated_files": {
-    ".claude-plugin/marketplace.json": "157fed46aafe2601129a06802b31b7ec422e420a8b6171b64d9acd5fe17cf183",
-    ".cursor-plugin/marketplace.json": "157fed46aafe2601129a06802b31b7ec422e420a8b6171b64d9acd5fe17cf183",
-    ".agents/plugins/marketplace.json": "9a33e6283b3bbada44d36a710ece3e014fd729cfdab9836dfb950cae7efd40f5",
-    "package.json": "201fd291f0d84d09c408c8107cb9b4aee06d3789fa397fdf7b23f48d1280f63b"
+    ".claude-plugin/marketplace.json": "9391c699c7d1636b9217146988233b6456d9de905b2fb74c5e369ec23ea84524",
+    ".cursor-plugin/marketplace.json": "9391c699c7d1636b9217146988233b6456d9de905b2fb74c5e369ec23ea84524",
+    ".agents/plugins/marketplace.json": "8cce0f3b2a2cf09375465147b26e0efb21ba189d169639ae26325d931b9381d5",
+    "package.json": "4e8b61bfacb9bd9d871f5a1a679c1e6437f9f2afab0764cd6f88307e43c60307"
   }
 }

@@ -4,32 +4,38 @@
     "name": "oDestroyeRo"
   },
   "metadata": {
-    "description": "Matt Pocock, pstack, tstack, and Anthropic skills for coding agents."
+    "description": "Matt Pocock, pstack, tstack, Anthropic, and MongoDB skills for coding agents."
   },
   "plugins": [
     {
       "name": "mattpocock",
       "source": "./plugins/mattpocock",
       "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
-      "version": "1.0.18"
+      "version": "1.0.19"
     },
     {
       "name": "pstack",
       "source": "./plugins/pstack",
       "description": "pstack engineering workflows and principles, with upstream updates.",
-      "version": "1.0.18"
+      "version": "1.0.19"
     },
     {
       "name": "tstack",
       "source": "./plugins/tstack",
       "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
-      "version": "1.0.18"
+      "version": "1.0.19"
     },
     {
       "name": "agent-examples",
       "source": "./plugins/agent-examples",
       "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
-      "version": "1.0.18"
+      "version": "1.0.19"
+    },
+    {
+      "name": "mongodb",
+      "source": "./plugins/mongodb",
+      "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
+      "version": "1.0.19"
     }
   ]
 }

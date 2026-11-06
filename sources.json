@@ -56,6 +56,28 @@
         ],
         "support_paths": ["THIRD_PARTY_NOTICES.md"]
       }
+    },
+    {
+      "id": "mongodb",
+      "repository": "https://github.com/mongodb/agent-skills.git",
+      "ref": "main",
+      "root": ".",
+      "skill_roots": ["skills"],
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".cursor-plugin",
+        ".gitattributes",
+        ".github",
+        ".gitignore",
+        ".grok-plugin",
+        "CONTRIBUTING.md",
+        "GEMINI.md",
+        "gemini-extension.json",
+        "plugins",
+        "testing",
+        "tools"
+      ]
     }
   ]
 }

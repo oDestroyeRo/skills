@@ -1,0 +1,50 @@
+[
+  {
+    "name": "mongodb-mongodb-atlas-stream-processing",
+    "source": "mongodb",
+    "upstream_name": "mongodb-atlas-stream-processing",
+    "path": "skills/mongodb-atlas-stream-processing/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-connection",
+    "source": "mongodb",
+    "upstream_name": "mongodb-connection",
+    "path": "skills/mongodb-connection/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-mcp-setup",
+    "source": "mongodb",
+    "upstream_name": "mongodb-mcp-setup",
+    "path": "skills/mongodb-mcp-setup/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-natural-language-querying",
+    "source": "mongodb",
+    "upstream_name": "mongodb-natural-language-querying",
+    "path": "skills/mongodb-natural-language-querying/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-qe-size-estimation",
+    "source": "mongodb",
+    "upstream_name": "mongodb-qe-size-estimation",
+    "path": "skills/mongodb-qe-size-estimation/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-query-optimizer",
+    "source": "mongodb",
+    "upstream_name": "mongodb-query-optimizer",
+    "path": "skills/mongodb-query-optimizer/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-schema-design",
+    "source": "mongodb",
+    "upstream_name": "mongodb-schema-design",
+    "path": "skills/mongodb-schema-design/SKILL.md"
+  },
+  {
+    "name": "mongodb-mongodb-search-and-ai",
+    "source": "mongodb",
+    "upstream_name": "mongodb-search-and-ai",
+    "path": "skills/mongodb-search-and-ai/SKILL.md"
+  }
+]
