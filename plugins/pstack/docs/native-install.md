@@ -6,11 +6,13 @@ The `odestroyero-skills` marketplace contains five independent plugins. Install 
 plugins/mattpocock/    Matt Pocock's published skills
 plugins/pstack/        pstack's published skills
 plugins/tstack/        Theo Browne's tstack skills
-plugins/agent-examples/     Anthropic's redistributable skills
+plugins/cc/     Anthropic's redistributable skills
 plugins/mongodb/           MongoDB's query, schema, search, and Atlas skills
 ```
 
 Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Skill names retain their collection prefixes across harnesses, such as `mattpocock-tdd` and `pstack-tdd`.
+
+If you installed the Anthropic collection under its previous plugin name, reinstall it as `cc` using your harness's instructions below. The plugin identity changed. Skill names and the npm package `@odestroyero/anthropic-skills` stay the same.
 
 The Anthropic plugin includes only skills with approved redistribution terms. Its document skills and unlicensed `doc-coauthoring` skill are excluded. See the [Anthropic runtime notes](harnesses.md#anthropic-workflows).
 
@@ -27,7 +29,7 @@ claude plugin marketplace add oDestroyeRo/skills
 claude plugin install mattpocock@odestroyero-skills
 claude plugin install pstack@odestroyero-skills
 claude plugin install tstack@odestroyero-skills
-claude plugin install agent-examples@odestroyero-skills
+claude plugin install cc@odestroyero-skills
 claude plugin install mongodb@odestroyero-skills
 ```
 
@@ -35,13 +37,13 @@ For local testing, use `claude plugin marketplace add /absolute/path/to/skills` 
 
 Open `/plugin`, select **Marketplaces**, select `odestroyero-skills`, then select **Enable auto-update**. Third-party marketplaces have automatic updates disabled by default. Updated files load in the next session, or after `/reload-plugins` in a running session.
 
-Invoke a skill as `/mattpocock:mattpocock-code-review`, `/pstack:pstack-poteto-mode`, `/tstack:tstack-full-stop`, `/agent-examples:anthropic-frontend-design`, or `/mongodb:mongodb-mongodb-query-optimizer`. For manual updates:
+Invoke a skill as `/mattpocock:mattpocock-code-review`, `/pstack:pstack-poteto-mode`, `/tstack:tstack-full-stop`, `/cc:anthropic-frontend-design`, or `/mongodb:mongodb-mongodb-query-optimizer`. For manual updates:
 
 ```sh
 claude plugin update mattpocock@odestroyero-skills
 claude plugin update pstack@odestroyero-skills
 claude plugin update tstack@odestroyero-skills
-claude plugin update agent-examples@odestroyero-skills
+claude plugin update cc@odestroyero-skills
 claude plugin update mongodb@odestroyero-skills
 ```
 
@@ -56,7 +58,7 @@ codex plugin marketplace add oDestroyeRo/skills
 codex plugin add mattpocock@odestroyero-skills
 codex plugin add pstack@odestroyero-skills
 codex plugin add tstack@odestroyero-skills
-codex plugin add agent-examples@odestroyero-skills
+codex plugin add cc@odestroyero-skills
 codex plugin add mongodb@odestroyero-skills
 ```
 
@@ -72,7 +74,7 @@ Automatic refresh of custom marketplaces depends on the Codex host and version. 
 
 ## Cursor
 
-On Teams or Enterprise, open **Dashboard → Plugins & MCPs → Team Marketplaces → Add Marketplace**. Choose **Import from Repo** and enter `https://github.com/oDestroyeRo/skills`. Select the collections you want in **Customize**: `mattpocock`, `pstack`, `tstack`, `agent-examples`, or `mongodb`.
+On Teams or Enterprise, open **Dashboard → Plugins & MCPs → Team Marketplaces → Add Marketplace**. Choose **Import from Repo** and enter `https://github.com/oDestroyeRo/skills`. Select the collections you want in **Customize**: `mattpocock`, `pstack`, `tstack`, `cc`, or `mongodb`.
 
 Enable **Auto Refresh** in the marketplace settings and grant the Cursor GitHub App access to this repository. Import the whole repository so refresh also reads catalog changes. Existing Cloud Agents keep their starting versions; start a new agent after an update.
 
@@ -82,7 +84,7 @@ For local testing, copy each complete folder into Cursor's local-plugin director
 plugins/mattpocock/ → ~/.cursor/plugins/local/mattpocock/
 plugins/pstack/     → ~/.cursor/plugins/local/pstack/
 plugins/tstack/     → ~/.cursor/plugins/local/tstack/
-plugins/agent-examples/ → ~/.cursor/plugins/local/agent-examples/
+plugins/cc/ → ~/.cursor/plugins/local/cc/
 plugins/mongodb/ → ~/.cursor/plugins/local/mongodb/
 ```
 
@@ -96,7 +98,7 @@ Install the per-collection local packages from a checkout:
 pi install /absolute/path/to/skills/plugins/mattpocock
 pi install /absolute/path/to/skills/plugins/pstack
 pi install /absolute/path/to/skills/plugins/tstack
-pi install /absolute/path/to/skills/plugins/agent-examples
+pi install /absolute/path/to/skills/plugins/cc
 pi install /absolute/path/to/skills/plugins/mongodb
 ```
 
@@ -123,7 +125,7 @@ Install the Git subdirectory packages you want:
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/mattpocock'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/pstack'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/tstack'
-opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/agent-examples'
+opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/cc'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/mongodb'
 ```
 
@@ -135,7 +137,7 @@ For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
     "/absolute/path/to/skills/plugins/mattpocock",
     "/absolute/path/to/skills/plugins/pstack",
     "/absolute/path/to/skills/plugins/tstack",
-    "/absolute/path/to/skills/plugins/agent-examples",
+    "/absolute/path/to/skills/plugins/cc",
     "/absolute/path/to/skills/plugins/mongodb"
   ]
 }
@@ -163,8 +165,8 @@ agy plugin validate --strict /absolute/path/to/skills/plugins/pstack
 agy plugin install /absolute/path/to/skills/plugins/pstack
 agy plugin validate --strict /absolute/path/to/skills/plugins/tstack
 agy plugin install /absolute/path/to/skills/plugins/tstack
-agy plugin validate --strict /absolute/path/to/skills/plugins/agent-examples
-agy plugin install /absolute/path/to/skills/plugins/agent-examples
+agy plugin validate --strict /absolute/path/to/skills/plugins/cc
+agy plugin install /absolute/path/to/skills/plugins/cc
 agy plugin validate --strict /absolute/path/to/skills/plugins/mongodb
 agy plugin install /absolute/path/to/skills/plugins/mongodb
 agy plugin list

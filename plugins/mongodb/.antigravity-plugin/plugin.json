@@ -1,7 +1,7 @@
 {
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "mongodb",
-  "version": "1.0.19",
+  "version": "1.0.22",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",

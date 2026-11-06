@@ -1,7 +1,6 @@
 {
-  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
-  "name": "agent-examples",
-  "version": "1.0.19",
+  "name": "cc",
+  "version": "1.0.22",
   "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",
@@ -13,9 +12,6 @@
   "displayName": "Anthropic Skills (Community Mirror)",
   "skills": "./skills/",
   "logo": "assets/logo.svg",
-  "suggestedPrompts": [
-    "Use anthropic-frontend-design to build a polished interface."
-  ],
   "keywords": [
     "skills",
     "engineering"

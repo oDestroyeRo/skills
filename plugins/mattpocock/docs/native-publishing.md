@@ -1,6 +1,6 @@
 # Build and distribute native plugins
 
-Generate one marketplace with `mattpocock`, `pstack`, `tstack`, `agent-examples`, and `mongodb` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
+Generate one marketplace with `mattpocock`, `pstack`, `tstack`, `cc`, and `mongodb` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
 
 Run these commands from the source checkout, which contains `scripts/`. Installed and extracted plugins contain runtime resources rather than the source build tools. Generation writes local artifacts; publishing and installations are separate actions.
 
@@ -26,7 +26,7 @@ plugins/
   mattpocock/                          Matt's native plugin and npm package
   pstack/                             pstack's native plugin and npm package
   tstack/                             tstack's native plugin and npm package
-  agent-examples/                Anthropic's community plugin and npm package
+  cc/                       Anthropic's community plugin and npm package
   mongodb/                       MongoDB's community plugin and npm package
 dist/
   mattpocock-<version>.zip
@@ -35,8 +35,8 @@ dist/
   pstack-<version>.tar.gz
   tstack-<version>.zip
   tstack-<version>.tar.gz
-  agent-examples-<version>.zip
-  agent-examples-<version>.tar.gz
+  cc-<version>.zip
+  cc-<version>.tar.gz
   mongodb-<version>.zip
   mongodb-<version>.tar.gz
 ```
@@ -56,7 +56,7 @@ python3 -m unittest discover -s tests -v
 claude plugin validate --strict --profile directory plugins/mattpocock
 claude plugin validate --strict --profile directory plugins/pstack
 claude plugin validate --strict --profile directory plugins/tstack
-claude plugin validate --strict --profile directory plugins/agent-examples
+claude plugin validate --strict --profile directory plugins/cc
 claude plugin validate --strict --profile directory plugins/mongodb
 claude plugin validate --strict .claude-plugin/marketplace.json
 ```
@@ -90,7 +90,7 @@ npm pack --ignore-scripts --workspaces --pack-destination dist
 npm publish --workspaces --access public --ignore-scripts
 ```
 
-The private root workspace is excluded. You can publish a single collection with `--workspace plugins/mattpocock`, `--workspace plugins/pstack`, `--workspace plugins/tstack`, `--workspace plugins/agent-examples`, or `--workspace plugins/mongodb` instead of `--workspaces`.
+The private root workspace is excluded. You can publish a single collection with `--workspace plugins/mattpocock`, `--workspace plugins/pstack`, `--workspace plugins/tstack`, `--workspace plugins/cc`, or `--workspace plugins/mongodb` instead of `--workspaces`.
 
 The daily workflow updates Git consumers and marketplaces; it does not publish npm releases. Publish each release separately if consumers track npm packages.
 

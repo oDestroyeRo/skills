@@ -37,7 +37,7 @@
     },
     {
       "source": "anthropic",
-      "name": "agent-examples",
+      "name": "cc",
       "npm_name": "@odestroyero/anthropic-skills",
       "display_name": "Anthropic Skills (Community Mirror)",
       "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
