@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/mongodb-skills",
-  "version": "1.0.19",
+  "version": "1.0.22",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "type": "module",
   "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",

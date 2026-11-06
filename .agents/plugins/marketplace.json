@@ -41,10 +41,10 @@
       "category": "Productivity"
     },
     {
-      "name": "agent-examples",
+      "name": "cc",
       "source": {
         "source": "local",
-        "path": "./plugins/agent-examples"
+        "path": "./plugins/cc"
       },
       "policy": {
         "installation": "AVAILABLE",

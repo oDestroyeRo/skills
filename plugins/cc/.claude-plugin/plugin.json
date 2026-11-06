@@ -1,6 +1,6 @@
 {
-  "name": "agent-examples",
-  "version": "1.0.19",
+  "name": "cc",
+  "version": "1.0.22",
   "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",
@@ -8,6 +8,5 @@
   },
   "homepage": "https://github.com/oDestroyeRo/skills",
   "repository": "https://github.com/oDestroyeRo/skills",
-  "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
-  "skills": "./skills/"
+  "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md"
 }
