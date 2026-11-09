@@ -11,31 +11,31 @@
       "name": "mattpocock",
       "source": "./plugins/mattpocock",
       "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
-      "version": "1.0.22"
+      "version": "1.0.23"
     },
     {
       "name": "pstack",
       "source": "./plugins/pstack",
       "description": "pstack engineering workflows and principles, with upstream updates.",
-      "version": "1.0.22"
+      "version": "1.0.23"
     },
     {
       "name": "tstack",
       "source": "./plugins/tstack",
       "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
-      "version": "1.0.22"
+      "version": "1.0.23"
     },
     {
       "name": "cc",
       "source": "./plugins/cc",
       "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
-      "version": "1.0.22"
+      "version": "1.0.23"
     },
     {
       "name": "mongodb",
       "source": "./plugins/mongodb",
       "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
-      "version": "1.0.22"
+      "version": "1.0.23"
     }
   ]
 }

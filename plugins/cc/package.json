@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/anthropic-skills",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
   "type": "module",
   "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
