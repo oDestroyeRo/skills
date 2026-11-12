@@ -5,8 +5,8 @@
       "repository": "https://github.com/t3dotgg/tstack.git",
       "ref": "main",
       "root": ".",
-      "commit": "1085050f3baed1ac724caa4a8166145fb2ac88af",
-      "sha256": "cc60cfa1c1659225d8855f61de26d73dd6c51a0322b4e0080c6d03815b8173d8",
+      "commit": "11e37a74d0a6868c121cd0910ab2b3bd9873b92a",
+      "sha256": "c77de62f0b1ce2d8c4d557bfcaf2337fb29d2a7d90213248e726661b470fba77",
       "exclude_paths": []
     }
   }

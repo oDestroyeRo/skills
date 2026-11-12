@@ -2,7 +2,7 @@
 
 pstack engineering workflows and principles, with upstream updates.
 
-Version 1.0.23. This bundle contains 58 namespaced skills.
+Version 1.0.24. This bundle contains 58 namespaced skills.
 
 Install in Claude Code with `claude plugin install pstack --marketplace oDestroyeRo/skills`.
 
