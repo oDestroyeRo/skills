@@ -19,6 +19,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
+T3_AGENTS = ("codex", "claude-code", "pi", "antigravity", "opencode", "cursor")
 GLOBAL_DIRS = {
     "codex": [".agents/skills"],
     "claude-code": [".claude/skills"],
@@ -26,6 +27,7 @@ GLOBAL_DIRS = {
     "antigravity": [".gemini/config/skills"],
     "opencode": [".config/opencode/skills"],
     "cursor": [".cursor/skills"],
+    "deepseek-harness": [".dsh/skills"],
 }
 PROJECT_DIRS = {
     "codex": [".agents/skills"],
@@ -34,6 +36,7 @@ PROJECT_DIRS = {
     "antigravity": [".agents/skills"],
     "opencode": [".opencode/skills"],
     "cursor": [".cursor/skills"],
+    "deepseek-harness": [".dsh/skills"],
 }
 AGENTS = list(GLOBAL_DIRS) + ["t3", "all"]
 
@@ -446,9 +449,10 @@ def check(check_distribution=True):
 def target_directories(agents, home, project):
     expanded = set(agents)
     if "all" in expanded:
+        expanded.update(GLOBAL_DIRS)
         expanded.add("t3")
     if "t3" in expanded:
-        expanded.update(GLOBAL_DIRS)
+        expanded.update(T3_AGENTS)
     mapping = GLOBAL_DIRS if project is None else PROJECT_DIRS
     base = home if project is None else project
     directories = {base / relative for agent in expanded if agent in mapping for relative in mapping[agent]}

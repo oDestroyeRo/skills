@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "mongodb",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",

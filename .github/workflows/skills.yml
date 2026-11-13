@@ -21,7 +21,7 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - run: python3 scripts/skills.py check
       - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
-      - run: node --test tests/opencode.test.mjs
+      - run: node --test tests/opencode.test.mjs tests/dsh.test.mjs
       - run: python3 scripts/skills.py package --archive
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

@@ -1,0 +1,3 @@
+- insert:
+    - id: skill-mongodb
+      name: '@odestroyero/mongodb-skills/dsh'
