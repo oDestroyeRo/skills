@@ -87,11 +87,23 @@ def npm_manifest(config, version):
         "dependencies": DEPENDENCIES,
     }
     manifest.update({
-        "exports": {".": "./opencode.mjs"}, "pi": {"skills": ["./skills"]},
+        "icon": "./assets/logo.svg",
+        "exports": {
+            ".": "./opencode.mjs",
+            "./dsh": "./dsh.mjs",
+            "./dsh/icon": "./assets/logo.svg",
+            "./dsh/locale/*.json": "./locale/*.json",
+            "./cordis.patch.yml": "./cordis.patch.yml",
+            "./locale/*.json": "./locale/*.json",
+            "./package.json": "./package.json",
+        },
+        "pi": {"skills": ["./skills"]},
+        "dsh": {"bundle": {"patch": "./cordis.patch.yml"}},
         "files": [
             "plugin.json", ".claude-plugin", ".codex-plugin", ".cursor-plugin",
             ".antigravity-plugin", "skills", "upstream", "docs",
-            "assets", "opencode.mjs", "sources.lock.json", "LICENSE", "THIRD_PARTY_NOTICES.md",
+            "assets", "locale", "opencode.mjs", "dsh.mjs", "cordis.patch.yml",
+            "sources.lock.json", "LICENSE", "THIRD_PARTY_NOTICES.md",
         ],
     })
     return manifest
@@ -183,6 +195,18 @@ def populate_bundle(root, bundle, config, version, snapshot):
                                 entry["name"])
     write_json(bundle / "skills/catalog.json", catalog)
     shutil.copy2(root / "adapters/opencode.mjs", bundle / "opencode.mjs")
+    shutil.copy2(root / "adapters/dsh.mjs", bundle / "dsh.mjs")
+    (bundle / "cordis.patch.yml").write_text(
+        "- insert:\n"
+        "    - id: skill-" + config["name"] + "\n"
+        "      name: '" + config["npm_name"] + "/dsh'\n"
+    )
+    write_json(bundle / "locale/en.json", {
+        "meta": {
+            "title": config["display_name"],
+            "description": config["description"],
+        },
+    })
     source_lock = read_json(root / "sources.lock.json")
     write_json(bundle / "sources.lock.json", {"version": 1, "sources": {
         source_id: source_lock["sources"][source_id]

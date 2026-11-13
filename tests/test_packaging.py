@@ -53,6 +53,15 @@ class NativePackagingTest(unittest.TestCase):
             manifest = json.loads((package / "package.json").read_text())
             self.assertTrue((package / manifest["pi"]["skills"][0]).is_dir())
             self.assertTrue((package / manifest["exports"]["."]).is_file())
+            self.assertTrue((package / manifest["exports"]["./dsh"]).is_file())
+            self.assertTrue((package / manifest["icon"]).is_file())
+            self.assertTrue((package / manifest["dsh"]["bundle"]["patch"]).is_file())
+            patch_text = (package / "cordis.patch.yml").read_text()
+            self.assertIn("id: skill-" + name, patch_text)
+            self.assertIn(manifest["name"] + "/dsh", patch_text)
+            locale_meta = json.loads((package / "locale/en.json").read_text())["meta"]
+            self.assertTrue(locale_meta["title"])
+            self.assertEqual(locale_meta["description"], manifest["description"])
             catalog = json.loads((package / "skills/catalog.json").read_text())
             self.assertEqual({entry["source"] for entry in catalog}, {name})
             self.assertEqual({path.name for path in (package / "upstream").iterdir()}, {name})
@@ -285,6 +294,9 @@ class NativePackagingTest(unittest.TestCase):
         version = self.lock()["package_version"]
         with zipfile.ZipFile(self.repo / "dist" / ("pstack-" + version + ".zip")) as archive:
             self.assertIn("plugin.json", archive.namelist())
+            self.assertIn("dsh.mjs", archive.namelist())
+            self.assertIn("cordis.patch.yml", archive.namelist())
+            self.assertIn("locale/en.json", archive.namelist())
             self.assertIn("LICENSE", archive.namelist())
             self.assertIn("upstream/pstack/LICENSE", archive.namelist())
             item = archive.getinfo("upstream/pstack/skills/tdd/tool.sh")

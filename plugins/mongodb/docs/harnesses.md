@@ -65,3 +65,9 @@ Antigravity documents external skill discovery, but its symlink behavior has not
 ## OpenCode and Cursor
 
 OpenCode uses its native tools and configured agents; permission rules still apply. Cursor can use pstack's original tool vocabulary, but this repo's packages register skills rather than upstream agents or automations. For upstream's complete native plugin behavior, use its own plugin installation. See [OpenCode skills](https://opencode.ai/docs/skills/) and the [pstack README](https://github.com/cursor/plugins/blob/main/pstack/README.md).
+
+## DeepSeek Harness
+
+Folder installs link into `~/.dsh/skills` globally and `.dsh/skills` in a project, which outrank `.agents/skills` and `~/.agents/skills` in `@deepseek-ai/dsh-skill-filesystem`. If `DSH_HOME` points outside `~/.dsh`, pass `--directory "$DSH_HOME/skills"`.
+
+Native bundles declare `dsh.bundle.patch` (`cordis.patch.yml`) and mount `dsh.mjs` (`<npm-package>/dsh`) as a bundled-rank (`600`) provider on `ctx.skills`, so project and user skill folders still override matching names. Agent presets that expose `@deepseek-ai/dsh-tool-skill` advertise model-invocable skills in `<available_skills>` and accept `/<skill-name>` for user-invocable skills, including entries with `disable-model-invocation: true`; `sdk-minimal` omits skill loading unless patched in. Use DeepSeek Harness's native filesystem, shell, subagent, and approval tools when executing workflows, and supply packaged agent prompts to supported delegates rather than referencing unregistered presets. See [`@deepseek-ai/dsh`](https://www.npmjs.com/package/@deepseek-ai/dsh).

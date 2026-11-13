@@ -127,12 +127,22 @@ class SharedSkillsTest(unittest.TestCase):
                 self.assertIn("name: " + name, (folder / "SKILL.md").read_text())
                 self.assertTrue((folder.resolve().parents[1] / "docs/harnesses.md").is_file())
                 self.assertIn("Original example", self.resource(name, "examples.md").read_text())
+        self.assertFalse((home / ".dsh/skills").exists())
         self.assertFalse((self.repo / "skills").exists())
         self.assertFalse((self.repo / "upstream").exists())
         self.command("install", "--agent", "t3", "--global", "--home", str(home))
+        self.command("install", "--agent", "deepseek-harness", "--global", "--home", str(home))
+        for name in ["mattpocock-tdd", "pstack-tdd"]:
+            folder = home / ".dsh/skills" / name
+            self.assertTrue(folder.is_symlink())
+            self.assertEqual(folder.resolve(), self.skill(name).resolve())
+        dsh_project = self.base / "dsh project"
+        self.command("install", "--agent", "deepseek-harness", "--project", str(dsh_project))
+        self.assertTrue((dsh_project / ".dsh/skills/pstack-tdd/SKILL.md").is_file())
+        self.assertFalse((dsh_project / ".agents/skills").exists())
         project = self.base / "consumer project"
         self.command("install", "--agent", "all", "--project", str(project))
-        for relative in [".agents/skills", ".claude/skills", ".pi/skills", ".opencode/skills", ".cursor/skills"]:
+        for relative in [".agents/skills", ".claude/skills", ".pi/skills", ".opencode/skills", ".cursor/skills", ".dsh/skills"]:
             self.assertTrue((project / relative / "pstack-tdd/SKILL.md").is_file())
 
     def test_sync_adds_updates_and_removes_only_managed_installed_skills(self):

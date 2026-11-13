@@ -34,7 +34,8 @@ class CheckedInLibraryTest(unittest.TestCase):
                 for entry in json.loads(file.read_text()):
                     folders[entry["name"]] = file.parent / entry["name"]
             targets = [".agents/skills", ".claude/skills", ".pi/agent/skills", ".gemini/config/skills",
-                       ".gemini/antigravity-cli/skills", ".config/opencode/skills", ".cursor/skills"]
+                       ".gemini/antigravity-cli/skills", ".config/opencode/skills", ".cursor/skills",
+                       ".dsh/skills"]
             for relative in targets:
                 directory = home / relative
                 self.assertEqual({path.name for path in directory.iterdir()}, set(folders))

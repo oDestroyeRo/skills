@@ -1,12 +1,12 @@
 # Shared agent skills
 
-One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
+One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, Cursor, and DeepSeek Harness**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
 
-Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Each collection's entry points live in `plugins/<name>/skills/`. Folder installs link directly to those entries; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's package and SDK checks use Node.js **22+**.
+Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Each collection's entry points live in `plugins/<name>/skills/`. Folder installs link directly to those entries; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
 
 ## Install
 
-The native marketplace contains five independent plugins: **mattpocock**, **pstack**, **tstack**, **cc**, and **mongodb**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
+The native marketplace contains five independent plugins: **mattpocock**, **pstack**, **tstack**, **cc**, and **mongodb**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, DeepSeek Harness, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
 
 Use the folder installer below to link plugin skills from one checkout across harnesses:
 
@@ -17,10 +17,11 @@ python3 scripts/skills.py check
 python3 scripts/skills.py install --agent t3 --global
 ```
 
-The T3 profile covers its Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor provider directories. To choose native harnesses individually:
+The T3 profile covers its Codex, Claude Code, Pi, Antigravity, OpenCode, and Cursor provider directories. Use `--agent all` to include DeepSeek Harness as well, or choose native harnesses individually:
 
 ```sh
 python3 scripts/skills.py install --agent codex --agent claude-code --global
+python3 scripts/skills.py install --agent deepseek-harness --global
 python3 scripts/skills.py install --agent all --project /path/to/your/project
 ```
 

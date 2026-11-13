@@ -25,7 +25,7 @@ Run the checks affected by your change. The full verification workflow runs:
 python3 -m unittest discover -s tests -v
 python3 scripts/skills.py check
 npm install --ignore-scripts --no-package-lock --no-audit --no-fund
-node --test tests/opencode.test.mjs
+node --test tests/opencode.test.mjs tests/dsh.test.mjs
 python3 scripts/skills.py package --archive
 ```
 

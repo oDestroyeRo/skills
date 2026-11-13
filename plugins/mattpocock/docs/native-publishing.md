@@ -41,7 +41,7 @@ dist/
   mongodb-<version>.tar.gz
 ```
 
-Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `skills/`, its own `upstream/` source, guides, a logo, and a `THIRD_PARTY_NOTICES.md` license index. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
+Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `dsh.mjs`, `cordis.patch.yml`, `locale/`, `skills/`, its own `upstream/` source, guides, a logo, and a `THIRD_PARTY_NOTICES.md` license index. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
 
 Bundles use regular files with materialized copies of source symlinks. Skill links resolve within their own bundle. ZIP contents start at the plugin root; tarballs contain a directory named for the plugin. Workstation installation records, Git credentials, dependency installations, and build caches are excluded.
 
@@ -61,11 +61,11 @@ claude plugin validate --strict --profile directory plugins/mongodb
 claude plugin validate --strict .claude-plugin/marketplace.json
 ```
 
-For OpenCode SDK checks and separate npm archives, use Node.js 22 or newer:
+For OpenCode and DeepSeek Harness adapter checks and separate npm archives, use Node.js 22 or newer:
 
 ```sh
 npm install --ignore-scripts --no-package-lock
-node --test tests/opencode.test.mjs
+node --test tests/opencode.test.mjs tests/dsh.test.mjs
 npm pack --ignore-scripts --workspaces --pack-destination dist
 ```
 
@@ -79,7 +79,7 @@ The daily workflow runs `sync`, which reads each upstream's configured manifest 
 
 For a manual release, review and commit source and generated changes through your normal process. Include `distribution.lock.json`, `plugins/`, the three catalogs, and root `package.json`. Push to the branch tracked by your marketplaces. Keep `dist/`, `node_modules/`, and `.cache/` out of commits.
 
-Consumers need their host's updater enabled. Claude Code has a marketplace switch, Cursor team marketplaces have Auto Refresh, Pi supports package updates and unpinned startup packages, and OpenCode v2 has an update command. Codex custom-marketplace refresh and Antigravity Git/local refresh need verification in the deployed host. See the [installation guide](native-install.md).
+Consumers need their host's updater enabled. Claude Code has a marketplace switch, Cursor team marketplaces have Auto Refresh, Pi supports package updates and unpinned startup packages, OpenCode v2 has an update command, and DeepSeek Harness profiles update through `dsh plugin` or the Plugins UI. Codex custom-marketplace refresh and Antigravity Git/local refresh need verification in the deployed host. See the [installation guide](native-install.md).
 
 ## Publish separate npm releases
 

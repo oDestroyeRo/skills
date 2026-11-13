@@ -178,6 +178,34 @@ After refreshing the checkout, re-run the local install and check the version wi
 
 For marketplace delivery, submit each standalone plugin through Antigravity's official intake after validation. See [plugin authoring](https://antigravity.google/docs/build-plugins) and [marketplace installation](https://antigravity.google/docs/marketplace).
 
+## DeepSeek Harness
+
+Install the Git subdirectory bundles you want into a DeepSeek Harness profile (such as `web`, `headless`, `sdk`, `acp`, or a custom profile name; requires `pnpm` on `PATH`):
+
+```sh
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/mattpocock'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/pstack'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/tstack'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/cc'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/mongodb'
+```
+
+For local testing from a checkout without installing workspace dependencies, pass `file:` directory specs (or `dist/<name>-<version>.tar.gz` archives); omit `file:` to link directly after running `npm install --ignore-scripts --no-package-lock` in the checkout:
+
+```sh
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/mattpocock
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/pstack
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/tstack
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/cc
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/mongodb
+```
+
+After publishing the separate npm packages, you can also install `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, and `@odestroyero/mongodb-skills` with `dsh plugin --profile <profile> add` or from the **Plugins** page in Web and Desktop. For the Desktop profile, initialize Desktop once and quit it before running Desktop's bundled `dsh plugin --profile desktop` command, or install through Desktop's **Plugins** UI.
+
+Each bundle's `cordis.patch.yml` mounts `dsh.mjs` (`<package>/dsh`), registering only that collection on `ctx.skills` at bundled rank so `.dsh/skills` and `~/.dsh/skills` overrides still win. Invoke user-invocable skills with `/mattpocock-code-review`, `/pstack-poteto-mode`, `/tstack-full-stop`, `/anthropic-frontend-design`, or `/mongodb-mongodb-query-optimizer`; model-invocable skills also appear in `<available_skills>` when `@deepseek-ai/dsh-tool-skill` is active.
+
+Refresh Git or registry bundles with `dsh plugin --profile <profile> update`, or refresh linked local checkouts with `python3 scripts/skills.py update`. Profiles with `dsh-hmr` enabled (such as `web`) reload live; startup-only profiles apply changes on the next launch. See [`@deepseek-ai/dsh`](https://www.npmjs.com/package/@deepseek-ai/dsh) and the [DeepSeek Harness runtime notes](harnesses.md#deepseek-harness).
+
 ## T3 Code
 
 Install the collections through the provider you use in T3. Codex and Claude Code use the marketplace entries; Pi and OpenCode use their per-collection packages. Start a new provider session or refresh its picker after installation.
