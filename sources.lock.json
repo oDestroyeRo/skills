@@ -28,8 +28,8 @@
       "repository": "https://github.com/cursor/plugins.git",
       "ref": "main",
       "root": "pstack",
-      "commit": "bf0c7cd80abdbf7fe47b634978a7d1b4071f71a7",
-      "sha256": "608395967e0ec64d19ed30fe106e6dece4413a97c083cbe3bcbee3e402e9f677",
+      "commit": "e1cc03121a0e71129a4fb730d7c5528a0a3e43c8",
+      "sha256": "8ef4d957d694a6c62ca6c8d37923b52e208c8c880263457e7b9b859b215a6121",
       "exclude_paths": [
         ".gitignore"
       ]
@@ -86,8 +86,8 @@
       "repository": "https://github.com/mongodb/agent-skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "7b44a4a06a8ac94f9911d7c94f3f7dc4a13d2d0a",
-      "sha256": "4b9801251d71f31d9e9f1f651f57b486b32b4670a74bbbcfc12b5296238cfb0a",
+      "commit": "d649b461ece46f485f86f069d4220e61e6df68f6",
+      "sha256": "69107d6d9f5524d17c1f2a19bfb83b7d8568f6fe8a1a83b98528f49aa7b7ead1",
       "exclude_paths": [
         ".agents",
         ".claude-plugin",

@@ -5,8 +5,8 @@
       "repository": "https://github.com/cursor/plugins.git",
       "ref": "main",
       "root": "pstack",
-      "commit": "bf0c7cd80abdbf7fe47b634978a7d1b4071f71a7",
-      "sha256": "608395967e0ec64d19ed30fe106e6dece4413a97c083cbe3bcbee3e402e9f677",
+      "commit": "e1cc03121a0e71129a4fb730d7c5528a0a3e43c8",
+      "sha256": "8ef4d957d694a6c62ca6c8d37923b52e208c8c880263457e7b9b859b215a6121",
       "exclude_paths": [
         ".gitignore"
       ]
