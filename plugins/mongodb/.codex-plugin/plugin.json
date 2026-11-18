@@ -1,6 +1,6 @@
 {
   "name": "mongodb",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",

@@ -5,8 +5,8 @@
       "repository": "https://github.com/mongodb/agent-skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "d649b461ece46f485f86f069d4220e61e6df68f6",
-      "sha256": "69107d6d9f5524d17c1f2a19bfb83b7d8568f6fe8a1a83b98528f49aa7b7ead1",
+      "commit": "c12b25ccd009da8689976db63324e749e5ca2ad2",
+      "sha256": "0731487bee3575220679ae989ad8a0dafd50d97ec137c79ae8f57db4dda10e29",
       "exclude_paths": [
         ".agents",
         ".claude-plugin",
