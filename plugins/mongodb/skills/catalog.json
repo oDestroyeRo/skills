@@ -1,5 +1,11 @@
 [
   {
+    "name": "mongodb-mongodb",
+    "source": "mongodb",
+    "upstream_name": "mongodb",
+    "path": "skills/mongodb/SKILL.md"
+  },
+  {
     "name": "mongodb-mongodb-atlas-stream-processing",
     "source": "mongodb",
     "upstream_name": "mongodb-atlas-stream-processing",

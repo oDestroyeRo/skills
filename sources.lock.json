@@ -5,8 +5,8 @@
       "repository": "https://github.com/mattpocock/skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "5863806dd4e15c63174bee4e7515a4256792ecfa",
-      "sha256": "5560591a775c3435868d50b0d716d084fa49ea08281caa7e2f6051371bfe620e",
+      "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "sha256": "e925c67cc92d349d6f920960d68c96097d6252482c3bc8c6388be7da0b77aa6e",
       "exclude_paths": [
         ".agents",
         ".changeset",
@@ -28,8 +28,8 @@
       "repository": "https://github.com/cursor/plugins.git",
       "ref": "main",
       "root": "pstack",
-      "commit": "e58dd043600587dbaf58ba315e7f2b38373eeb43",
-      "sha256": "8594f82c1207d76da8e9cacc2225c51ded25531200a34f9c586b53d39da50639",
+      "commit": "aaeb0ea3a0584995aa8f55ce44c6c5259414b896",
+      "sha256": "0f3d9b7f996d9046f64391e8fbac27dbecec2092a5be88e5e1452590e34cf383",
       "exclude_paths": [
         ".gitignore"
       ]
@@ -86,8 +86,8 @@
       "repository": "https://github.com/mongodb/agent-skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "c12b25ccd009da8689976db63324e749e5ca2ad2",
-      "sha256": "0731487bee3575220679ae989ad8a0dafd50d97ec137c79ae8f57db4dda10e29",
+      "commit": "ff9a88211c5a9fa74012bfa8b797132d510f9b44",
+      "sha256": "abf86ee7c68e00c58322a3c9d51d9af3e87b7e65169c5a0a43a4c9210c755c3e",
       "exclude_paths": [
         ".agents",
         ".claude-plugin",
