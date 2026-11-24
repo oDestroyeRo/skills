@@ -282,6 +282,12 @@
     "path": "skills/reflect/SKILL.md"
   },
   {
+    "name": "pstack-reframe",
+    "source": "pstack",
+    "upstream_name": "reframe",
+    "path": "skills/reframe/SKILL.md"
+  },
+  {
     "name": "pstack-setup-pstack",
     "source": "pstack",
     "upstream_name": "setup-pstack",
