@@ -5,8 +5,8 @@
       "repository": "https://github.com/mattpocock/skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
-      "sha256": "e925c67cc92d349d6f920960d68c96097d6252482c3bc8c6388be7da0b77aa6e",
+      "commit": "d65391149dbb5fe76478e76fa8d5122b2aa5a70e",
+      "sha256": "c707cab0e5ad80d84e66a4e43e7d14c0a28dea507690db034c2c3aff954e55ba",
       "exclude_paths": [
         ".agents",
         ".changeset",
