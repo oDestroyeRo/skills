@@ -2,7 +2,7 @@
 
 Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.
 
-Version 1.0.34. This bundle contains 9 namespaced skills.
+Version 1.0.35. This bundle contains 9 namespaced skills.
 
 Install in Claude Code with `claude plugin install mongodb --marketplace oDestroyeRo/skills`.
 
