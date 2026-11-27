@@ -3,54 +3,63 @@
     "name": "mongodb-mongodb",
     "source": "mongodb",
     "upstream_name": "mongodb",
-    "path": "skills/mongodb/SKILL.md"
+    "path": "skills/mongodb/SKILL.md",
+    "native_name": "mongodb"
   },
   {
     "name": "mongodb-mongodb-atlas-stream-processing",
     "source": "mongodb",
     "upstream_name": "mongodb-atlas-stream-processing",
-    "path": "skills/mongodb-atlas-stream-processing/SKILL.md"
+    "path": "skills/mongodb-atlas-stream-processing/SKILL.md",
+    "native_name": "atlas-stream-processing"
   },
   {
     "name": "mongodb-mongodb-connection",
     "source": "mongodb",
     "upstream_name": "mongodb-connection",
-    "path": "skills/mongodb-connection/SKILL.md"
+    "path": "skills/mongodb-connection/SKILL.md",
+    "native_name": "connection"
   },
   {
     "name": "mongodb-mongodb-mcp-setup",
     "source": "mongodb",
     "upstream_name": "mongodb-mcp-setup",
-    "path": "skills/mongodb-mcp-setup/SKILL.md"
+    "path": "skills/mongodb-mcp-setup/SKILL.md",
+    "native_name": "mcp-setup"
   },
   {
     "name": "mongodb-mongodb-natural-language-querying",
     "source": "mongodb",
     "upstream_name": "mongodb-natural-language-querying",
-    "path": "skills/mongodb-natural-language-querying/SKILL.md"
+    "path": "skills/mongodb-natural-language-querying/SKILL.md",
+    "native_name": "natural-language-querying"
   },
   {
     "name": "mongodb-mongodb-qe-size-estimation",
     "source": "mongodb",
     "upstream_name": "mongodb-qe-size-estimation",
-    "path": "skills/mongodb-qe-size-estimation/SKILL.md"
+    "path": "skills/mongodb-qe-size-estimation/SKILL.md",
+    "native_name": "qe-size-estimation"
   },
   {
     "name": "mongodb-mongodb-query-optimizer",
     "source": "mongodb",
     "upstream_name": "mongodb-query-optimizer",
-    "path": "skills/mongodb-query-optimizer/SKILL.md"
+    "path": "skills/mongodb-query-optimizer/SKILL.md",
+    "native_name": "query-optimizer"
   },
   {
     "name": "mongodb-mongodb-schema-design",
     "source": "mongodb",
     "upstream_name": "mongodb-schema-design",
-    "path": "skills/mongodb-schema-design/SKILL.md"
+    "path": "skills/mongodb-schema-design/SKILL.md",
+    "native_name": "schema-design"
   },
   {
     "name": "mongodb-mongodb-search-and-ai",
     "source": "mongodb",
     "upstream_name": "mongodb-search-and-ai",
-    "path": "skills/mongodb-search-and-ai/SKILL.md"
+    "path": "skills/mongodb-search-and-ai/SKILL.md",
+    "native_name": "search-and-ai"
   }
 ]

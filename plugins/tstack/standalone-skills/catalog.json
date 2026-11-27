@@ -3,54 +3,63 @@
     "name": "tstack-babysit-pr",
     "source": "tstack",
     "upstream_name": "babysit-pr",
-    "path": "skills/babysit-pr/SKILL.md"
+    "path": "skills/babysit-pr/SKILL.md",
+    "native_name": "babysit-pr"
   },
   {
     "name": "tstack-council",
     "source": "tstack",
     "upstream_name": "council",
-    "path": "skills/council/SKILL.md"
+    "path": "skills/council/SKILL.md",
+    "native_name": "council"
   },
   {
     "name": "tstack-file-pr",
     "source": "tstack",
     "upstream_name": "file-pr",
-    "path": "skills/file-pr/SKILL.md"
+    "path": "skills/file-pr/SKILL.md",
+    "native_name": "file-pr"
   },
   {
     "name": "tstack-full-send",
     "source": "tstack",
     "upstream_name": "full-send",
-    "path": "skills/full-send/SKILL.md"
+    "path": "skills/full-send/SKILL.md",
+    "native_name": "full-send"
   },
   {
     "name": "tstack-full-stop",
     "source": "tstack",
     "upstream_name": "full-stop",
-    "path": "skills/full-stop/SKILL.md"
+    "path": "skills/full-stop/SKILL.md",
+    "native_name": "full-stop"
   },
   {
     "name": "tstack-leaving-pr-comments",
     "source": "tstack",
     "upstream_name": "leaving-pr-comments",
-    "path": "skills/leaving-pr-comments/SKILL.md"
+    "path": "skills/leaving-pr-comments/SKILL.md",
+    "native_name": "leaving-pr-comments"
   },
   {
     "name": "tstack-modernize",
     "source": "tstack",
     "upstream_name": "modernize",
-    "path": "skills/modernize/SKILL.md"
+    "path": "skills/modernize/SKILL.md",
+    "native_name": "modernize"
   },
   {
     "name": "tstack-sol-loop",
     "source": "tstack",
     "upstream_name": "sol-loop",
-    "path": "skills/sol-loop/SKILL.md"
+    "path": "skills/sol-loop/SKILL.md",
+    "native_name": "sol-loop"
   },
   {
     "name": "tstack-takeover",
     "source": "tstack",
     "upstream_name": "takeover",
-    "path": "skills/takeover/SKILL.md"
+    "path": "skills/takeover/SKILL.md",
+    "native_name": "takeover"
   }
 ]

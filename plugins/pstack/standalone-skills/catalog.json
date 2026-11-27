@@ -3,354 +3,413 @@
     "name": "pstack-architect",
     "source": "pstack",
     "upstream_name": "architect",
-    "path": "skills/architect/SKILL.md"
+    "path": "skills/architect/SKILL.md",
+    "native_name": "architect"
   },
   {
     "name": "pstack-arena",
     "source": "pstack",
     "upstream_name": "arena",
-    "path": "skills/arena/SKILL.md"
+    "path": "skills/arena/SKILL.md",
+    "native_name": "arena"
   },
   {
     "name": "pstack-automate-me",
     "source": "pstack",
     "upstream_name": "automate-me",
-    "path": "skills/automate-me/SKILL.md"
+    "path": "skills/automate-me/SKILL.md",
+    "native_name": "automate-me"
   },
   {
     "name": "pstack-benchmark-checklist",
     "source": "pstack",
     "upstream_name": "benchmark-checklist",
-    "path": "skills/benchmark-checklist/SKILL.md"
+    "path": "skills/benchmark-checklist/SKILL.md",
+    "native_name": "benchmark-checklist"
   },
   {
     "name": "pstack-blast-radius",
     "source": "pstack",
     "upstream_name": "blast-radius",
-    "path": "skills/blast-radius/SKILL.md"
+    "path": "skills/blast-radius/SKILL.md",
+    "native_name": "blast-radius"
   },
   {
     "name": "pstack-bro",
     "source": "pstack",
     "upstream_name": "bro",
-    "path": "skills/bro/SKILL.md"
+    "path": "skills/bro/SKILL.md",
+    "native_name": "bro"
   },
   {
     "name": "pstack-correct",
     "source": "pstack",
     "upstream_name": "correct",
-    "path": "skills/correct/SKILL.md"
+    "path": "skills/correct/SKILL.md",
+    "native_name": "correct"
   },
   {
     "name": "pstack-create-formal-verification-skill",
     "source": "pstack",
     "upstream_name": "create-formal-verification-skill",
-    "path": "skills/create-formal-verification-skill/SKILL.md"
+    "path": "skills/create-formal-verification-skill/SKILL.md",
+    "native_name": "create-formal-verification-skill"
   },
   {
     "name": "pstack-create-verification-skill",
     "source": "pstack",
     "upstream_name": "create-verification-skill",
-    "path": "skills/create-verification-skill/SKILL.md"
+    "path": "skills/create-verification-skill/SKILL.md",
+    "native_name": "create-verification-skill"
   },
   {
     "name": "pstack-figure-it-out",
     "source": "pstack",
     "upstream_name": "figure-it-out",
-    "path": "skills/figure-it-out/SKILL.md"
+    "path": "skills/figure-it-out/SKILL.md",
+    "native_name": "figure-it-out"
   },
   {
     "name": "pstack-how",
     "source": "pstack",
     "upstream_name": "how",
-    "path": "skills/how/SKILL.md"
+    "path": "skills/how/SKILL.md",
+    "native_name": "how"
   },
   {
     "name": "pstack-in-your-own-words",
     "source": "pstack",
     "upstream_name": "in-your-own-words",
-    "path": "skills/in-your-own-words/SKILL.md"
+    "path": "skills/in-your-own-words/SKILL.md",
+    "native_name": "in-your-own-words"
   },
   {
     "name": "pstack-interrogate",
     "source": "pstack",
     "upstream_name": "interrogate",
-    "path": "skills/interrogate/SKILL.md"
+    "path": "skills/interrogate/SKILL.md",
+    "native_name": "interrogate"
   },
   {
     "name": "pstack-ketchup",
     "source": "pstack",
     "upstream_name": "ketchup",
-    "path": "skills/ketchup/SKILL.md"
+    "path": "skills/ketchup/SKILL.md",
+    "native_name": "ketchup"
   },
   {
     "name": "pstack-ketchup-video",
     "source": "pstack",
     "upstream_name": "ketchup-video",
-    "path": "skills/ketchup-video/SKILL.md"
+    "path": "skills/ketchup-video/SKILL.md",
+    "native_name": "ketchup-video"
   },
   {
     "name": "pstack-maintain-formal-verification-skill",
     "source": "pstack",
     "upstream_name": "maintain-formal-verification-skill",
-    "path": "skills/maintain-formal-verification-skill/SKILL.md"
+    "path": "skills/maintain-formal-verification-skill/SKILL.md",
+    "native_name": "maintain-formal-verification-skill"
   },
   {
     "name": "pstack-maintain-verification-skill",
     "source": "pstack",
     "upstream_name": "maintain-verification-skill",
-    "path": "skills/maintain-verification-skill/SKILL.md"
+    "path": "skills/maintain-verification-skill/SKILL.md",
+    "native_name": "maintain-verification-skill"
   },
   {
     "name": "pstack-make-bot-ui",
     "source": "pstack",
     "upstream_name": "make-bot-ui",
-    "path": "skills/make-bot-ui/SKILL.md"
+    "path": "skills/make-bot-ui/SKILL.md",
+    "native_name": "make-bot-ui"
   },
   {
     "name": "pstack-no-comments",
     "source": "pstack",
     "upstream_name": "no-comments",
-    "path": "skills/no-comments/SKILL.md"
+    "path": "skills/no-comments/SKILL.md",
+    "native_name": "no-comments"
   },
   {
     "name": "pstack-poteto-help",
     "source": "pstack",
     "upstream_name": "poteto-help",
-    "path": "skills/poteto-help/SKILL.md"
+    "path": "skills/poteto-help/SKILL.md",
+    "native_name": "poteto-help"
   },
   {
     "name": "pstack-poteto-mode",
     "source": "pstack",
     "upstream_name": "poteto-mode",
-    "path": "skills/poteto-mode/SKILL.md"
+    "path": "skills/poteto-mode/SKILL.md",
+    "native_name": "poteto-mode"
   },
   {
     "name": "pstack-principle-attack-the-premise",
     "source": "pstack",
     "upstream_name": "principle-attack-the-premise",
-    "path": "skills/principle-attack-the-premise/SKILL.md"
+    "path": "skills/principle-attack-the-premise/SKILL.md",
+    "native_name": "principle-attack-the-premise"
   },
   {
     "name": "pstack-principle-boundary-discipline",
     "source": "pstack",
     "upstream_name": "principle-boundary-discipline",
-    "path": "skills/principle-boundary-discipline/SKILL.md"
+    "path": "skills/principle-boundary-discipline/SKILL.md",
+    "native_name": "principle-boundary-discipline"
   },
   {
     "name": "pstack-principle-build-the-lever",
     "source": "pstack",
     "upstream_name": "principle-build-the-lever",
-    "path": "skills/principle-build-the-lever/SKILL.md"
+    "path": "skills/principle-build-the-lever/SKILL.md",
+    "native_name": "principle-build-the-lever"
   },
   {
     "name": "pstack-principle-encode-lessons-in-structure",
     "source": "pstack",
     "upstream_name": "principle-encode-lessons-in-structure",
-    "path": "skills/principle-encode-lessons-in-structure/SKILL.md"
+    "path": "skills/principle-encode-lessons-in-structure/SKILL.md",
+    "native_name": "principle-encode-lessons-in-structure"
   },
   {
     "name": "pstack-principle-exhaust-the-design-space",
     "source": "pstack",
     "upstream_name": "principle-exhaust-the-design-space",
-    "path": "skills/principle-exhaust-the-design-space/SKILL.md"
+    "path": "skills/principle-exhaust-the-design-space/SKILL.md",
+    "native_name": "principle-exhaust-the-design-space"
   },
   {
     "name": "pstack-principle-experience-first",
     "source": "pstack",
     "upstream_name": "principle-experience-first",
-    "path": "skills/principle-experience-first/SKILL.md"
+    "path": "skills/principle-experience-first/SKILL.md",
+    "native_name": "principle-experience-first"
   },
   {
     "name": "pstack-principle-explain-the-number",
     "source": "pstack",
     "upstream_name": "principle-explain-the-number",
-    "path": "skills/principle-explain-the-number/SKILL.md"
+    "path": "skills/principle-explain-the-number/SKILL.md",
+    "native_name": "principle-explain-the-number"
   },
   {
     "name": "pstack-principle-fix-root-causes",
     "source": "pstack",
     "upstream_name": "principle-fix-root-causes",
-    "path": "skills/principle-fix-root-causes/SKILL.md"
+    "path": "skills/principle-fix-root-causes/SKILL.md",
+    "native_name": "principle-fix-root-causes"
   },
   {
     "name": "pstack-principle-foundational-thinking",
     "source": "pstack",
     "upstream_name": "principle-foundational-thinking",
-    "path": "skills/principle-foundational-thinking/SKILL.md"
+    "path": "skills/principle-foundational-thinking/SKILL.md",
+    "native_name": "principle-foundational-thinking"
   },
   {
     "name": "pstack-principle-guard-the-context-window",
     "source": "pstack",
     "upstream_name": "principle-guard-the-context-window",
-    "path": "skills/principle-guard-the-context-window/SKILL.md"
+    "path": "skills/principle-guard-the-context-window/SKILL.md",
+    "native_name": "principle-guard-the-context-window"
   },
   {
     "name": "pstack-principle-laziness-protocol",
     "source": "pstack",
     "upstream_name": "principle-laziness-protocol",
-    "path": "skills/principle-laziness-protocol/SKILL.md"
+    "path": "skills/principle-laziness-protocol/SKILL.md",
+    "native_name": "principle-laziness-protocol"
   },
   {
     "name": "pstack-principle-make-operations-idempotent",
     "source": "pstack",
     "upstream_name": "principle-make-operations-idempotent",
-    "path": "skills/principle-make-operations-idempotent/SKILL.md"
+    "path": "skills/principle-make-operations-idempotent/SKILL.md",
+    "native_name": "principle-make-operations-idempotent"
   },
   {
     "name": "pstack-principle-migrate-callers-then-delete-legacy-apis",
     "source": "pstack",
     "upstream_name": "principle-migrate-callers-then-delete-legacy-apis",
-    "path": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md"
+    "path": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+    "native_name": "principle-migrate-callers-then-delete-legacy-apis"
   },
   {
     "name": "pstack-principle-minimize-reader-load",
     "source": "pstack",
     "upstream_name": "principle-minimize-reader-load",
-    "path": "skills/principle-minimize-reader-load/SKILL.md"
+    "path": "skills/principle-minimize-reader-load/SKILL.md",
+    "native_name": "principle-minimize-reader-load"
   },
   {
     "name": "pstack-principle-model-the-domain",
     "source": "pstack",
     "upstream_name": "principle-model-the-domain",
-    "path": "skills/principle-model-the-domain/SKILL.md"
+    "path": "skills/principle-model-the-domain/SKILL.md",
+    "native_name": "principle-model-the-domain"
   },
   {
     "name": "pstack-principle-never-block-on-the-human",
     "source": "pstack",
     "upstream_name": "principle-never-block-on-the-human",
-    "path": "skills/principle-never-block-on-the-human/SKILL.md"
+    "path": "skills/principle-never-block-on-the-human/SKILL.md",
+    "native_name": "principle-never-block-on-the-human"
   },
   {
     "name": "pstack-principle-outcome-oriented-execution",
     "source": "pstack",
     "upstream_name": "principle-outcome-oriented-execution",
-    "path": "skills/principle-outcome-oriented-execution/SKILL.md"
+    "path": "skills/principle-outcome-oriented-execution/SKILL.md",
+    "native_name": "principle-outcome-oriented-execution"
   },
   {
     "name": "pstack-principle-prove-it-works",
     "source": "pstack",
     "upstream_name": "principle-prove-it-works",
-    "path": "skills/principle-prove-it-works/SKILL.md"
+    "path": "skills/principle-prove-it-works/SKILL.md",
+    "native_name": "principle-prove-it-works"
   },
   {
     "name": "pstack-principle-redesign-from-first-principles",
     "source": "pstack",
     "upstream_name": "principle-redesign-from-first-principles",
-    "path": "skills/principle-redesign-from-first-principles/SKILL.md"
+    "path": "skills/principle-redesign-from-first-principles/SKILL.md",
+    "native_name": "principle-redesign-from-first-principles"
   },
   {
     "name": "pstack-principle-separate-before-serializing-shared-state",
     "source": "pstack",
     "upstream_name": "principle-separate-before-serializing-shared-state",
-    "path": "skills/principle-separate-before-serializing-shared-state/SKILL.md"
+    "path": "skills/principle-separate-before-serializing-shared-state/SKILL.md",
+    "native_name": "principle-separate-before-serializing-shared-state"
   },
   {
     "name": "pstack-principle-sequence-verifiable-units",
     "source": "pstack",
     "upstream_name": "principle-sequence-verifiable-units",
-    "path": "skills/principle-sequence-verifiable-units/SKILL.md"
+    "path": "skills/principle-sequence-verifiable-units/SKILL.md",
+    "native_name": "principle-sequence-verifiable-units"
   },
   {
     "name": "pstack-principle-subtract-before-you-add",
     "source": "pstack",
     "upstream_name": "principle-subtract-before-you-add",
-    "path": "skills/principle-subtract-before-you-add/SKILL.md"
+    "path": "skills/principle-subtract-before-you-add/SKILL.md",
+    "native_name": "principle-subtract-before-you-add"
   },
   {
     "name": "pstack-principle-test-behavior-not-implementation",
     "source": "pstack",
     "upstream_name": "principle-test-behavior-not-implementation",
-    "path": "skills/principle-test-behavior-not-implementation/SKILL.md"
+    "path": "skills/principle-test-behavior-not-implementation/SKILL.md",
+    "native_name": "principle-test-behavior-not-implementation"
   },
   {
     "name": "pstack-principle-type-system-discipline",
     "source": "pstack",
     "upstream_name": "principle-type-system-discipline",
-    "path": "skills/principle-type-system-discipline/SKILL.md"
+    "path": "skills/principle-type-system-discipline/SKILL.md",
+    "native_name": "principle-type-system-discipline"
   },
   {
     "name": "pstack-recall",
     "source": "pstack",
     "upstream_name": "recall",
-    "path": "skills/recall/SKILL.md"
+    "path": "skills/recall/SKILL.md",
+    "native_name": "recall"
   },
   {
     "name": "pstack-reflect",
     "source": "pstack",
     "upstream_name": "reflect",
-    "path": "skills/reflect/SKILL.md"
+    "path": "skills/reflect/SKILL.md",
+    "native_name": "reflect"
   },
   {
     "name": "pstack-reframe",
     "source": "pstack",
     "upstream_name": "reframe",
-    "path": "skills/reframe/SKILL.md"
+    "path": "skills/reframe/SKILL.md",
+    "native_name": "reframe"
   },
   {
     "name": "pstack-setup-pstack",
     "source": "pstack",
     "upstream_name": "setup-pstack",
-    "path": "skills/setup-pstack/SKILL.md"
+    "path": "skills/setup-pstack/SKILL.md",
+    "native_name": "setup-pstack"
   },
   {
     "name": "pstack-sharpen",
     "source": "pstack",
     "upstream_name": "sharpen",
-    "path": "skills/sharpen/SKILL.md"
+    "path": "skills/sharpen/SKILL.md",
+    "native_name": "sharpen"
   },
   {
     "name": "pstack-show-me-your-work",
     "source": "pstack",
     "upstream_name": "show-me-your-work",
-    "path": "skills/show-me-your-work/SKILL.md"
+    "path": "skills/show-me-your-work/SKILL.md",
+    "native_name": "show-me-your-work"
   },
   {
     "name": "pstack-statechart",
     "source": "pstack",
     "upstream_name": "statechart",
-    "path": "skills/statechart/SKILL.md"
+    "path": "skills/statechart/SKILL.md",
+    "native_name": "statechart"
   },
   {
     "name": "pstack-swarm",
     "source": "pstack",
     "upstream_name": "swarm",
-    "path": "skills/swarm/SKILL.md"
+    "path": "skills/swarm/SKILL.md",
+    "native_name": "swarm"
   },
   {
     "name": "pstack-tdd",
     "source": "pstack",
     "upstream_name": "tdd",
-    "path": "skills/tdd/SKILL.md"
+    "path": "skills/tdd/SKILL.md",
+    "native_name": "tdd"
   },
   {
     "name": "pstack-teach",
     "source": "pstack",
     "upstream_name": "teach",
-    "path": "skills/teach/SKILL.md"
+    "path": "skills/teach/SKILL.md",
+    "native_name": "teach"
   },
   {
     "name": "pstack-technical-writing",
     "source": "pstack",
     "upstream_name": "technical-writing",
-    "path": "skills/technical-writing/SKILL.md"
+    "path": "skills/technical-writing/SKILL.md",
+    "native_name": "technical-writing"
   },
   {
     "name": "pstack-typescript-best-practices",
     "source": "pstack",
     "upstream_name": "typescript-best-practices",
-    "path": "skills/typescript-best-practices/SKILL.md"
+    "path": "skills/typescript-best-practices/SKILL.md",
+    "native_name": "typescript-best-practices"
   },
   {
     "name": "pstack-unslop",
     "source": "pstack",
     "upstream_name": "unslop",
-    "path": "skills/unslop/SKILL.md"
+    "path": "skills/unslop/SKILL.md",
+    "native_name": "unslop"
   },
   {
     "name": "pstack-why",
     "source": "pstack",
     "upstream_name": "why",
-    "path": "skills/why/SKILL.md"
+    "path": "skills/why/SKILL.md",
+    "native_name": "why"
   }
 ]

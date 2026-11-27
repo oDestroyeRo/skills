@@ -10,7 +10,7 @@ plugins/cc/     Anthropic's redistributable skills
 plugins/mongodb/           MongoDB's query, schema, search, and Atlas skills
 ```
 
-Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Codex and Claude Code use names such as `pstack:how` for native plugins. Folder installations use prefixed names such as `pstack-how`.
+Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Codex, Claude Code, and OpenCode v2 use names such as `pstack:how` for native plugins. Folder installations use prefixed names such as `pstack-how`.
 
 If you installed the Anthropic collection under its previous plugin name, reinstall it as `cc` using your harness's instructions below. The plugin identity changed. Skill names and the npm package `@odestroyero/anthropic-skills` stay the same.
 
@@ -143,7 +143,7 @@ For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
 }
 ```
 
-Each adapter targets `@opencode/plugin` 2.2.5 and registers only its collection through the v2 skill transform API. Upstream agents, hooks, and services still require their own configuration. OpenCode v1 has a different plugin API; use the folder installer there.
+Each adapter targets `@opencode/plugin` 2.2.5 and registers its collection through the v2 skill transform API. Skills appear with qualified names such as `mattpocock:tdd` and `pstack:tdd`. Configure upstream agents, hooks, and services separately. For OpenCode v1, use the folder installer.
 
 Check and apply package updates with:
 

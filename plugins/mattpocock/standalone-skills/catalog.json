@@ -3,162 +3,189 @@
     "name": "mattpocock-ask-matt",
     "source": "mattpocock",
     "upstream_name": "ask-matt",
-    "path": "skills/engineering/ask-matt/SKILL.md"
+    "path": "skills/engineering/ask-matt/SKILL.md",
+    "native_name": "ask-matt"
   },
   {
     "name": "mattpocock-code-review",
     "source": "mattpocock",
     "upstream_name": "code-review",
-    "path": "skills/engineering/code-review/SKILL.md"
+    "path": "skills/engineering/code-review/SKILL.md",
+    "native_name": "code-review"
   },
   {
     "name": "mattpocock-codebase-design",
     "source": "mattpocock",
     "upstream_name": "codebase-design",
-    "path": "skills/engineering/codebase-design/SKILL.md"
+    "path": "skills/engineering/codebase-design/SKILL.md",
+    "native_name": "codebase-design"
   },
   {
     "name": "mattpocock-diagnosing-bugs",
     "source": "mattpocock",
     "upstream_name": "diagnosing-bugs",
-    "path": "skills/engineering/diagnosing-bugs/SKILL.md"
+    "path": "skills/engineering/diagnosing-bugs/SKILL.md",
+    "native_name": "diagnosing-bugs"
   },
   {
     "name": "mattpocock-domain-modeling",
     "source": "mattpocock",
     "upstream_name": "domain-modeling",
-    "path": "skills/engineering/domain-modeling/SKILL.md"
+    "path": "skills/engineering/domain-modeling/SKILL.md",
+    "native_name": "domain-modeling"
   },
   {
     "name": "mattpocock-grill-with-docs",
     "source": "mattpocock",
     "upstream_name": "grill-with-docs",
-    "path": "skills/engineering/grill-with-docs/SKILL.md"
+    "path": "skills/engineering/grill-with-docs/SKILL.md",
+    "native_name": "grill-with-docs"
   },
   {
     "name": "mattpocock-implement",
     "source": "mattpocock",
     "upstream_name": "implement",
-    "path": "skills/engineering/implement/SKILL.md"
+    "path": "skills/engineering/implement/SKILL.md",
+    "native_name": "implement"
   },
   {
     "name": "mattpocock-implement-spec",
     "source": "mattpocock",
     "upstream_name": "implement-spec",
-    "path": "skills/engineering/implement-spec/SKILL.md"
+    "path": "skills/engineering/implement-spec/SKILL.md",
+    "native_name": "implement-spec"
   },
   {
     "name": "mattpocock-improve-codebase-architecture",
     "source": "mattpocock",
     "upstream_name": "improve-codebase-architecture",
-    "path": "skills/engineering/improve-codebase-architecture/SKILL.md"
+    "path": "skills/engineering/improve-codebase-architecture/SKILL.md",
+    "native_name": "improve-codebase-architecture"
   },
   {
     "name": "mattpocock-pr",
     "source": "mattpocock",
     "upstream_name": "pr",
-    "path": "skills/engineering/pr/SKILL.md"
+    "path": "skills/engineering/pr/SKILL.md",
+    "native_name": "pr"
   },
   {
     "name": "mattpocock-prototype",
     "source": "mattpocock",
     "upstream_name": "prototype",
-    "path": "skills/engineering/prototype/SKILL.md"
+    "path": "skills/engineering/prototype/SKILL.md",
+    "native_name": "prototype"
   },
   {
     "name": "mattpocock-research",
     "source": "mattpocock",
     "upstream_name": "research",
-    "path": "skills/engineering/research/SKILL.md"
+    "path": "skills/engineering/research/SKILL.md",
+    "native_name": "research"
   },
   {
     "name": "mattpocock-retro",
     "source": "mattpocock",
     "upstream_name": "retro",
-    "path": "skills/engineering/retro/SKILL.md"
+    "path": "skills/engineering/retro/SKILL.md",
+    "native_name": "retro"
   },
   {
     "name": "mattpocock-setup-matt-pocock-skills",
     "source": "mattpocock",
     "upstream_name": "setup-matt-pocock-skills",
-    "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md"
+    "path": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+    "native_name": "setup-matt-pocock-skills"
   },
   {
     "name": "mattpocock-tdd",
     "source": "mattpocock",
     "upstream_name": "tdd",
-    "path": "skills/engineering/tdd/SKILL.md"
+    "path": "skills/engineering/tdd/SKILL.md",
+    "native_name": "tdd"
   },
   {
     "name": "mattpocock-to-spec",
     "source": "mattpocock",
     "upstream_name": "to-spec",
-    "path": "skills/engineering/to-spec/SKILL.md"
+    "path": "skills/engineering/to-spec/SKILL.md",
+    "native_name": "to-spec"
   },
   {
     "name": "mattpocock-to-tickets",
     "source": "mattpocock",
     "upstream_name": "to-tickets",
-    "path": "skills/engineering/to-tickets/SKILL.md"
+    "path": "skills/engineering/to-tickets/SKILL.md",
+    "native_name": "to-tickets"
   },
   {
     "name": "mattpocock-triage",
     "source": "mattpocock",
     "upstream_name": "triage",
-    "path": "skills/engineering/triage/SKILL.md"
+    "path": "skills/engineering/triage/SKILL.md",
+    "native_name": "triage"
   },
   {
     "name": "mattpocock-wayfinder",
     "source": "mattpocock",
     "upstream_name": "wayfinder",
-    "path": "skills/engineering/wayfinder/SKILL.md"
+    "path": "skills/engineering/wayfinder/SKILL.md",
+    "native_name": "wayfinder"
   },
   {
     "name": "mattpocock-wizard",
     "source": "mattpocock",
     "upstream_name": "wizard",
-    "path": "skills/engineering/wizard/SKILL.md"
+    "path": "skills/engineering/wizard/SKILL.md",
+    "native_name": "wizard"
   },
   {
     "name": "mattpocock-grill-me",
     "source": "mattpocock",
     "upstream_name": "grill-me",
-    "path": "skills/productivity/grill-me/SKILL.md"
+    "path": "skills/productivity/grill-me/SKILL.md",
+    "native_name": "grill-me"
   },
   {
     "name": "mattpocock-grilling",
     "source": "mattpocock",
     "upstream_name": "grilling",
-    "path": "skills/productivity/grilling/SKILL.md"
+    "path": "skills/productivity/grilling/SKILL.md",
+    "native_name": "grilling"
   },
   {
     "name": "mattpocock-handoff",
     "source": "mattpocock",
     "upstream_name": "handoff",
-    "path": "skills/productivity/handoff/SKILL.md"
+    "path": "skills/productivity/handoff/SKILL.md",
+    "native_name": "handoff"
   },
   {
     "name": "mattpocock-teach",
     "source": "mattpocock",
     "upstream_name": "teach",
-    "path": "skills/productivity/teach/SKILL.md"
+    "path": "skills/productivity/teach/SKILL.md",
+    "native_name": "teach"
   },
   {
     "name": "mattpocock-to-questionnaire",
     "source": "mattpocock",
     "upstream_name": "to-questionnaire",
-    "path": "skills/productivity/to-questionnaire/SKILL.md"
+    "path": "skills/productivity/to-questionnaire/SKILL.md",
+    "native_name": "to-questionnaire"
   },
   {
     "name": "mattpocock-wait-what",
     "source": "mattpocock",
     "upstream_name": "wait-what",
-    "path": "skills/productivity/wait-what/SKILL.md"
+    "path": "skills/productivity/wait-what/SKILL.md",
+    "native_name": "wait-what"
   },
   {
     "name": "mattpocock-writing-for-agents",
     "source": "mattpocock",
     "upstream_name": "writing-for-agents",
-    "path": "skills/productivity/writing-for-agents/SKILL.md"
+    "path": "skills/productivity/writing-for-agents/SKILL.md",
+    "native_name": "writing-for-agents"
   }
 ]
