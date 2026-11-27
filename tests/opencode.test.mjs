@@ -19,12 +19,14 @@ for (const { name: collection, source } of collections) {
     await plugin.setup({
       skill: { async transform(callback) { callback({ add: (definition) => definitions.push(definition) }); } },
     });
-    assert.deepEqual(definitions.map(({ id }) => id).sort(), catalog.map(({ name }) => name).sort());
+    assert.deepEqual(definitions.map(({ id }) => id).sort(),
+      catalog.map(({ native_name }) => `${collection}:${native_name}`).sort());
     for (const definition of definitions) {
       Skill.Info.make(definition);
       const text = await readFile(definition.path, "utf8");
       const header = parse(/^---\n([\s\S]*?)\n---\n/.exec(text)[1]);
-      assert.equal(definition.name, header.name);
+      assert.equal(definition.name, `${collection}:${header.name}`);
+      assert.equal(definition.id, definition.name);
       assert.equal(definition.autoinvoke, header["disable-model-invocation"] !== true);
       assert.ok(definition.content.length > 0);
       for (const [, link] of definition.content.matchAll(/\]\(([^)]+)\)/g)) {
@@ -39,7 +41,7 @@ test("all configured collections coexist without skill-name collisions", async (
   const expected = [];
   for (const { name: collection } of collections) {
     const catalog = JSON.parse(await readFile(new URL(`../plugins/${collection}/standalone-skills/catalog.json`, import.meta.url), "utf8"));
-    expected.push(...catalog.map(({ name }) => name));
+    expected.push(...catalog.map(({ native_name }) => `${collection}:${native_name}`));
     const { default: plugin } = await import(new URL(`../plugins/${collection}/opencode.mjs`, import.meta.url));
     await plugin.setup({
       skill: {
@@ -55,4 +57,6 @@ test("all configured collections coexist without skill-name collisions", async (
     });
   }
   assert.deepEqual([...names].sort(), expected.sort());
+  assert.ok(names.has("mattpocock:tdd"));
+  assert.ok(names.has("pstack:tdd"));
 });

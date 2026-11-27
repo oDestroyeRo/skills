@@ -193,6 +193,7 @@ def populate_bundle(root, bundle, config, version, snapshot):
             fields["description"] = "description: " + json.dumps(description, ensure_ascii=False)
         short_name = original_name.removeprefix(source_prefix)
         native_name = original_name if short_name in upstream_names else short_name
+        entry["native_name"] = native_name
         for directory, name, prefix, invocation in (
             (standalone, entry["name"], source_prefix, entry["name"]),
             (bundle / "skills", native_name, plugin_prefix, plugin_prefix + native_name),

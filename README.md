@@ -2,7 +2,7 @@
 
 One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, Cursor, and DeepSeek Harness**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
 
-Upstream files stay together with their references, scripts, agent prompts, and licenses. Native Codex and Claude Code plugins use qualified names such as `pstack:how` and `mattpocock:code-review`. Folder installs use names such as `mattpocock-tdd` and `pstack-tdd` so both skills can coexist in a shared directory. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
+Upstream files stay together with their references, scripts, agent prompts, and licenses. Native Codex, Claude Code, and OpenCode v2 plugins use qualified names such as `pstack:tdd` and `mattpocock:tdd`. Folder installs use names such as `mattpocock-tdd` and `pstack-tdd` so both skills can coexist in a shared directory. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
 
 ## Install
 

@@ -9,13 +9,14 @@ export default Plugin.define({
   id: manifest.name,
   async setup(ctx) {
     const catalog = JSON.parse(await readFile(new URL("./standalone-skills/catalog.json", import.meta.url), "utf8"));
-    const definitions = await Promise.all(catalog.map(async ({ name }) => {
-      const url = new URL(`./standalone-skills/${name}/SKILL.md`, import.meta.url);
+    const definitions = await Promise.all(catalog.map(async ({ native_name: nativeName }) => {
+      const name = `${manifest.name}:${nativeName}`;
+      const url = new URL(`./skills/${nativeName}/SKILL.md`, import.meta.url);
       const text = await readFile(url, "utf8");
       const match = /^---\n([\s\S]*?)\n---\n/.exec(text);
       if (!match) throw new Error(`Missing skill frontmatter: ${name}`);
       const header = parse(match[1]);
-      if (header.name !== name || typeof header.description !== "string") {
+      if (header.name !== nativeName || typeof header.description !== "string") {
         throw new Error(`Invalid skill metadata: ${name}`);
       }
       return {
