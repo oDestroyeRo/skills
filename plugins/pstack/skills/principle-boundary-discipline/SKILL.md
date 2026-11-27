@@ -10,6 +10,6 @@ Read the complete [upstream skill](../../upstream/pstack/skills/principle-bounda
 
 Resolve `../../upstream/pstack/skills/principle-boundary-discipline/SKILL.md` to its real path. Resolve the workflow's relative file references from that upstream file, so its scripts, references, and sibling skills stay together.
 
-When it names another skill from this collection, use `pstack:<name>` or read that skill directly in [the upstream library](../../upstream/pstack). Keep this collection's skills together when names overlap with another collection.
+When it names another skill, select the entry from the same collection or read the matching file in [the upstream library](../../upstream/pstack).
 
 For harness-specific tools, delegation, models, or settings, read the [harness adapter](../../docs/harnesses.md) and apply the section for the current harness.

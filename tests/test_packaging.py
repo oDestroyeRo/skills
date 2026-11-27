@@ -32,13 +32,13 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("check")
         version = self.lock()["package_version"]
         for relative in ["plugin.json", ".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
-                         ".cursor-plugin/plugin.json", ".antigravity-plugin/plugin.json", "package.json"]:
+                         "package.json"]:
             manifest = json.loads((self.bundle / relative).read_text())
             self.assertEqual(manifest["version"], version)
             self.assertEqual(manifest["license"], "MIT")
         self.assertFalse(any(path.is_symlink() for path in self.bundle.rglob("*")))
         self.assertEqual((self.bundle / "upstream/pstack/skills/tdd/examples.md").read_text(), "Original example for pstack\n")
-        text = (self.bundle / "standalone-skills/pstack-tdd/SKILL.md").read_text()
+        text = (self.bundle / "skills/tdd/SKILL.md").read_text()
         self.assertIn("../../upstream/pstack/skills/tdd/SKILL.md", text)
         self.assertTrue((self.bundle / "LICENSE").is_file())
         self.assertIn("upstream/pstack/LICENSE", (self.bundle / "THIRD_PARTY_NOTICES.md").read_text())
@@ -51,7 +51,7 @@ class NativePackagingTest(unittest.TestCase):
         for name in ["mattpocock", "pstack"]:
             package = self.repo / "plugins" / name
             manifest = json.loads((package / "package.json").read_text())
-            self.assertTrue((package / manifest["pi"]["skills"][0]).is_dir())
+            self.assertEqual(manifest["pi"]["skills"], [])
             self.assertTrue((package / manifest["exports"]["."]).is_file())
             self.assertTrue((package / manifest["exports"]["./dsh"]).is_file())
             self.assertTrue((package / manifest["icon"]).is_file())
@@ -62,10 +62,10 @@ class NativePackagingTest(unittest.TestCase):
             locale_meta = json.loads((package / "locale/en.json").read_text())["meta"]
             self.assertTrue(locale_meta["title"])
             self.assertEqual(locale_meta["description"], manifest["description"])
-            catalog = json.loads((package / "standalone-skills/catalog.json").read_text())
+            catalog = json.loads((package / "catalog.json").read_text())
             self.assertEqual({entry["source"] for entry in catalog}, {name})
             self.assertEqual({path.name for path in (package / "upstream").iterdir()}, {name})
-        for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json"]:
+        for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json"]:
             entries = json.loads((self.repo / path).read_text())["plugins"]
             self.assertEqual({entry["name"] for entry in entries}, {"mattpocock", "pstack"})
             self.assertEqual(len(entries), 2)
@@ -80,7 +80,7 @@ class NativePackagingTest(unittest.TestCase):
         installed.mkdir()
         (installed / "pstack-tdd").symlink_to(self.bundle / "skills/pstack-tdd")
         self.fixture.command("install", "--directory", str(installed))
-        self.assertEqual((installed / "pstack-tdd").resolve(), (self.bundle / "standalone-skills/pstack-tdd").resolve())
+        self.assertEqual((installed / "pstack-tdd").resolve(), (self.repo / ".cache/skill-files/pstack/pstack-tdd").resolve())
         self.assertTrue((installed / "pstack-pstack-tdd/SKILL.md").is_file())
 
     def test_source_symlinks_are_stored_as_regular_files_that_check_accepts(self):
@@ -168,7 +168,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("install", "--directory", str(target))
         bundle = self.repo / "plugins/mattpocock"
         self.assertIn('description: "An approved workflow with a compact description."',
-                      (bundle / "standalone-skills/mattpocock-tdd/SKILL.md").read_text())
+                      (bundle / "skills/tdd/SKILL.md").read_text())
         self.assertIn("description: Test a public behavior.", (bundle / "upstream/mattpocock/skills/tdd/SKILL.md").read_text())
         snapshot = bundle / "upstream/mattpocock"
         self.assertFalse((snapshot / "skills/restricted").exists())
@@ -197,7 +197,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.commit(checkout, "retire the last approved skill")
         self.fixture.command("sync")
         self.fixture.command("check")
-        self.assertEqual(json.loads((bundle / "standalone-skills/catalog.json").read_text()), [])
+        self.assertEqual(json.loads((bundle / "catalog.json").read_text()), [])
         self.assertEqual(list(snapshot.iterdir()), [])
         before = (self.repo / "sources.lock.json").read_bytes()
         source["license_filter"]["support_paths"] = ["skills"]
@@ -234,29 +234,42 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("sync")
         self.fixture.command("check")
         self.assertFalse((snapshot / "skills/tdd").exists())
-        self.assertEqual(json.loads((self.repo / "plugins/mattpocock/standalone-skills/catalog.json").read_text()), [])
+        self.assertEqual(json.loads((self.repo / "plugins/mattpocock/catalog.json").read_text()), [])
 
     def test_additions_and_removals_bump_versions_and_remove_retired_bundle_files(self):
         original = self.lock()["package_version"]
+        installed = self.fixture.base / "installed"
+        self.fixture.command("install", "--directory", str(installed))
+        checkout = self.fixture.upstreams["pstack"]
+        skill = checkout / "pstack/skills/tdd/SKILL.md"
+        revised = "description: Test the updated workflow."
+        skill.write_text(skill.read_text().replace("description: Test a public behavior.", revised))
         self.fixture.add_skill()
         self.fixture.command("sync")
         added = self.lock()["package_version"]
         self.assertNotEqual(added, original)
-        self.assertTrue((self.bundle / "standalone-skills/pstack-new-skill/SKILL.md").is_file())
+        self.assertTrue((self.bundle / "skills/new-skill/SKILL.md").is_file())
+        self.assertIn(revised, (installed / "pstack-tdd/SKILL.md").read_text())
+        self.assertTrue((installed / "pstack-new-skill/SKILL.md").is_file())
+        self.fixture.command("package", "--archive")
+        with zipfile.ZipFile(self.repo / "dist" / ("pstack-" + added + ".zip")) as archive:
+            self.assertIn(revised, archive.read("skills/tdd/SKILL.md").decode())
+            self.assertIn(revised, archive.read("prefixed-skills/pstack-tdd/SKILL.md").decode())
+            self.assertIn("prefixed-skills/pstack-new-skill/SKILL.md", archive.namelist())
         shutil.rmtree(self.fixture.upstreams["pstack"] / "pstack/skills/tdd")
         self.fixture.commit(self.fixture.upstreams["pstack"], "retire existing skill")
         self.fixture.command("sync")
         removed = self.lock()["package_version"]
         self.assertNotEqual(removed, added)
-        self.assertFalse((self.bundle / "standalone-skills/pstack-tdd").exists())
+        self.assertFalse((self.bundle / "skills/tdd").exists())
         self.assertFalse((self.bundle / "upstream/pstack/skills/tdd").exists())
-        for relative in ["package.json", ".claude-plugin/plugin.json", ".antigravity-plugin/plugin.json"]:
+        for relative in ["package.json", ".claude-plugin/plugin.json"]:
             self.assertEqual(json.loads((self.bundle / relative).read_text())["version"], removed)
         self.fixture.command("check")
 
     def test_local_edits_to_generated_native_outputs_are_preserved(self):
         original = self.lock()
-        file = self.bundle / "standalone-skills/pstack-tdd/SKILL.md"
+        file = self.bundle / "skills/tdd/SKILL.md"
         file.write_text(file.read_text() + "\nLocal edit\n")
         result = self.fixture.command("package", success=False)
         self.assertIn("Local edit", file.read_text())
@@ -265,16 +278,16 @@ class NativePackagingTest(unittest.TestCase):
 
     def test_native_conflict_stops_sync_before_shared_state_or_installed_links_change(self):
         before_lock = (self.repo / "sources.lock.json").read_bytes()
-        before_catalog = (self.bundle / "standalone-skills/catalog.json").read_bytes()
+        before_catalog = (self.bundle / "catalog.json").read_bytes()
         before_version = self.lock()
         target = self.fixture.base / "installed"
         self.fixture.command("install", "--directory", str(target))
-        file = self.bundle / "standalone-skills/pstack-tdd/SKILL.md"
+        file = self.bundle / "skills/tdd/SKILL.md"
         file.write_text(file.read_text() + "\nLocal native edit\n")
         self.fixture.add_skill()
         self.fixture.command("sync", success=False)
         self.assertEqual((self.repo / "sources.lock.json").read_bytes(), before_lock)
-        self.assertEqual((self.bundle / "standalone-skills/catalog.json").read_bytes(), before_catalog)
+        self.assertEqual((self.bundle / "catalog.json").read_bytes(), before_catalog)
         self.assertEqual(self.lock(), before_version)
         self.assertFalse((target / "pstack-new-skill").exists())
         self.assertTrue((target / "pstack-tdd/SKILL.md").is_file())
@@ -307,7 +320,15 @@ class NativePackagingTest(unittest.TestCase):
         with zipfile.ZipFile(self.repo / "dist" / ("pstack-" + version + ".zip")) as archive:
             self.assertIn("plugin.json", archive.namelist())
             self.assertIn("skills/tdd/SKILL.md", archive.namelist())
-            self.assertIn("standalone-skills/pstack-tdd/SKILL.md", archive.namelist())
+            self.assertIn("prefixed-skills/pstack-tdd/SKILL.md", archive.namelist())
+            self.assertIn("../../upstream/pstack/skills/tdd/SKILL.md",
+                          archive.read("prefixed-skills/pstack-tdd/SKILL.md").decode())
+            for manifest_file in (".cursor-plugin/plugin.json", ".antigravity-plugin/plugin.json"):
+                manifest = json.loads(archive.read(manifest_file))
+                self.assertEqual(manifest["skills"], "./prefixed-skills/")
+                self.assertEqual(manifest["version"], version)
+            package = json.loads(archive.read("package.json"))
+            self.assertEqual(package["pi"]["skills"], ["./prefixed-skills"])
             self.assertIn("dsh.mjs", archive.namelist())
             self.assertIn("cordis.patch.yml", archive.namelist())
             self.assertIn("locale/en.json", archive.namelist())
@@ -334,7 +355,7 @@ class NativePackagingTest(unittest.TestCase):
         state = self.lock()
         state["bundle_hashes"]["shared-skills"] = state["bundle_hashes"]["pstack"]
         (self.repo / "distribution.lock.json").write_text(json.dumps(state))
-        file = retired / "standalone-skills/pstack-tdd/SKILL.md"
+        file = retired / "skills/tdd/SKILL.md"
         original = file.read_text()
         file.write_text(original + "\nKeep this edit\n")
         self.fixture.command("package", success=False)
@@ -372,7 +393,7 @@ class NativePackagingTest(unittest.TestCase):
         self.fixture.command("sync")
         self.fixture.command("check")
         bundle = self.repo / "plugins/tstack"
-        catalog = json.loads((bundle / "standalone-skills/catalog.json").read_text())
+        catalog = json.loads((bundle / "catalog.json").read_text())
         self.assertEqual([entry["name"] for entry in catalog], ["tstack-full-stop"])
         self.assertEqual({item.name for item in (bundle / "upstream").iterdir()}, {"tstack"})
         self.assertEqual((bundle / "upstream/tstack/LICENSE").read_text(), "MIT tstack fixture notice\n")
@@ -383,7 +404,7 @@ class NativePackagingTest(unittest.TestCase):
         self.assertIn("$tstack:full-stop", native_ui)
         self.assertIn("allow_implicit_invocation: false", native_ui)
         self.assertEqual((bundle / "upstream/tstack/skills/full-stop/agents/openai.yaml").read_text(), original_ui)
-        for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json", ".cursor-plugin/marketplace.json"]:
+        for path in [".agents/plugins/marketplace.json", ".claude-plugin/marketplace.json"]:
             entries = json.loads((self.repo / path).read_text())["plugins"]
             self.assertEqual({entry["name"] for entry in entries}, {"mattpocock", "pstack", "tstack"})
         shutil.rmtree(skill)
@@ -396,12 +417,11 @@ class NativePackagingTest(unittest.TestCase):
         self.assertFalse((target / "tstack-full-stop").is_symlink())
         self.assertTrue((target / "tstack-review/SKILL.md").is_file())
         self.assertFalse((bundle / "skills/full-stop").exists())
-        self.assertFalse((bundle / "standalone-skills/tstack-full-stop").exists())
         self.assertFalse((bundle / "upstream/tstack/skills/full-stop").exists())
-        self.assertEqual([entry["name"] for entry in json.loads((bundle / "standalone-skills/catalog.json").read_text())],
+        self.assertEqual([entry["name"] for entry in json.loads((bundle / "catalog.json").read_text())],
                          ["tstack-review"])
         for other in ("mattpocock", "pstack"):
-            self.assertTrue((self.repo / "plugins" / other / "standalone-skills" / (other + "-tdd/SKILL.md")).is_file())
+            self.assertTrue((self.repo / "plugins" / other / "skills/tdd/SKILL.md").is_file())
 
 
 if __name__ == "__main__":

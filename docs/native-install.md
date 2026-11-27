@@ -74,35 +74,19 @@ Automatic refresh of custom marketplaces depends on the Codex host and version. 
 
 ## Cursor
 
-On Teams or Enterprise, open **Dashboard → Plugins & MCPs → Team Marketplaces → Add Marketplace**. Choose **Import from Repo** and enter `https://github.com/oDestroyeRo/skills`. Select the collections you want in **Customize**: `mattpocock`, `pstack`, `tstack`, `cc`, or `mongodb`.
+Download the collection's ZIP from [GitHub Releases](https://github.com/oDestroyeRo/skills/releases), or run `python3 scripts/skills.py package --archive` and use the ZIP from `dist/`. Extract each plugin into its own directory under `~/.cursor/plugins/local/`, such as `~/.cursor/plugins/local/pstack/`. Reload Cursor after extracting a fresh version. For scheduled refresh, use the folder installer with `--agent cursor`. See [Cursor's local plugin guide](https://cursor.com/docs/plugins).
 
-Enable **Auto Refresh** in the marketplace settings and grant the Cursor GitHub App access to this repository. Import the whole repository so refresh also reads catalog changes. Existing Cloud Agents keep their starting versions; start a new agent after an update.
-
-For local testing, copy each complete folder into Cursor's local-plugin directory:
-
-```text
-plugins/mattpocock/ → ~/.cursor/plugins/local/mattpocock/
-plugins/pstack/     → ~/.cursor/plugins/local/pstack/
-plugins/tstack/     → ~/.cursor/plugins/local/tstack/
-plugins/cc/ → ~/.cursor/plugins/local/cc/
-plugins/mongodb/ → ~/.cursor/plugins/local/mongodb/
-```
-
-Reload Cursor after copying. A symlink to a checkout outside that local-plugin directory is not a supported substitute. Public Marketplace listing requires submission and review. See [Cursor installation and refresh](https://cursor.com/docs/plugins#keep-plugins-up-to-date).
+If you previously used this repository as a Cursor Git marketplace, switch to the release bundles or the folder installer.
 
 ## Pi
 
-Install the per-collection local packages from a checkout:
+Extract the collection's tar.gz or ZIP from [GitHub Releases](https://github.com/oDestroyeRo/skills/releases) or build it locally with `python3 scripts/skills.py package --archive`. Install the extracted package:
 
 ```sh
-pi install /absolute/path/to/skills/plugins/mattpocock
-pi install /absolute/path/to/skills/plugins/pstack
-pi install /absolute/path/to/skills/plugins/tstack
-pi install /absolute/path/to/skills/plugins/cc
-pi install /absolute/path/to/skills/plugins/mongodb
+pi install /absolute/path/to/extracted/pstack
 ```
 
-Each package's `pi.skills` entry selects only that collection. Local packages load from their folder. A scheduled `python3 scripts/skills.py update` keeps the checkout current; run `/reload` in Pi if the session has stale skills.
+Each release package selects its generated prefixed entries via `pi.skills`. To update a local package, extract the newer release at the package path and run `/reload`. To use the scheduled checkout updater, use the folder installer with `--agent pi`.
 
 After publishing the separate npm packages, you can install them from the registry:
 
@@ -156,27 +140,15 @@ OpenCode v2 checks unpinned packages at startup but does not apply updates autom
 
 ## Antigravity
 
-Validate and install each selected native folder:
+Download a collection's ZIP from [GitHub Releases](https://github.com/oDestroyeRo/skills/releases) or build it with `python3 scripts/skills.py package --archive`. Extract the plugin folder, then validate and install it:
 
 ```sh
-agy plugin validate --strict /absolute/path/to/skills/plugins/mattpocock
-agy plugin install /absolute/path/to/skills/plugins/mattpocock
-agy plugin validate --strict /absolute/path/to/skills/plugins/pstack
-agy plugin install /absolute/path/to/skills/plugins/pstack
-agy plugin validate --strict /absolute/path/to/skills/plugins/tstack
-agy plugin install /absolute/path/to/skills/plugins/tstack
-agy plugin validate --strict /absolute/path/to/skills/plugins/cc
-agy plugin install /absolute/path/to/skills/plugins/cc
-agy plugin validate --strict /absolute/path/to/skills/plugins/mongodb
-agy plugin install /absolute/path/to/skills/plugins/mongodb
+agy plugin validate --strict /absolute/path/to/extracted/pstack
+agy plugin install /absolute/path/to/extracted/pstack
 agy plugin list
 ```
 
-Each folder has the Antigravity manifest, logo, suggested prompt, skills, and resources for that collection. Antigravity loads the default skill directory and the additional prefixed entries, such as `/pstack-how`. Use the prefixed names to distinguish workflows with the same short name. Its standalone ZIP or tar.gz can also be extracted and installed as a local plugin.
-
-After refreshing the checkout, re-run the local install and check the version with `agy plugin list`. Automatic updates for arbitrary Git or local installs have not been verified. Use folder installs with a scheduled repository updater when you need the existing automatic-refresh path.
-
-For marketplace delivery, submit each standalone plugin through Antigravity's official intake after validation. See [plugin authoring](https://antigravity.google/docs/build-plugins) and [marketplace installation](https://antigravity.google/docs/marketplace).
+The release package includes the Antigravity manifest and prefixed skills such as `/pstack-how`. Use the prefixed names when collections share a short name. Install the newer release to update the plugin. For scheduled refresh, use the folder installer with `--agent antigravity`. See [Antigravity's plugin guide](https://antigravity.google/docs/build-plugins).
 
 ## DeepSeek Harness
 
@@ -216,4 +188,4 @@ T3's provider integration determines native plugin discovery. If it does not exp
 python3 scripts/skills.py install --agent t3 --global
 ```
 
-Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. The folder installer links into each plugin's `standalone-skills/` directory. If you linked skills from an older checkout, run `git pull --ff-only` before `python3 scripts/skills.py update` to refresh the saved links using the new installer. Custom collections use their own source and plugin entries.
+Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. The folder installer links into the checkout's generated skill cache. If you linked skills from an older checkout, run `git pull --ff-only` before `python3 scripts/skills.py update` to refresh the saved links using the new installer. Custom collections use their own source and plugin entries.

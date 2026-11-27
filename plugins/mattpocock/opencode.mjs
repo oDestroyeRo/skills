@@ -8,7 +8,7 @@ const manifest = JSON.parse(await readFile(new URL("./plugin.json", import.meta.
 export default Plugin.define({
   id: manifest.name,
   async setup(ctx) {
-    const catalog = JSON.parse(await readFile(new URL("./standalone-skills/catalog.json", import.meta.url), "utf8"));
+    const catalog = JSON.parse(await readFile(new URL("./catalog.json", import.meta.url), "utf8"));
     const definitions = await Promise.all(catalog.map(async ({ native_name: nativeName }) => {
       const name = `${manifest.name}:${nativeName}`;
       const url = new URL(`./skills/${nativeName}/SKILL.md`, import.meta.url);

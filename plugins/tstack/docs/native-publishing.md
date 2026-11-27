@@ -20,7 +20,6 @@ The generated layout is:
 ```text
 .agents/plugins/marketplace.json       Five Codex entries
 .claude-plugin/marketplace.json        Five Claude Code entries
-.cursor-plugin/marketplace.json        Five Cursor entries
 package.json                           Private development workspace
 plugins/
   mattpocock/                          Matt's native plugin and npm package
@@ -41,7 +40,7 @@ dist/
   mongodb-<version>.tar.gz
 ```
 
-Each plugin folder contains `plugin.json`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.antigravity-plugin/`, `package.json`, `opencode.mjs`, `dsh.mjs`, `cordis.patch.yml`, `locale/`, `skills/`, its own `upstream/` source, guides, a logo, and a `THIRD_PARTY_NOTICES.md` license index. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
+Each plugin folder contains a skill catalog, native manifests, adapters, `skills/`, and its own upstream resources and license notices. The ZIP and tar.gz bundles also contain the Cursor and Antigravity manifests and `prefixed-skills/` for Pi, Cursor, and Antigravity. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
 
 Bundles use regular files with materialized copies of source symlinks. Skill links resolve within their own bundle. ZIP contents start at the plugin root; tarballs contain a directory named for the plugin. Workstation installation records, Git credentials, dependency installations, and build caches are excluded.
 
@@ -66,36 +65,36 @@ For OpenCode and DeepSeek Harness adapter checks and separate npm archives, use 
 ```sh
 npm install --ignore-scripts --no-package-lock
 node --test tests/opencode.test.mjs tests/dsh.test.mjs
-npm pack --ignore-scripts --workspaces --pack-destination dist
 ```
 
 The npm packages are `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, and `@odestroyero/mongodb-skills`. Registry publication requires ownership of that scope. The repo's packaging code uses MIT. Upstream terms remain in each bundle's `upstream/` folder and are linked from its notice index. Anthropic's npm license field points to that index because its skills and assets have separate terms. MongoDB's npm license field also points to its notice index, which links its Apache 2.0 source license.
 
-If Antigravity is installed, validate each folder with `agy plugin validate --strict`. Check skill names and versions in each target client. Schema and SDK checks do not prove live discovery or workflow execution across every client.
+If Antigravity is installed, validate each extracted plugin folder with `agy plugin validate --strict`. Check skill names and versions in each target client. Schema and SDK checks do not prove live discovery or workflow execution across every client.
 
 ## Update the Git marketplaces
 
 The daily workflow runs `sync`, which reads each upstream's configured manifest or skill roots, rebuilds each plugin, and updates the release version when inputs change. It checks the result and runs tests before committing generated updates. Additions and removals update the appropriate plugin without a second skill list. tstack and MongoDB use their `skills/` directories directly, so newly added or removed skills are picked up automatically. Anthropic also uses that directory, with a license-file hash filter applied before archiving. New skills with approved terms are included; missing or changed terms are omitted and recorded in `sources.lock.json`. Review license changes before extending the hash list.
 
-For a manual release, review and commit source and generated changes through your normal process. Include `distribution.lock.json`, `plugins/`, the three catalogs, and root `package.json`. Push to the branch tracked by your marketplaces. Keep `dist/`, `node_modules/`, and `.cache/` out of commits.
+The daily workflow publishes the ZIP and tar.gz bundles to [GitHub Releases](https://github.com/oDestroyeRo/skills/releases) after validation and push. It uses the package version as the tag and resumes incomplete draft uploads on the next run.
 
-Consumers need their host's updater enabled. Claude Code has a marketplace switch, Cursor team marketplaces have Auto Refresh, Pi supports package updates and unpinned startup packages, OpenCode v2 has an update command, and DeepSeek Harness profiles update through `dsh plugin` or the Plugins UI. Codex custom-marketplace refresh and Antigravity Git/local refresh need verification in the deployed host. See the [installation guide](native-install.md).
+For a manual change, review and commit source inputs, the regenerated `plugins/`, the marketplace catalogs, `distribution.lock.json`, and the root `package.json`. Keep `dist/`, `node_modules/`, and `.cache/` out of commits.
+
+Installed clients receive updates through their configured updater. For the scheduled folder updater, `skills.py update` pulls the checkout and regenerates entries. For installed copies of release archives, download and install the new version. See the [installation guide](native-install.md).
 
 ## Publish separate npm releases
 
-After your npm account has access to the configured scope, inspect and publish the workspace packages:
+After your npm account has access to the configured scope, build the archives and publish the desired versioned tar.gz:
 
 ```sh
-npm pack --ignore-scripts --workspaces --pack-destination dist
-npm publish --workspaces --access public --ignore-scripts
+python3 scripts/skills.py package --archive
+version=$(python3 -c 'import json; print(json.load(open("distribution.lock.json"))["package_version"])')
+npm publish "./dist/pstack-$version.tar.gz" --access public --ignore-scripts
 ```
 
-The private root workspace is excluded. You can publish a single collection with `--workspace plugins/mattpocock`, `--workspace plugins/pstack`, `--workspace plugins/tstack`, `--workspace plugins/cc`, or `--workspace plugins/mongodb` instead of `--workspaces`.
-
-The daily workflow updates Git consumers and marketplaces; it does not publish npm releases. Publish each release separately if consumers track npm packages.
+Publish each collection you want to distribute through npm. The daily workflow publishes to GitHub Releases. Publishing to the npm registry uses separate credentials.
 
 ## Submit public marketplace plugins
 
-Submit each selected `plugins/<name>/` folder, or its ZIP, as a separate plugin. Review publisher metadata, original notices, and workflow requirements before submission. Cursor, Antigravity, and OpenAI have intake and review processes separate from a repo marketplace. Generating these catalogs does not list the plugins in a public directory.
+Submit each selected release ZIP or extracted plugin folder as a separate plugin. Review publisher metadata, original notices, and workflow requirements before submission. Cursor, Antigravity, and OpenAI have intake and review processes separate from a repo marketplace. Generating these catalogs does not list the plugins in a public directory.
 
 Formats follow the [Agent Plugins schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json), [OpenAI packaging guide](https://developers.openai.com/plugins/build/plugins), [Claude manifest reference](https://code.claude.com/docs/en/plugins-reference), [Cursor plugin guide](https://cursor.com/docs/plugins), and [Antigravity authoring guide](https://antigravity.google/docs/build-plugins).
