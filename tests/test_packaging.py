@@ -83,6 +83,20 @@ class NativePackagingTest(unittest.TestCase):
         self.assertEqual((installed / "pstack-tdd").resolve(), (self.repo / ".cache/skill-files/pstack/pstack-tdd").resolve())
         self.assertTrue((installed / "pstack-pstack-tdd/SKILL.md").is_file())
 
+    def test_name_override_shortens_the_export_and_preserves_upstream_reference(self):
+        original = "a" * 60
+        self.fixture.add_skill(original)
+        source = next(source for source in self.fixture.config["sources"] if source["id"] == "pstack")
+        source["name_overrides"] = {original: "short-workflow"}
+        self.fixture.write_config()
+        self.fixture.command("sync")
+        self.fixture.command("check")
+        native = self.bundle / "skills/short-workflow/SKILL.md"
+        self.assertIn(f"../../upstream/pstack/skills/{original}/SKILL.md", native.read_text())
+        installed = self.fixture.base / "installed"
+        self.fixture.command("install", "--directory", str(installed))
+        self.assertIn("name: pstack-short-workflow\n", (installed / "pstack-short-workflow/SKILL.md").read_text())
+
     def test_source_symlinks_are_stored_as_regular_files_that_check_accepts(self):
         checkout = self.fixture.upstreams["pstack"]
         (checkout / "pstack/skills/tdd/alias.md").symlink_to("examples.md")

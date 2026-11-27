@@ -1,0 +1,16 @@
+[
+  {
+    "name": "postgres-pg-graph",
+    "source": "postgres",
+    "upstream_name": "pg-graph",
+    "path": "plugin/skills/pg-graph/SKILL.md",
+    "native_name": "pg-graph"
+  },
+  {
+    "name": "postgres-postgresql-best-practices",
+    "source": "postgres",
+    "upstream_name": "postgresql-best-practices",
+    "path": "plugin/skills/postgresql-best-practices/SKILL.md",
+    "native_name": "postgresql-best-practices"
+  }
+]

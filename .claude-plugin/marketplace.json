@@ -4,38 +4,50 @@
     "name": "oDestroyeRo"
   },
   "metadata": {
-    "description": "Matt Pocock, pstack, tstack, Anthropic, and MongoDB skills for coding agents."
+    "description": "Matt Pocock, pstack, tstack, Anthropic, MongoDB, Google, and Microsoft PostgreSQL skills for coding agents."
   },
   "plugins": [
     {
       "name": "mattpocock",
       "source": "./plugins/mattpocock",
       "description": "Matt Pocock engineering and productivity skills, with upstream updates.",
-      "version": "1.0.41"
+      "version": "1.0.43"
     },
     {
       "name": "pstack",
       "source": "./plugins/pstack",
       "description": "pstack engineering workflows and principles, with upstream updates.",
-      "version": "1.0.41"
+      "version": "1.0.43"
     },
     {
       "name": "tstack",
       "source": "./plugins/tstack",
       "description": "Theo Browne's tstack review and pull request workflows, with upstream updates.",
-      "version": "1.0.41"
+      "version": "1.0.43"
     },
     {
       "name": "cc",
       "source": "./plugins/cc",
       "description": "Community mirror of Anthropic's redistributable design, development, and productivity skills, with upstream updates.",
-      "version": "1.0.41"
+      "version": "1.0.43"
     },
     {
       "name": "mongodb",
       "source": "./plugins/mongodb",
       "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
-      "version": "1.0.41"
+      "version": "1.0.43"
+    },
+    {
+      "name": "google",
+      "source": "./plugins/google",
+      "description": "Community mirror of Google's agent skills for Google products and technologies, with upstream updates.",
+      "version": "1.0.43"
+    },
+    {
+      "name": "postgres",
+      "source": "./plugins/postgres",
+      "description": "Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.",
+      "version": "1.0.43"
     }
   ]
 }

@@ -1,0 +1,58 @@
+{
+  "name": "@odestroyero/postgres-skills",
+  "version": "1.0.43",
+  "description": "Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oDestroyeRo/skills.git"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@opencode/plugin": "2.2.5",
+    "yaml": "2.8.1"
+  },
+  "icon": "./assets/logo.svg",
+  "exports": {
+    ".": "./opencode.mjs",
+    "./dsh": "./dsh.mjs",
+    "./dsh/icon": "./assets/logo.svg",
+    "./dsh/locale/*.json": "./locale/*.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "pi": {
+    "skills": []
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "plugin.json",
+    ".claude-plugin",
+    ".codex-plugin",
+    "skills",
+    "catalog.json",
+    "upstream",
+    "docs",
+    "assets",
+    "locale",
+    "opencode.mjs",
+    "dsh.mjs",
+    "cordis.patch.yml",
+    "sources.lock.json",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ]
+}

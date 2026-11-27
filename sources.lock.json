@@ -103,6 +103,54 @@
         "testing",
         "tools"
       ]
+    },
+    "google": {
+      "repository": "https://github.com/google/skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "6dc0d53303b9f96f166ac72d7f8f1920cb260f24",
+      "sha256": "c0780f5312803a783c98fa90ddd6439b4e182f4957776a3d8840ac28556e1579",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        ".gitmodules",
+        ".lycheeignore",
+        "CONTRIBUTING.md",
+        "lychee.toml",
+        "plugins",
+        "skills/cloud/agent-platform-alert-configuration",
+        "skills/cloud/api-gateway-mcp-server",
+        "skills/cloud/assured-workloads-basics",
+        "skills/cloud/bigquery-migration-sql-translator",
+        "skills/cloud/cloud-logging-finops",
+        "skills/cloud/cloud-monitoring-alert-configuration",
+        "skills/cloud/dbt-sf-to-bq-translator",
+        "skills/cloud/google-cloud-filestore-nfs-browser",
+        "skills/developers/gerrit-code-review",
+        "skills/platform-devices/litert-google-tensor"
+      ]
+    },
+    "postgres": {
+      "repository": "https://github.com/microsoft/postgres-skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "b7908c0b53b2a292fb8286d4d4bdba7ea4690291",
+      "sha256": "129229de6dacdcad312876f2f9e57f09c9dae22f4ecee505cae1bd42a6567791",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "SUPPORT.md",
+        "plugin/skills/migrate-oracle-app",
+        "plugin/tests",
+        "tests"
+      ]
     }
   }
 }

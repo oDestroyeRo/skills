@@ -1,13 +1,15 @@
 # Install the native plugins
 
-The `odestroyero-skills` marketplace contains five independent plugins. Install the collections you want:
+The `odestroyero-skills` marketplace contains seven independent plugins. Install the collections you want:
 
 ```text
 plugins/mattpocock/    Matt Pocock's published skills
 plugins/pstack/        pstack's published skills
 plugins/tstack/        Theo Browne's tstack skills
 plugins/cc/     Anthropic's redistributable skills
-plugins/mongodb/           MongoDB's query, schema, search, and Atlas skills
+plugins/mongodb/       MongoDB's query, schema, search, and Atlas skills
+plugins/google/        Google's first-party agent skills
+plugins/postgres/      Microsoft's PostgreSQL skills
 ```
 
 Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Codex, Claude Code, and OpenCode v2 use names such as `pstack:how` for native plugins. Folder installations use prefixed names such as `pstack-how`.
@@ -31,6 +33,8 @@ claude plugin install pstack@odestroyero-skills
 claude plugin install tstack@odestroyero-skills
 claude plugin install cc@odestroyero-skills
 claude plugin install mongodb@odestroyero-skills
+claude plugin install google@odestroyero-skills
+claude plugin install postgres@odestroyero-skills
 ```
 
 For local testing, use `claude plugin marketplace add /absolute/path/to/skills` for the first command.
@@ -45,6 +49,8 @@ claude plugin update pstack@odestroyero-skills
 claude plugin update tstack@odestroyero-skills
 claude plugin update cc@odestroyero-skills
 claude plugin update mongodb@odestroyero-skills
+claude plugin update google@odestroyero-skills
+claude plugin update postgres@odestroyero-skills
 ```
 
 See [Claude Code installation and updates](https://code.claude.com/docs/en/discover-plugins#keep-plugins-updated).
@@ -60,6 +66,8 @@ codex plugin add pstack@odestroyero-skills
 codex plugin add tstack@odestroyero-skills
 codex plugin add cc@odestroyero-skills
 codex plugin add mongodb@odestroyero-skills
+codex plugin add google@odestroyero-skills
+codex plugin add postgres@odestroyero-skills
 ```
 
 Use `codex plugin marketplace add /absolute/path/to/skills` for local testing. The catalog at `.agents/plugins/marketplace.json` points to each generated folder. Each has a portable `plugin.json` and a Codex compatibility manifest.
@@ -96,6 +104,8 @@ pi install npm:@odestroyero/pstack-skills
 pi install npm:@odestroyero/tstack-skills
 pi install npm:@odestroyero/anthropic-skills
 pi install npm:@odestroyero/mongodb-skills
+pi install npm:@odestroyero/google-skills
+pi install npm:@odestroyero/postgres-skills
 pi update --extensions
 ```
 
@@ -111,6 +121,8 @@ opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/pstack'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/tstack'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/cc'
 opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/mongodb'
+opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/google'
+opencode plugin add 'github:oDestroyeRo/skills#main::path:plugins/postgres'
 ```
 
 For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
@@ -122,7 +134,9 @@ For local testing, select the folders in `opencode.json` or `opencode.jsonc`:
     "/absolute/path/to/skills/plugins/pstack",
     "/absolute/path/to/skills/plugins/tstack",
     "/absolute/path/to/skills/plugins/cc",
-    "/absolute/path/to/skills/plugins/mongodb"
+    "/absolute/path/to/skills/plugins/mongodb",
+    "/absolute/path/to/skills/plugins/google",
+    "/absolute/path/to/skills/plugins/postgres"
   ]
 }
 ```
@@ -160,6 +174,8 @@ dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/pstack
 dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/tstack'
 dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/cc'
 dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/mongodb'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/google'
+dsh plugin --profile web add 'github:oDestroyeRo/skills#main&path:plugins/postgres'
 ```
 
 For local testing from a checkout without installing workspace dependencies, pass `file:` directory specs (or `dist/<name>-<version>.tar.gz` archives); omit `file:` to link directly after running `npm install --ignore-scripts --no-package-lock` in the checkout:
@@ -170,9 +186,11 @@ dsh plugin --profile web add file:/absolute/path/to/skills/plugins/pstack
 dsh plugin --profile web add file:/absolute/path/to/skills/plugins/tstack
 dsh plugin --profile web add file:/absolute/path/to/skills/plugins/cc
 dsh plugin --profile web add file:/absolute/path/to/skills/plugins/mongodb
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/google
+dsh plugin --profile web add file:/absolute/path/to/skills/plugins/postgres
 ```
 
-After publishing the separate npm packages, you can also install `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, and `@odestroyero/mongodb-skills` with `dsh plugin --profile <profile> add` or from the **Plugins** page in Web and Desktop. For the Desktop profile, initialize Desktop once and quit it before running Desktop's bundled `dsh plugin --profile desktop` command, or install through Desktop's **Plugins** UI.
+After publishing the separate npm packages, you can also install `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, `@odestroyero/mongodb-skills`, `@odestroyero/google-skills`, and `@odestroyero/postgres-skills` with `dsh plugin --profile <profile> add` or from the **Plugins** page in Web and Desktop. For the Desktop profile, initialize Desktop once and quit it before running Desktop's bundled `dsh plugin --profile desktop` command, or install through Desktop's **Plugins** UI.
 
 Each bundle's `cordis.patch.yml` mounts `dsh.mjs` (`<package>/dsh`), registering only that collection on `ctx.skills` at bundled rank so `.dsh/skills` and `~/.dsh/skills` overrides still win. Invoke user-invocable skills with `/mattpocock-code-review`, `/pstack-poteto-mode`, `/tstack-full-stop`, `/anthropic-frontend-design`, or `/mongodb-mongodb-query-optimizer`; model-invocable skills also appear in `<available_skills>` when `@deepseek-ai/dsh-tool-skill` is active.
 

@@ -1,0 +1,12 @@
+{
+  "name": "postgres",
+  "version": "1.0.43",
+  "description": "Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.",
+  "author": {
+    "name": "oDestroyeRo",
+    "url": "https://github.com/oDestroyeRo"
+  },
+  "homepage": "https://github.com/oDestroyeRo/skills",
+  "repository": "https://github.com/oDestroyeRo/skills",
+  "license": "MIT"
+}

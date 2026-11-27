@@ -97,6 +97,12 @@ def sources():
         for path in excluded:
             if relative_path(path) == PurePosixPath("."):
                 raise SkillError("Cannot exclude an entire source: " + name)
+        aliases = source.get("name_overrides", {})
+        if not isinstance(aliases, dict) or not all(
+            SLUG.fullmatch(key) and isinstance(value, str) and SLUG.fullmatch(value)
+            for key, value in aliases.items()
+        ):
+            raise SkillError("Expected skill name overrides using lowercase slugs: " + name)
         overrides = source.get("description_overrides", {})
         if not isinstance(overrides, dict) or not all(
             SLUG.fullmatch(key) and isinstance(value, str) and 0 < len(value) <= 1024
@@ -346,10 +352,12 @@ def write_prefixed_skill(folder, bundle, entry, *, link_from=None):
 def discover_skills(snapshots, configured_sources):
     catalog = []
     names = set()
-    collections = [(s["id"], snapshots[s["id"]], skill_roots(s, snapshots[s["id"]])) for s in configured_sources]
-    for source_id, package, roots in collections:
+    for source in configured_sources:
+        source_id = source["id"]
+        package = snapshots[source_id]
+        aliases = source.get("name_overrides", {})
         skill_files = set()
-        for root in roots:
+        for root in skill_roots(source, package):
             for directory, children, files in os.walk(package / root):
                 children[:] = [child for child in children if not child.startswith(".")]
                 if "SKILL.md" in files:
@@ -357,7 +365,7 @@ def discover_skills(snapshots, configured_sources):
                     children.clear()
         for file in sorted(skill_files):
             original, _ = metadata(file)
-            name = source_id + "-" + original
+            name = source_id + "-" + aliases.get(original, original)
             if len(name) > 64 or name in names:
                 raise SkillError("Duplicate or overlong skill name: " + name)
             names.add(name)
