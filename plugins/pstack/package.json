@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/pstack-skills",
-  "version": "1.0.38",
+  "version": "1.0.41",
   "description": "pstack engineering workflows and principles, with upstream updates.",
   "type": "module",
   "license": "MIT",
@@ -31,9 +31,7 @@
     "./package.json": "./package.json"
   },
   "pi": {
-    "skills": [
-      "./standalone-skills"
-    ]
+    "skills": []
   },
   "dsh": {
     "bundle": {
@@ -44,10 +42,8 @@
     "plugin.json",
     ".claude-plugin",
     ".codex-plugin",
-    ".cursor-plugin",
-    ".antigravity-plugin",
     "skills",
-    "standalone-skills",
+    "catalog.json",
     "upstream",
     "docs",
     "assets",

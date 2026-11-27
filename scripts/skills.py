@@ -18,7 +18,7 @@ import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-STANDALONE_SKILLS_DIR = "standalone-skills"
+CACHED_SKILLS = ".cache/skill-files"
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 T3_AGENTS = ("codex", "claude-code", "pi", "antigravity", "opencode", "cursor")
 GLOBAL_DIRS = {
@@ -294,7 +294,7 @@ def skill_roots(source, package):
     return roots
 
 
-def render_skill(name, skill_prefix, fields, source_file, library, adapter):
+def render_skill(name, fields, source_file, library, adapter):
     description = "\n".join(line.rstrip() for line in fields["description"].splitlines())
     header = ["name: " + name, description]
     for field in ("disable-model-invocation", "user-invocable"):
@@ -305,9 +305,8 @@ def render_skill(name, skill_prefix, fields, source_file, library, adapter):
         "Read the complete [upstream skill](" + source_file + ") before doing the task.\n\n"
         "Resolve `" + source_file + "` to its real path. Resolve the workflow's relative file "
         "references from that upstream file, so its scripts, references, and sibling skills stay together.\n\n"
-        "When it names another skill from this collection, use `" + skill_prefix + "<name>` "
-        "or read that skill directly in [the upstream library](" + library + "). Keep this collection's "
-        "skills together when names overlap with another collection.\n\n"
+        "When it names another skill, select the entry from the same collection or read "
+        "the matching file in [the upstream library](" + library + ").\n\n"
         "For harness-specific tools, delegation, models, or settings, read the "
         "[harness adapter](" + adapter + ") and apply the section for the current harness.\n"
     )
@@ -323,6 +322,25 @@ def copy_agent_metadata(source, destination, original_name, invocation_name):
         prompt = r"(?m)^  default_prompt:[^\n]*(?:\n    [^\n]*)*"
         text = re.sub(prompt, lambda match: token.sub(lambda _: "$" + invocation_name, match.group()), text)
         config.write_text(text)
+
+
+def write_skill_entry(folder, bundle, entry, fields, invocation, *, link_from=None):
+    library = bundle / "upstream" / entry["source"]
+    original = library / entry["path"]
+    link_from = folder if link_from is None else link_from
+    folder.mkdir(parents=True)
+    (folder / "SKILL.md").write_text(render_skill(
+        folder.name, fields, os.path.relpath(original, link_from),
+        os.path.relpath(library, link_from), os.path.relpath(bundle / "docs/harnesses.md", link_from),
+    ))
+    agents = original.parent / "agents"
+    if agents.is_dir():
+        copy_agent_metadata(agents, folder / "agents", entry["upstream_name"], invocation)
+
+
+def write_prefixed_skill(folder, bundle, entry, *, link_from=None):
+    _, fields = metadata(bundle / "skills" / entry["native_name"] / "SKILL.md")
+    write_skill_entry(folder, bundle, entry, fields, entry["name"], link_from=link_from)
 
 
 def discover_skills(snapshots, configured_sources):
@@ -353,12 +371,12 @@ def plugin_skills():
     from package_skills import configuration
     entries = {}
     for plugin in configuration(ROOT)["plugins"]:
-        directory = ROOT / "plugins" / plugin["name"] / STANDALONE_SKILLS_DIR
-        for entry in read_json(directory / "catalog.json"):
+        bundle = ROOT / "plugins" / plugin["name"]
+        for entry in read_json(bundle / "catalog.json"):
             name = entry["name"]
             if not SLUG.fullmatch(name) or name in entries:
                 raise SkillError("Invalid or duplicate packaged skill: " + name)
-            entries[name] = directory / name
+            entries[name] = (bundle, entry)
     return entries
 
 
@@ -398,7 +416,7 @@ def sync(locked=False):
         protect_generated(lock)
         distribution = preflight_package(ROOT)
         plugins = {plugin["source"]: plugin["name"] for plugin in distribution["plugins"]}
-        prospective = {entry["name"]: ROOT / "plugins" / plugins[entry["source"]] / STANDALONE_SKILLS_DIR / entry["name"]
+        prospective = {entry["name"]: ROOT / CACHED_SKILLS / plugins[entry["source"]] / entry["name"]
                        for entry in catalog}
         remembered = [Path(path) for path in read_json(ROOT / ".cache/installations.json", [])]
         installation_changes(remembered, prospective, previous_plugins)
@@ -476,18 +494,18 @@ def owned_skill_link(file, plugins):
     target = file.resolve()
     if target == ROOT / "skills" / file.name:
         return True
+    if target.is_relative_to(ROOT / CACHED_SKILLS):
+        parts = target.relative_to(ROOT / CACHED_SKILLS).parts
+        return len(parts) == 2 and parts[1] == file.name
     try:
         parts = target.relative_to(ROOT / "plugins").parts
     except ValueError:
         return False
     if len(parts) != 3 or parts[0] not in plugins or parts[2] != file.name:
         return False
-    if parts[1] == STANDALONE_SKILLS_DIR:
+    if parts[1] == "standalone-skills":
         return True
-    standalone = ROOT / "plugins" / parts[0] / STANDALONE_SKILLS_DIR
-    return parts[1] == "skills" and (
-        not standalone.is_dir() or not target.exists() or (standalone / file.name).is_dir()
-    )
+    return parts[1] == "skills" and not target.exists()
 
 
 def installation_changes(directories, entries, plugins):
@@ -495,14 +513,20 @@ def installation_changes(directories, entries, plugins):
     changes = []
     for directory in directories:
         directory = directory.expanduser().absolute()
-        if directory.resolve().is_relative_to(ROOT / "plugins") or directory.resolve() == ROOT / "skills":
+        resolved = directory.resolve()
+        if (resolved.is_relative_to(ROOT / "plugins") or resolved == ROOT / "skills" or
+            resolved.is_relative_to(ROOT / CACHED_SKILLS)):
             raise SkillError("Install into a harness directory, not a generated plugin directory")
         for name in sorted(names):
             destination = directory / name
             target = entries[name]
             if destination.is_symlink() and destination.resolve() == target.resolve():
                 continue
-            if (destination.exists() or destination.is_symlink()) and not owned_skill_link(destination, plugins):
+            legacy_bundle_entry = target.parent.name in plugins and destination.is_symlink() and (
+                destination.resolve() == ROOT / "plugins" / target.parent.name / "skills" / name
+            )
+            if ((destination.exists() or destination.is_symlink()) and
+                not (legacy_bundle_entry or owned_skill_link(destination, plugins))):
                 raise SkillError("Existing skill preserved: " + str(destination))
             changes.append((destination, target))
         if directory.is_dir():
@@ -512,9 +536,34 @@ def installation_changes(directories, entries, plugins):
     return changes
 
 
+def generate_cached_skills(entries, targets):
+    cache = ROOT / CACHED_SKILLS
+    if cache.is_symlink() or (cache.exists() and not (cache / ".generated").is_file()):
+        raise SkillError("Unmanaged skill cache preserved: " + str(cache))
+    with tempfile.TemporaryDirectory(prefix="skill-entries-", dir=cache.parent) as temporary:
+        stage = Path(temporary) / "next"
+        stage.mkdir()
+        (stage / ".generated").touch()
+        for name, (bundle, entry) in entries.items():
+            write_prefixed_skill(stage / bundle.name / name, bundle, entry, link_from=targets[name])
+        if tree_hash(cache) == tree_hash(stage):
+            return
+        previous = Path(temporary) / "previous"
+        if cache.exists():
+            cache.rename(previous)
+        try:
+            stage.rename(cache)
+        except OSError:
+            if previous.exists():
+                previous.rename(cache)
+            raise
+
+
 def install(directories, remember=True, previous_plugins=()):
     entries = plugin_skills()
-    changes = installation_changes(directories, entries, managed_plugin_names() | set(previous_plugins))
+    targets = {name: ROOT / CACHED_SKILLS / bundle.name / name for name, (bundle, _) in entries.items()}
+    changes = installation_changes(directories, targets, managed_plugin_names() | set(previous_plugins))
+    generate_cached_skills(entries, targets)
     for destination, target in changes:
         if destination.is_symlink():
             destination.unlink()

@@ -12,13 +12,14 @@ import tempfile
 import zipfile
 
 from skills import (
-    SLUG, STANDALONE_SKILLS_DIR, SkillError, copy_agent_metadata, copy_materialized,
-    discover_skills, metadata, read_json, render_skill, tree_hash, write_json,
+    SLUG, SkillError, copy_materialized, discover_skills, metadata, read_json,
+    tree_hash, write_json, write_prefixed_skill, write_skill_entry,
 )
 
 
 PORTABLE_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 DEPENDENCIES = {"@opencode/plugin": "2.2.5", "yaml": "2.8.1"}
+PREFIXED_SKILLS_DIR = "prefixed-skills"
 
 
 def configuration(root):
@@ -78,7 +79,7 @@ def json_text(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
 
-def npm_manifest(config, version):
+def npm_manifest(config, version, *, include_prefixed=False):
     manifest = {
         "name": config["npm_name"], "version": version,
         "description": config["description"], "type": "module",
@@ -100,15 +101,16 @@ def npm_manifest(config, version):
             "./locale/*.json": "./locale/*.json",
             "./package.json": "./package.json",
         },
-        "pi": {"skills": ["./" + STANDALONE_SKILLS_DIR]},
+        "pi": {"skills": ["./" + PREFIXED_SKILLS_DIR] if include_prefixed else []},
         "dsh": {"bundle": {"patch": "./cordis.patch.yml"}},
         "files": [
-            "plugin.json", ".claude-plugin", ".codex-plugin", ".cursor-plugin",
-            ".antigravity-plugin", "skills", STANDALONE_SKILLS_DIR, "upstream", "docs",
+            "plugin.json", ".claude-plugin", ".codex-plugin", "skills", "catalog.json", "upstream", "docs",
             "assets", "locale", "opencode.mjs", "dsh.mjs", "cordis.patch.yml",
             "sources.lock.json", "LICENSE", "THIRD_PARTY_NOTICES.md",
         ],
     })
+    if include_prefixed:
+        manifest["files"].extend([".cursor-plugin", ".antigravity-plugin", PREFIXED_SKILLS_DIR])
     return manifest
 
 
@@ -122,31 +124,33 @@ def workspace_manifest(config, version):
     }
 
 
-def plugin_manifests(config, version):
+def plugin_manifests(config, version, *, include_prefixed=False):
     identity = {
         "name": config["name"], "version": version, "description": config["description"],
         "author": config["author"], "homepage": config["repository"],
         "repository": config["repository"],
         "license": config["license"],
     }
-    standalone_skills = "./" + STANDALONE_SKILLS_DIR + "/"
-    return {
+    manifests = {
         "plugin.json": {"$schema": PORTABLE_SCHEMA, **identity},
         ".claude-plugin/plugin.json": identity,
         ".codex-plugin/plugin.json": {**identity, "skills": "./skills/"},
-        ".cursor-plugin/plugin.json": {
-            **identity, "displayName": config["display_name"], "skills": standalone_skills,
+        "package.json": npm_manifest(config, version, include_prefixed=include_prefixed),
+    }
+    if include_prefixed:
+        skills_path = "./" + PREFIXED_SKILLS_DIR + "/"
+        manifests[".cursor-plugin/plugin.json"] = {
+            **identity, "displayName": config["display_name"], "skills": skills_path,
             "logo": "assets/logo.svg", "keywords": ["skills", "engineering"],
-        },
-        ".antigravity-plugin/plugin.json": {
+        }
+        manifests[".antigravity-plugin/plugin.json"] = {
             "$schema": "https://antigravity.google/schemas/v1/plugin.json", **identity,
-            "displayName": config["display_name"], "skills": standalone_skills,
+            "displayName": config["display_name"], "skills": skills_path,
             "logo": "assets/logo.svg",
             "suggestedPrompts": config["suggested_prompts"],
             "keywords": ["skills", "engineering"],
-        },
-        "package.json": npm_manifest(config, version),
-    }
+        }
+    return manifests
 
 
 def marketplace_files(config, version):
@@ -159,7 +163,6 @@ def marketplace_files(config, version):
     }
     return {
         ".claude-plugin/marketplace.json": common,
-        ".cursor-plugin/marketplace.json": common,
         ".agents/plugins/marketplace.json": {
             "name": config["marketplace"], "interface": {"displayName": config["display_name"]},
             "plugins": [{"name": plugin["name"], "source": {
@@ -182,9 +185,7 @@ def populate_bundle(root, bundle, config, version, snapshot):
     upstream_names = {entry["upstream_name"] for entry in catalog}
     source_prefix = source_id + "-"
     plugin_prefix = config["name"] + ":"
-    standalone = bundle / STANDALONE_SKILLS_DIR
     for entry in catalog:
-        library = "../../upstream/" + source_id
         original = snapshot / entry["path"]
         original_name = entry["upstream_name"]
         _, fields = metadata(original)
@@ -194,18 +195,8 @@ def populate_bundle(root, bundle, config, version, snapshot):
         short_name = original_name.removeprefix(source_prefix)
         native_name = original_name if short_name in upstream_names else short_name
         entry["native_name"] = native_name
-        for directory, name, prefix, invocation in (
-            (standalone, entry["name"], source_prefix, entry["name"]),
-            (bundle / "skills", native_name, plugin_prefix, plugin_prefix + native_name),
-        ):
-            folder = directory / name
-            folder.mkdir(parents=True)
-            text = render_skill(name, prefix, fields, library + "/" + entry["path"],
-                                library, "../../docs/harnesses.md")
-            (folder / "SKILL.md").write_text(text)
-            if (original.parent / "agents").is_dir():
-                copy_agent_metadata(original.parent / "agents", folder / "agents", original_name, invocation)
-    write_json(standalone / "catalog.json", catalog)
+        write_skill_entry(bundle / "skills" / native_name, bundle, entry, fields, plugin_prefix + native_name)
+    write_json(bundle / "catalog.json", catalog)
     shutil.copy2(root / "adapters/opencode.mjs", bundle / "opencode.mjs")
     shutil.copy2(root / "adapters/dsh.mjs", bundle / "dsh.mjs")
     (bundle / "cordis.patch.yml").write_text(
@@ -269,7 +260,7 @@ def protect_outputs(root, config, lock, files):
             bundle.is_symlink() or name not in hashes or tree_hash(bundle) != hashes[name]
         ):
             raise SkillError("Local edits preserved in native bundle " + name + "; change its source inputs before rebuilding")
-    for relative in files:
+    for relative in files.keys() | lock.get("generated_files", {}).keys():
         file = root / relative
         expected = lock.get("generated_files", {}).get(relative)
         if file.exists() and hashlib.sha256(file.read_bytes()).hexdigest() != expected:
@@ -296,6 +287,7 @@ def build_package(root, snapshots=None):
         version = "{}.{}.{}".format(major, minor, patch + 1)
     files = marketplace_files(config, version)
     protect_outputs(root, config, lock, files)
+    retired = lock.get("generated_files", {}).keys() - files.keys()
     with tempfile.TemporaryDirectory(prefix=".native-stage-", dir=root) as temporary:
         stage = Path(temporary)
         staged = stage / "bundles"
@@ -317,7 +309,7 @@ def build_package(root, snapshots=None):
         previous = stage / "previous"
         previous.mkdir()
         old_files = {relative: (root / relative).read_bytes() if (root / relative).exists() else None
-                     for relative in [*files, "distribution.lock.json"]}
+                     for relative in [*files, *retired, "distribution.lock.json"]}
         published = []
         try:
             for name in managed_bundles(config, lock):
@@ -330,6 +322,8 @@ def build_package(root, snapshots=None):
                 published.append(name)
             for relative, value in files.items():
                 write_json(root / relative, value)
+            for relative in retired:
+                (root / relative).unlink(missing_ok=True)
             write_json(root / "distribution.lock.json", state)
         except OSError:
             for name in reversed(published):
@@ -377,10 +371,16 @@ def archive_package(root):
         raise SkillError("Archive directory is a symlink; existing destination preserved")
     output.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".archive-stage-", dir=output) as temporary:
-        staged = Path(temporary)
+        staged = Path(temporary) / "archives"
+        staged.mkdir()
         for plugin in config["plugins"]:
             name = plugin["name"]
-            bundle = root / "plugins" / name
+            bundle = Path(temporary) / name
+            shutil.copytree(root / "plugins" / name, bundle)
+            for entry in read_json(bundle / "catalog.json"):
+                write_prefixed_skill(bundle / PREFIXED_SKILLS_DIR / entry["name"], bundle, entry)
+            for relative, value in plugin_manifests({**config, **plugin}, version, include_prefixed=True).items():
+                write_json(bundle / relative, value)
             stem = name + "-" + version
             files = [file for file in sorted(bundle.rglob("*")) if file.is_file()]
             with zipfile.ZipFile(staged / (stem + ".zip"), "w", compression=zipfile.ZIP_DEFLATED) as archive:

@@ -25,8 +25,9 @@ class CheckedInLibraryTest(unittest.TestCase):
                 plugin = ROOT / "plugins" / name
                 manifest = json.loads((plugin / ".codex-plugin/plugin.json").read_text())
                 native = {path.parent.name: path for path in (plugin / manifest["skills"]).glob("*/SKILL.md")}
-                standalone = json.loads((plugin / "standalone-skills/catalog.json").read_text())
-                self.assertEqual(len(native), len(standalone))
+                catalog = json.loads((plugin / "catalog.json").read_text())
+                self.assertEqual(set(native), {entry["native_name"] for entry in catalog})
+                self.assertFalse((plugin / "standalone-skills").exists())
                 self.assertIn(short_name, native)
                 for skill_name, file in native.items():
                     text = file.read_text()
@@ -52,9 +53,9 @@ class CheckedInLibraryTest(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertFalse((checkout / "skills").exists())
             folders = {}
-            for file in (checkout / "plugins").glob("*/standalone-skills/catalog.json"):
+            for file in (checkout / "plugins").glob("*/catalog.json"):
                 for entry in json.loads(file.read_text()):
-                    folders[entry["name"]] = file.parent / entry["name"]
+                    folders[entry["name"]] = checkout / ".cache/skill-files" / file.parent.name / entry["name"]
             targets = [".agents/skills", ".claude/skills", ".pi/agent/skills", ".gemini/config/skills",
                        ".gemini/antigravity-cli/skills", ".config/opencode/skills", ".cursor/skills",
                        ".dsh/skills"]

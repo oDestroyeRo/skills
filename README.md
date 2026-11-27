@@ -42,13 +42,13 @@ git pull --ff-only
 python3 scripts/skills.py update
 ```
 
-The updated installer retargets remembered links to the plugin folders. A manual `sync` also removes an unchanged legacy root folder and migrates remembered links. Local edits stop that migration for review.
+The updated installer retargets remembered links to skill entries generated in `.cache/skill-files/`. A manual `sync` also removes an unchanged legacy root folder and migrates remembered links. Local edits stop that migration for review.
 
 ## Automatic updates
 
 There are two update steps:
 
-1. **Upstream → this repository.** The [daily workflow](.github/workflows/sync-upstream.yml) fetches all configured upstream branches, validates them, runs tests, and commits changed snapshots and entry points. It also supports **Run workflow**. It becomes active after these files are pushed to the repository's default branch with Actions enabled. The bot needs permission to push; protected branches may require adapting this to your contribution policy.
+1. **Upstream → this repository.** The [daily workflow](.github/workflows/sync-upstream.yml) fetches all configured upstream branches, validates them, runs tests, and commits changed snapshots and entry points, then publishes the versioned plugin bundles. It also supports **Run workflow**. It becomes active after these files are pushed to the repository's default branch with Actions enabled. The bot needs permission to push; protected branches may require adapting this to your contribution policy.
 2. **This repository → each machine.** Run the command below from a scheduler on each machine. It fast-forwards the checkout's tracking branch, validates the library, and refreshes all remembered installations. Existing skill links then see the updated source.
 
 ```sh
@@ -86,7 +86,7 @@ python3 -m unittest discover -s tests -v
 
 Matt's manifest currently publishes the stable engineering and productivity collections. tstack has no plugin manifest, so its `skills/` directory is discovered directly on every sync. `sources.lock.json` records exact commits, excluded paths, and content hashes. An upstream commit that leaves a snapshot unchanged keeps the recorded commit and the package version.
 
-Each plugin keeps its source skill tree, supporting resources, guides, manifests, and licenses in `plugins/<name>/upstream/<source>/`. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Generated entry points live in `skills/` for native plugin discovery and `standalone-skills/` for prefixed names. The skill catalog lives in `standalone-skills/catalog.json`.
+Each plugin keeps its source skill tree, supporting resources, guides, manifests, and licenses in `plugins/<name>/upstream/<source>/`. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Each plugin has one skill catalog in `catalog.json` and native entries in `skills/`. The folder installer generates prefixed entries in its cache. Release archives include prefixed entries for Pi, Cursor, and Antigravity.
 
 Anthropic's source uses a `license_filter` with approved license-file SHA256 hashes. Sync archives only approved skill folders and the configured attribution notices. New skills with approved terms are included automatically; missing or changed licenses are omitted and recorded in `sources.lock.json`. At the current revision, 14 Apache 2.0 skills are included. `docx`, `pdf`, `pptx`, and `xlsx` prohibit redistribution, and `doc-coauthoring` has no license file, so those five are excluded. Review new terms before adding a license hash. See the [upstream document license](https://github.com/anthropics/skills/blob/main/skills/docx/LICENSE.txt).
 

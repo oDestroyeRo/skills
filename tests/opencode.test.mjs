@@ -12,7 +12,7 @@ for (const { name: collection, source } of collections) {
   test(`${collection} registers only its packaged skills through the OpenCode SDK`, async () => {
     const base = new URL(`../plugins/${collection}/`, import.meta.url);
     const { default: plugin } = await import(new URL("opencode.mjs", base));
-    const catalog = JSON.parse(await readFile(new URL("standalone-skills/catalog.json", base), "utf8"));
+    const catalog = JSON.parse(await readFile(new URL("catalog.json", base), "utf8"));
     assert.equal(plugin.id, collection);
     assert.ok(catalog.every((entry) => entry.source === source));
     const definitions = [];
@@ -40,7 +40,7 @@ test("all configured collections coexist without skill-name collisions", async (
   const names = new Set();
   const expected = [];
   for (const { name: collection } of collections) {
-    const catalog = JSON.parse(await readFile(new URL(`../plugins/${collection}/standalone-skills/catalog.json`, import.meta.url), "utf8"));
+    const catalog = JSON.parse(await readFile(new URL(`../plugins/${collection}/catalog.json`, import.meta.url), "utf8"));
     expected.push(...catalog.map(({ native_name }) => `${collection}:${native_name}`));
     const { default: plugin } = await import(new URL(`../plugins/${collection}/opencode.mjs`, import.meta.url));
     await plugin.setup({

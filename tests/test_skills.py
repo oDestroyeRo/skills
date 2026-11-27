@@ -1,6 +1,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -51,21 +52,26 @@ class SharedSkillsTest(unittest.TestCase):
         (self.repo / "distribution.json").write_text(json.dumps(distribution))
 
     def skill(self, name):
-        return self.repo / "plugins" / name.partition("-")[0] / "standalone-skills" / name
+        source, _, original = name.partition("-")
+        return self.repo / "plugins" / source / "skills" / original
+
+    def cached_skill(self, name):
+        return self.repo / ".cache/skill-files" / name.partition("-")[0] / name
 
     def resource(self, name, relative):
         skill = self.skill(name)
-        catalog = json.loads((skill.parent / "catalog.json").read_text())
+        catalog = json.loads((skill.parents[1] / "catalog.json").read_text())
         entry = next(entry for entry in catalog if entry["name"] == name)
         return skill.parents[1] / "upstream" / entry["source"] / Path(entry["path"]).parent / relative
 
     def catalog(self):
-        return [entry for file in sorted((self.repo / "plugins").glob("*/standalone-skills/catalog.json"))
+        return [entry for file in sorted((self.repo / "plugins").glob("*/catalog.json"))
                 for entry in json.loads(file.read_text())]
 
     def legacy_root(self):
         legacy = self.repo / "skills"
-        shutil.copytree(self.repo / "plugins/pstack/standalone-skills", legacy)
+        (legacy / "pstack-tdd").mkdir(parents=True)
+        (legacy / "pstack-tdd/SKILL.md").write_text("Legacy pstack entry.\n")
         retired = legacy / "pstack-retired"
         retired.mkdir()
         (retired / "SKILL.md").write_text("Retired legacy entry.\n")
@@ -123,9 +129,12 @@ class SharedSkillsTest(unittest.TestCase):
             for name in ["mattpocock-tdd", "pstack-tdd"]:
                 folder = home / relative / name
                 self.assertTrue(folder.is_symlink())
-                self.assertEqual(folder.resolve(), self.skill(name).resolve())
+                self.assertEqual(folder.resolve(), self.cached_skill(name).resolve())
                 self.assertIn("name: " + name, (folder / "SKILL.md").read_text())
-                self.assertTrue((folder.resolve().parents[1] / "docs/harnesses.md").is_file())
+                text = (folder / "SKILL.md").read_text()
+                adapter = re.search(r"\[harness adapter\]\(([^)]+)\)", text)
+                self.assertIsNotNone(adapter)
+                self.assertTrue((folder.resolve() / adapter[1]).is_file())
                 self.assertIn("Original example", self.resource(name, "examples.md").read_text())
         self.assertFalse((home / ".dsh/skills").exists())
         self.assertFalse((self.repo / "skills").exists())
@@ -135,7 +144,7 @@ class SharedSkillsTest(unittest.TestCase):
         for name in ["mattpocock-tdd", "pstack-tdd"]:
             folder = home / ".dsh/skills" / name
             self.assertTrue(folder.is_symlink())
-            self.assertEqual(folder.resolve(), self.skill(name).resolve())
+            self.assertEqual(folder.resolve(), self.cached_skill(name).resolve())
         dsh_project = self.base / "dsh project"
         self.command("install", "--agent", "deepseek-harness", "--project", str(dsh_project))
         self.assertTrue((dsh_project / ".dsh/skills/pstack-tdd/SKILL.md").is_file())
@@ -192,7 +201,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.command("check")
         self.assertFalse(legacy.exists())
         self.assertNotIn("skills_sha256", json.loads((self.repo / "sources.lock.json").read_text()))
-        self.assertEqual((target / "pstack-tdd").resolve(), self.skill("pstack-tdd").resolve())
+        self.assertEqual((target / "pstack-tdd").resolve(), self.cached_skill("pstack-tdd").resolve())
         self.assertFalse((target / "pstack-retired").is_symlink())
         self.assertTrue((target / "personal").is_dir())
         before = (self.repo / "distribution.lock.json").read_bytes()
@@ -233,15 +242,15 @@ class SharedSkillsTest(unittest.TestCase):
         target.mkdir()
         (target / "pstack-tdd").symlink_to(self.repo / "skills/pstack-tdd")
         (target / "pstack-retired").symlink_to(self.repo / "skills/pstack-retired")
-        (target / "mattpocock-tdd").symlink_to(self.repo / "plugins/mattpocock/skills/mattpocock-tdd")
+        (target / "mattpocock-tdd").symlink_to(self.repo / "plugins/mattpocock/standalone-skills/mattpocock-tdd")
         native = self.repo / "plugins/pstack/skills/tdd"
         (target / "tdd").symlink_to(native)
         outside = self.base / "unrelated-skill"
         outside.mkdir()
         (target / "unrelated").symlink_to(outside)
         self.command("install", "--directory", str(target))
-        self.assertEqual((target / "pstack-tdd").resolve(), self.skill("pstack-tdd").resolve())
-        self.assertEqual((target / "mattpocock-tdd").resolve(), self.skill("mattpocock-tdd").resolve())
+        self.assertEqual((target / "pstack-tdd").resolve(), self.cached_skill("pstack-tdd").resolve())
+        self.assertEqual((target / "mattpocock-tdd").resolve(), self.cached_skill("mattpocock-tdd").resolve())
         self.assertEqual((target / "tdd").resolve(), native.resolve())
         self.assertFalse((target / "pstack-retired").is_symlink())
         self.assertEqual((target / "unrelated").resolve(), outside.resolve())
@@ -273,7 +282,7 @@ class SharedSkillsTest(unittest.TestCase):
         self.command("sync")
         self.command("check")
         self.assertEqual((target / "pstack-tdd").resolve(),
-                         (self.repo / "plugins/renamed-pstack/standalone-skills/pstack-tdd").resolve())
+                         (self.repo / ".cache/skill-files/renamed-pstack/pstack-tdd").resolve())
         self.assertFalse((self.repo / "plugins/pstack").exists())
         config["plugins"] = [plugin for plugin in config["plugins"] if plugin["source"] != "pstack"]
         file.write_text(json.dumps(config))
@@ -301,7 +310,7 @@ class SharedSkillsTest(unittest.TestCase):
     def test_local_edits_in_sources_and_exports_are_preserved(self):
         self.command("sync")
         lock = (self.repo / "sources.lock.json").read_bytes()
-        for relative in ["plugins/pstack/upstream/pstack/skills/tdd/SKILL.md", "plugins/pstack/standalone-skills/pstack-tdd/SKILL.md"]:
+        for relative in ["plugins/pstack/upstream/pstack/skills/tdd/SKILL.md", "plugins/pstack/skills/tdd/SKILL.md"]:
             file = self.repo / relative
             original = file.read_text()
             file.write_text(original + "\nUser's local edit\n")

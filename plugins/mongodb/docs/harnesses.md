@@ -2,9 +2,9 @@
 
 Resolve this adapter file to its real path before following its relative links.
 
-Native plugin entries live in `skills/`, and folder installations link to entries in `standalone-skills/`. Both open the original workflow under the plugin's `upstream/` directory. Resolve the entry point to its real path before following its links. Read the original workflow before acting, and resolve its file references from its real location. For example, `pstack:poteto-mode` opens `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
+Native plugin entries live in `skills/`, and folder installs link to prefixed entries generated in the checkout's cache. Both open the original workflow under the plugin's `upstream/` directory. Resolve the entry point to its real path before following its links. Read the original workflow before acting, and resolve its file references from its real location. For example, `pstack:poteto-mode` opens `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
 
-Native Codex, Claude Code, and OpenCode v2 use the plugin namespace. In a pstack workflow, `tdd` refers to `pstack:tdd`. In Matt's workflow, it refers to `mattpocock:tdd`. Folder installs use `pstack-tdd` and `mattpocock-tdd`. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata are in each plugin's `standalone-skills/catalog.json`.
+Native Codex, Claude Code, and OpenCode v2 use the plugin namespace. In a pstack workflow, `tdd` refers to `pstack:tdd`. In Matt's workflow, it refers to `mattpocock:tdd`. Folder installs use `pstack-tdd` and `mattpocock-tdd`. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata are in each plugin's `catalog.json`.
 
 ## Shared capabilities
 
