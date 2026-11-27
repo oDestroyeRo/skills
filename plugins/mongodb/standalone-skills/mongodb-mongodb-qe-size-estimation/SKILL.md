@@ -1,7 +1,7 @@
 ---
 name: mongodb-mongodb-qe-size-estimation
 description: >
-  Estimates the storage and memory impact of encrypting fields in collections with Queryable Encryption (QE) enabled. 
+  Estimates the storage and memory impact of encrypting fields in collections with Queryable Encryption (QE) enabled.
   Do NOT use for collections that use Client-Side Field Level Encryption (CSFLE) instead of QE.
 ---
 

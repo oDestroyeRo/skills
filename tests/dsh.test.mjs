@@ -60,7 +60,7 @@ for (const { name: collection, source, npm_name: npmName, display_name: displayN
     assert.ok(provider);
     assert.equal(provider.name, collection);
 
-    const catalog = JSON.parse(await readFile(new URL("skills/catalog.json", base), "utf8"));
+    const catalog = JSON.parse(await readFile(new URL("standalone-skills/catalog.json", base), "utf8"));
     assert.ok(catalog.every((entry) => entry.source === source));
     const candidates = await provider.list({});
     assert.deepEqual(
@@ -76,7 +76,7 @@ for (const { name: collection, source, npm_name: npmName, display_name: displayN
       assert.equal(candidate.source, "bundled");
       assert.equal(candidate.rank, 600);
       assert.equal(candidate.resourceBase?.kind, "directory");
-      assert.equal(candidate.resourceBase.path, fileURLToPath(new URL(`skills/${candidate.name}`, base)));
+      assert.equal(candidate.resourceBase.path, fileURLToPath(new URL(`standalone-skills/${candidate.name}`, base)));
       assert.equal(candidate.path, join(candidate.resourceBase.path, "SKILL.md"));
 
       const raw = await readFile(candidate.path, "utf8");
@@ -118,7 +118,7 @@ test("all DeepSeek Harness bundles coexist with distinct row ids, providers, and
 
   for (const { name: collection, npm_name: npmName } of collections) {
     const catalog = JSON.parse(
-      await readFile(new URL(`../plugins/${collection}/skills/catalog.json`, import.meta.url), "utf8"),
+      await readFile(new URL(`../plugins/${collection}/standalone-skills/catalog.json`, import.meta.url), "utf8"),
     );
     expected.push(...catalog.map((entry) => entry.name));
 

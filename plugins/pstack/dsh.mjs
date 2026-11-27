@@ -27,11 +27,11 @@ function frontmatterBoolean(header, key) {
 }
 
 function loadSkills() {
-  return readFile(new URL("./skills/catalog.json", import.meta.url), "utf8").then(async (rawCatalog) => {
+  return readFile(new URL("./standalone-skills/catalog.json", import.meta.url), "utf8").then(async (rawCatalog) => {
     const catalog = JSON.parse(rawCatalog);
     const entries = await Promise.all(catalog.map(async ({ name }) => {
-      const directoryUrl = new URL(`./skills/${name}`, import.meta.url);
-      const fileUrl = new URL(`./skills/${name}/SKILL.md`, import.meta.url);
+      const directoryUrl = new URL(`./standalone-skills/${name}`, import.meta.url);
+      const fileUrl = new URL(`./standalone-skills/${name}/SKILL.md`, import.meta.url);
       const text = await readFile(fileUrl, "utf8");
       const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/.exec(text);
       if (!match) throw new Error(`Missing skill frontmatter: ${name}`);

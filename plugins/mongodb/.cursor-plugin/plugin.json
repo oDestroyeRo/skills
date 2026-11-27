@@ -1,6 +1,6 @@
 {
   "name": "mongodb",
-  "version": "1.0.35",
+  "version": "1.0.37",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",
@@ -10,7 +10,7 @@
   "repository": "https://github.com/oDestroyeRo/skills",
   "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
   "displayName": "MongoDB Skills (Community Mirror)",
-  "skills": "./skills/",
+  "skills": "./standalone-skills/",
   "logo": "assets/logo.svg",
   "keywords": [
     "skills",

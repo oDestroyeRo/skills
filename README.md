@@ -2,7 +2,7 @@
 
 One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, Cursor, and DeepSeek Harness**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
 
-Upstream files stay together with their references, scripts, agent prompts, and licenses. Namespaced entry points let the collections coexist: `mattpocock-tdd` and `pstack-tdd` are separate skills, while tstack uses names such as `tstack-full-stop`. Each collection's entry points live in `plugins/<name>/skills/`. Folder installs link directly to those entries; native packages contain self-contained copies. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
+Upstream files stay together with their references, scripts, agent prompts, and licenses. Native Codex and Claude Code plugins use qualified names such as `pstack:how` and `mattpocock:code-review`. Folder installs use names such as `mattpocock-tdd` and `pstack-tdd` so both skills can coexist in a shared directory. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
 
 ## Install
 
@@ -35,7 +35,7 @@ python3 scripts/skills.py install --directory /custom/config/skills
 
 The installer remembers target directories in ignored `.cache/installations.json`. Updates add new links and remove obsolete links owned by this checkout. Keep the checkout in place; moving or deleting it breaks its installed links. To uninstall, remove only the links pointing to this checkout and remove that destination from `.cache/installations.json` so a later update does not restore them.
 
-For an existing clone of the first release, pull this repository before running its updated installer:
+For folder installations from an older checkout, pull this repository before running its updated installer:
 
 ```sh
 git pull --ff-only
@@ -86,7 +86,7 @@ python3 -m unittest discover -s tests -v
 
 Matt's manifest currently publishes the stable engineering and productivity collections. tstack has no plugin manifest, so its `skills/` directory is discovered directly on every sync. `sources.lock.json` records exact commits, excluded paths, and content hashes. An upstream commit that leaves a snapshot unchanged keeps the recorded commit and the package version.
 
-Each plugin keeps its source skill tree, supporting resources, guides, manifests, and licenses in `plugins/<name>/upstream/<source>/`. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Generated entry points and catalogs live only in `plugins/<name>/skills/`.
+Each plugin keeps its source skill tree, supporting resources, guides, manifests, and licenses in `plugins/<name>/upstream/<source>/`. `exclude_paths` in `sources.json` omits upstream release tooling and contributor files on every sync. Each excluded path is relative to that source's `root`. Retained files keep their original contents and layout. Generated entry points live in `skills/` for native plugin discovery and `standalone-skills/` for prefixed names. The skill catalog lives in `standalone-skills/catalog.json`.
 
 Anthropic's source uses a `license_filter` with approved license-file SHA256 hashes. Sync archives only approved skill folders and the configured attribution notices. New skills with approved terms are included automatically; missing or changed licenses are omitted and recorded in `sources.lock.json`. At the current revision, 14 Apache 2.0 skills are included. `docx`, `pdf`, `pptx`, and `xlsx` prohibit redistribution, and `doc-coauthoring` has no license file, so those five are excluded. Review new terms before adding a license hash. See the [upstream document license](https://github.com/anthropics/skills/blob/main/skills/docx/LICENSE.txt).
 
@@ -102,7 +102,7 @@ Every sync also rebuilds each native plugin folder and its marketplace entries. 
 
 ## Compatibility and verification
 
-The folder installer and native packages use the same per-plugin skill files. Both methods use the available tools of the current harness. Some pstack and tstack workflows need subagents, selected models, services, or other plugins. tstack's PR workflows also need an authenticated GitHub CLI, and its PR wait helper needs Python 3. The [harness adapter](docs/harnesses.md) describes those boundaries and how T3 delegation fits. Existing plugin installations may also expose duplicate workflows under their original names.
+The folder installer and native packages open the same upstream workflows. Both methods use the available tools of the current harness. Some pstack and tstack workflows need subagents, selected models, services, or other plugins. tstack's PR workflows also need an authenticated GitHub CLI, and its PR wait helper needs Python 3. The [harness adapter](docs/harnesses.md) describes those boundaries and how T3 delegation fits. Existing plugin installations may also expose duplicate workflows under their original names.
 
 The tests exercise real local Git repositories, source advances, locked revisions, update failures, protected local edits, file references, name collisions, and isolated installs for every profile. `check` verifies the actual library. These checks establish filesystem and updater behavior; live discovery and every upstream workflow across all installed harness versions still need client-level verification. In particular, Antigravity's documented discovery paths are used, but its symlink discovery has not been exercised in a running client.
 
