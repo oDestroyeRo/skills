@@ -1,0 +1,16 @@
+---
+name: migrate-oracle-app
+description: "Assess and convert Oracle-dependent codebases to PostgreSQL. Use for architecture and Mermaid diagrams, Oracle JDBC, SQL, PL/SQL calls, ORM mappings, missing dependencies, missing PostgreSQL objects, Docker integration tests, synthetic data, code coverage, packaging, and migration-readiness reporting."
+disable-model-invocation: false
+user-invocable: true
+---
+
+Resolve this entry point to its real path before following its links.
+
+Read the complete [upstream skill](../../upstream/postgres/plugin/skills/migrate-oracle-app/SKILL.md) before doing the task.
+
+Resolve `../../upstream/postgres/plugin/skills/migrate-oracle-app/SKILL.md` to its real path. Resolve the workflow's relative file references from that upstream file, so its scripts, references, and sibling skills stay together.
+
+When it names another skill, select the entry from the same collection or read the matching file in [the upstream library](../../upstream/postgres).
+
+For harness-specific tools, delegation, models, or settings, read the [harness adapter](../../docs/harnesses.md) and apply the section for the current harness.

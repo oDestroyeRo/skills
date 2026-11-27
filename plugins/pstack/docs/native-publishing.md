@@ -1,6 +1,6 @@
 # Build and distribute native plugins
 
-Generate one marketplace with `mattpocock`, `pstack`, `tstack`, `cc`, and `mongodb` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
+Generate one marketplace with `mattpocock`, `pstack`, `tstack`, `cc`, `mongodb`, `google`, and `postgres` plugins. Each has its own folder, package identity, resources, and release archives. They share the repository's release version. Changes to any collection produce a new release, while consumers choose which plugins to install.
 
 Run these commands from the source checkout, which contains `scripts/`. Installed and extracted plugins contain runtime resources rather than the source build tools. Generation writes local artifacts; publishing and installations are separate actions.
 
@@ -18,15 +18,17 @@ The first build uses `initial_version`, currently `1.0.0`. Later builds incremen
 The generated layout is:
 
 ```text
-.agents/plugins/marketplace.json       Five Codex entries
-.claude-plugin/marketplace.json        Five Claude Code entries
+.agents/plugins/marketplace.json       Seven Codex entries
+.claude-plugin/marketplace.json        Seven Claude Code entries
 package.json                           Private development workspace
 plugins/
   mattpocock/                          Matt's native plugin and npm package
   pstack/                             pstack's native plugin and npm package
   tstack/                             tstack's native plugin and npm package
   cc/                       Anthropic's community plugin and npm package
-  mongodb/                       MongoDB's community plugin and npm package
+  mongodb/                            MongoDB's community plugin and npm package
+  google/                             Google's community plugin and npm package
+  postgres/                           Microsoft's PostgreSQL community plugin and npm package
 dist/
   mattpocock-<version>.zip
   mattpocock-<version>.tar.gz
@@ -38,6 +40,10 @@ dist/
   cc-<version>.tar.gz
   mongodb-<version>.zip
   mongodb-<version>.tar.gz
+  google-<version>.zip
+  google-<version>.tar.gz
+  postgres-<version>.zip
+  postgres-<version>.tar.gz
 ```
 
 Each plugin folder contains a skill catalog, native manifests, adapters, `skills/`, and its own upstream resources and license notices. The ZIP and tar.gz bundles also contain the Cursor and Antigravity manifests and `prefixed-skills/` for Pi, Cursor, and Antigravity. The root workspace is private. The builder discovers skills from each configured upstream and writes entry points only into that source's plugin folder. Custom collections use their own source and plugin entries.
@@ -57,6 +63,8 @@ claude plugin validate --strict --profile directory plugins/pstack
 claude plugin validate --strict --profile directory plugins/tstack
 claude plugin validate --strict --profile directory plugins/cc
 claude plugin validate --strict --profile directory plugins/mongodb
+claude plugin validate --strict --profile directory plugins/google
+claude plugin validate --strict --profile directory plugins/postgres
 claude plugin validate --strict .claude-plugin/marketplace.json
 ```
 
@@ -67,7 +75,7 @@ npm install --ignore-scripts --no-package-lock
 node --test tests/opencode.test.mjs tests/dsh.test.mjs
 ```
 
-The npm packages are `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, and `@odestroyero/mongodb-skills`. Registry publication requires ownership of that scope. The repo's packaging code uses MIT. Upstream terms remain in each bundle's `upstream/` folder and are linked from its notice index. Anthropic's npm license field points to that index because its skills and assets have separate terms. MongoDB's npm license field also points to its notice index, which links its Apache 2.0 source license.
+The npm packages are `@odestroyero/mattpocock-skills`, `@odestroyero/pstack-skills`, `@odestroyero/tstack-skills`, `@odestroyero/anthropic-skills`, `@odestroyero/mongodb-skills`, `@odestroyero/google-skills`, and `@odestroyero/postgres-skills`. Registry publication requires ownership of that scope. The repo's packaging code uses MIT. Upstream terms remain in each bundle's `upstream/` folder and are linked from its notice index. Anthropic's npm license field points to that index because its skills and assets have separate terms. MongoDB's npm license field also points to its notice index, which links its Apache 2.0 source license.
 
 If Antigravity is installed, validate each extracted plugin folder with `agy plugin validate --strict`. Check skill names and versions in each target client. Schema and SDK checks do not prove live discovery or workflow execution across every client.
 

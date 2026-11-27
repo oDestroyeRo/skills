@@ -2,7 +2,7 @@
   "version": 1,
   "marketplace": "odestroyero-skills",
   "display_name": "Shared Agent Skills",
-  "description": "Matt Pocock, pstack, tstack, Anthropic, and MongoDB skills for coding agents.",
+  "description": "Matt Pocock, pstack, tstack, Anthropic, MongoDB, Google, and Microsoft PostgreSQL skills for coding agents.",
   "author": {
     "name": "oDestroyeRo",
     "url": "https://github.com/oDestroyeRo"
@@ -52,6 +52,23 @@
       "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
       "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
       "suggested_prompts": ["Use mongodb-mongodb-query-optimizer to optimize a MongoDB query."]
+    },
+    {
+      "source": "google",
+      "name": "google",
+      "npm_name": "@odestroyero/google-skills",
+      "display_name": "Google Skills (Community Mirror)",
+      "description": "Community mirror of Google's agent skills for Google products and technologies, with upstream updates.",
+      "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
+      "suggested_prompts": ["Use google-gemini-api to build with the Gemini API."]
+    },
+    {
+      "source": "postgres",
+      "name": "postgres",
+      "npm_name": "@odestroyero/postgres-skills",
+      "display_name": "Microsoft PostgreSQL Skills (Community Mirror)",
+      "description": "Community mirror of Microsoft's PostgreSQL best practices, graph, and Oracle migration skills, with upstream updates.",
+      "suggested_prompts": ["Use postgres-postgresql-best-practices to review a PostgreSQL schema."]
     }
   ]
 }

@@ -1,12 +1,12 @@
 # Shared agent skills
 
-One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, Cursor, and DeepSeek Harness**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), and [MongoDB's skills](https://github.com/mongodb/agent-skills).
+One library for **T3 Code, Codex, Claude Code, Pi, Antigravity, OpenCode, Cursor, and DeepSeek Harness**, with updates from [Matt Pocock's skills](https://github.com/mattpocock/skills), [pstack](https://github.com/cursor/plugins/tree/main/pstack), [tstack](https://github.com/t3dotgg/tstack), [Anthropic's redistributable skills](https://github.com/anthropics/skills), [MongoDB's skills](https://github.com/mongodb/agent-skills), [Google's skills](https://github.com/google/skills), and [Microsoft's PostgreSQL skills](https://github.com/microsoft/postgres-skills).
 
 Upstream files stay together with their references, scripts, agent prompts, and licenses. Native Codex, Claude Code, and OpenCode v2 plugins use qualified names such as `pstack:tdd` and `mattpocock:tdd`. Folder installs use names such as `mattpocock-tdd` and `pstack-tdd` so both skills can coexist in a shared directory. The installer and bundle generator use Python **3.9+** and Git on macOS or Linux without third-party Python packages. OpenCode's and DeepSeek Harness's package and adapter checks use Node.js **22+**.
 
 ## Install
 
-The native marketplace contains five independent plugins: **mattpocock**, **pstack**, **tstack**, **cc**, and **mongodb**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, DeepSeek Harness, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
+The native marketplace contains seven independent plugins: **mattpocock**, **pstack**, **tstack**, **cc**, **mongodb**, **google**, and **postgres**, in their respective `plugins/<name>/` folders. Install the collections you want using the [native installation guide](docs/native-install.md). It covers Claude Code, Codex, Cursor, Pi, OpenCode v2, Antigravity, DeepSeek Harness, and T3 Code. The [publishing guide](docs/native-publishing.md) covers versions, validation, and separate release artifacts.
 
 Use the folder installer below to link plugin skills from one checkout across harnesses:
 
@@ -90,7 +90,7 @@ Each plugin keeps its source skill tree, supporting resources, guides, manifests
 
 Anthropic's source uses a `license_filter` with approved license-file SHA256 hashes. Sync archives only approved skill folders and the configured attribution notices. New skills with approved terms are included automatically; missing or changed licenses are omitted and recorded in `sources.lock.json`. At the current revision, 14 Apache 2.0 skills are included. `docx`, `pdf`, `pptx`, and `xlsx` prohibit redistribution, and `doc-coauthoring` has no license file, so those five are excluded. Review new terms before adding a license hash. See the [upstream document license](https://github.com/anthropics/skills/blob/main/skills/docx/LICENSE.txt).
 
-`description_overrides` can shorten an exported description without changing the original skill. Anthropic's `claude-api` entry uses this to stay within the 1024-character skill description limit.
+`name_overrides` shortens selected exported names to meet the 64-character limit while preserving their upstream paths. `description_overrides` can shorten an exported description without changing the original skill. Anthropic's `claude-api` entry uses this to stay within the 1024-character skill description limit.
 
 MongoDB's source discovers `skills/` directly and preserves its Apache 2.0 license, references, and scripts. The `mongodb` plugin is a community mirror of those skills. The collection prefix applies to upstream names that already start with `mongodb-`, so exported names include `mongodb-mongodb-query-optimizer` and `mongodb-mongodb-schema-design`. These packages install skills only. Configure the MongoDB MCP server separately when a workflow needs it. See the [MongoDB runtime notes](docs/harnesses.md#mongodb-workflows).
 
@@ -106,6 +106,6 @@ The folder installer and native packages open the same upstream workflows. Both 
 
 The tests exercise real local Git repositories, source advances, locked revisions, update failures, protected local edits, file references, name collisions, and isolated installs for every profile. `check` verifies the actual library. These checks establish filesystem and updater behavior; live discovery and every upstream workflow across all installed harness versions still need client-level verification. In particular, Antigravity's documented discovery paths are used, but its symlink discovery has not been exercised in a running client.
 
-The [harness notes](docs/harnesses.md) and [installation guide](docs/native-install.md) link to official documentation. Upstream license notices remain in [Matt's snapshot](plugins/mattpocock/upstream/mattpocock/LICENSE), [pstack's snapshot](plugins/pstack/upstream/pstack/LICENSE), [tstack's snapshot](plugins/tstack/upstream/tstack/LICENSE), [Anthropic's bundle notice index](plugins/cc/THIRD_PARTY_NOTICES.md), and [MongoDB's snapshot](plugins/mongodb/upstream/mongodb/LICENSE). Those terms govern their respective content and assets.
+The [harness notes](docs/harnesses.md) and [installation guide](docs/native-install.md) link to official documentation. Upstream license notices remain in [Matt's snapshot](plugins/mattpocock/upstream/mattpocock/LICENSE), [pstack's snapshot](plugins/pstack/upstream/pstack/LICENSE), [tstack's snapshot](plugins/tstack/upstream/tstack/LICENSE), [Anthropic's bundle notice index](plugins/cc/THIRD_PARTY_NOTICES.md), [MongoDB's snapshot](plugins/mongodb/upstream/mongodb/LICENSE), [Google's Apache-2.0 license](plugins/google/upstream/google/LICENSE), and [Microsoft's MIT license](plugins/postgres/upstream/postgres/LICENSE). Those terms govern their respective content and assets.
 
 This repo's code and packaging use the [MIT license](LICENSE).

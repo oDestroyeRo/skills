@@ -182,8 +182,8 @@ def populate_bundle(root, bundle, config, version, snapshot):
     copy_materialized(snapshot, bundle / "upstream" / source_id)
     source = next(source for source in read_json(root / "sources.json")["sources"] if source["id"] == source_id)
     catalog = discover_skills({source_id: snapshot}, [source])
-    upstream_names = {entry["upstream_name"] for entry in catalog}
     source_prefix = source_id + "-"
+    exported_names = {entry["name"].removeprefix(source_prefix) for entry in catalog}
     plugin_prefix = config["name"] + ":"
     for entry in catalog:
         original = snapshot / entry["path"]
@@ -192,8 +192,9 @@ def populate_bundle(root, bundle, config, version, snapshot):
         description = source.get("description_overrides", {}).get(original_name)
         if description is not None:
             fields["description"] = "description: " + json.dumps(description, ensure_ascii=False)
-        short_name = original_name.removeprefix(source_prefix)
-        native_name = original_name if short_name in upstream_names else short_name
+        export_name = entry["name"].removeprefix(source_prefix)
+        short_name = export_name.removeprefix(source_prefix)
+        native_name = export_name if short_name in exported_names else short_name
         entry["native_name"] = native_name
         write_skill_entry(bundle / "skills" / native_name, bundle, entry, fields, plugin_prefix + native_name)
     write_json(bundle / "catalog.json", catalog)

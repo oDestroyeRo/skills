@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "sources": {
+    "google": {
+      "repository": "https://github.com/google/skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "6dc0d53303b9f96f166ac72d7f8f1920cb260f24",
+      "sha256": "733bcfba587c41ba56d75422aba4fdd3c93020b1c55b85af9163d71203a1975b",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        ".gitmodules",
+        ".lycheeignore",
+        "CONTRIBUTING.md",
+        "lychee.toml",
+        "plugins"
+      ]
+    }
+  }
+}

@@ -78,6 +78,47 @@
         "testing",
         "tools"
       ]
+    },
+    {
+      "id": "google",
+      "repository": "https://github.com/google/skills.git",
+      "ref": "main",
+      "root": ".",
+      "skill_roots": ["skills"],
+      "name_overrides": {
+        "google-cloud-solution-agentic-ai-borderless-data-lakehouse": "cloud-solution-agentic-ai-data-lakehouse",
+        "google-cloud-solution-agentic-analytics-spark-knowledge-catalog": "cloud-solution-spark-knowledge-catalog"
+      },
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        ".gitmodules",
+        ".lycheeignore",
+        "CONTRIBUTING.md",
+        "lychee.toml",
+        "plugins"
+      ]
+    },
+    {
+      "id": "postgres",
+      "repository": "https://github.com/microsoft/postgres-skills.git",
+      "ref": "main",
+      "root": ".",
+      "skill_roots": ["plugin/skills"],
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "SUPPORT.md",
+        "plugin/tests",
+        "tests"
+      ]
     }
   ]
 }

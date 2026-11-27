@@ -1,0 +1,1542 @@
+[
+  {
+    "name": "google-data-manager-api-audience-ingestion",
+    "source": "google",
+    "upstream_name": "data-manager-api-audience-ingestion",
+    "path": "skills/ads/data-manager-api-audience-ingestion/SKILL.md",
+    "native_name": "data-manager-api-audience-ingestion"
+  },
+  {
+    "name": "google-data-manager-api-event-ingestion",
+    "source": "google",
+    "upstream_name": "data-manager-api-event-ingestion",
+    "path": "skills/ads/data-manager-api-event-ingestion/SKILL.md",
+    "native_name": "data-manager-api-event-ingestion"
+  },
+  {
+    "name": "google-data-manager-api-setup",
+    "source": "google",
+    "upstream_name": "data-manager-api-setup",
+    "path": "skills/ads/data-manager-api-setup/SKILL.md",
+    "native_name": "data-manager-api-setup"
+  },
+  {
+    "name": "google-data-manager-api-troubleshooting",
+    "source": "google",
+    "upstream_name": "data-manager-api-troubleshooting",
+    "path": "skills/ads/data-manager-api-troubleshooting/SKILL.md",
+    "native_name": "data-manager-api-troubleshooting"
+  },
+  {
+    "name": "google-google-ads-api-account-diagnostics",
+    "source": "google",
+    "upstream_name": "google-ads-api-account-diagnostics",
+    "path": "skills/ads/google-ads-api-account-diagnostics/SKILL.md",
+    "native_name": "ads-api-account-diagnostics"
+  },
+  {
+    "name": "google-google-ads-api-mcp-setup",
+    "source": "google",
+    "upstream_name": "google-ads-api-mcp-setup",
+    "path": "skills/ads/google-ads-api-mcp-setup/SKILL.md",
+    "native_name": "ads-api-mcp-setup"
+  },
+  {
+    "name": "google-google-ads-api-quickstart",
+    "source": "google",
+    "upstream_name": "google-ads-api-quickstart",
+    "path": "skills/ads/google-ads-api-quickstart/SKILL.md",
+    "native_name": "ads-api-quickstart"
+  },
+  {
+    "name": "google-google-mobile-ads-android-migrate-to-next-gen",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-android-migrate-to-next-gen",
+    "path": "skills/ads/google-mobile-ads-android-migrate-to-next-gen/SKILL.md",
+    "native_name": "mobile-ads-android-migrate-to-next-gen"
+  },
+  {
+    "name": "google-google-mobile-ads-banner",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-banner",
+    "path": "skills/ads/google-mobile-ads-banner/SKILL.md",
+    "native_name": "mobile-ads-banner"
+  },
+  {
+    "name": "google-google-mobile-ads-get-started",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-get-started",
+    "path": "skills/ads/google-mobile-ads-get-started/SKILL.md",
+    "native_name": "mobile-ads-get-started"
+  },
+  {
+    "name": "google-google-mobile-ads-interstitial",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-interstitial",
+    "path": "skills/ads/google-mobile-ads-interstitial/SKILL.md",
+    "native_name": "mobile-ads-interstitial"
+  },
+  {
+    "name": "google-google-mobile-ads-rewarded",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-rewarded",
+    "path": "skills/ads/google-mobile-ads-rewarded/SKILL.md",
+    "native_name": "mobile-ads-rewarded"
+  },
+  {
+    "name": "google-google-mobile-ads-validate",
+    "source": "google",
+    "upstream_name": "google-mobile-ads-validate",
+    "path": "skills/ads/google-mobile-ads-validate/SKILL.md",
+    "native_name": "mobile-ads-validate"
+  },
+  {
+    "name": "google-ima-dai-sdk",
+    "source": "google",
+    "upstream_name": "ima-dai-sdk",
+    "path": "skills/ads/ima-dai-sdk/SKILL.md",
+    "native_name": "ima-dai-sdk"
+  },
+  {
+    "name": "google-ima-sdk-client-side",
+    "source": "google",
+    "upstream_name": "ima-sdk-client-side",
+    "path": "skills/ads/ima-sdk-client-side/SKILL.md",
+    "native_name": "ima-sdk-client-side"
+  },
+  {
+    "name": "google-google-analytics-admin-api-basics",
+    "source": "google",
+    "upstream_name": "google-analytics-admin-api-basics",
+    "path": "skills/analytics/google-analytics-admin-api-basics/SKILL.md",
+    "native_name": "analytics-admin-api-basics"
+  },
+  {
+    "name": "google-google-analytics-data-api-basics",
+    "source": "google",
+    "upstream_name": "google-analytics-data-api-basics",
+    "path": "skills/analytics/google-analytics-data-api-basics/SKILL.md",
+    "native_name": "analytics-data-api-basics"
+  },
+  {
+    "name": "google-agent-platform-access-audit",
+    "source": "google",
+    "upstream_name": "agent-platform-access-audit",
+    "path": "skills/cloud/agent-platform-access-audit/SKILL.md",
+    "native_name": "agent-platform-access-audit"
+  },
+  {
+    "name": "google-agent-platform-agent-registry",
+    "source": "google",
+    "upstream_name": "agent-platform-agent-registry",
+    "path": "skills/cloud/agent-platform-agent-registry/SKILL.md",
+    "native_name": "agent-platform-agent-registry"
+  },
+  {
+    "name": "google-agent-platform-alert-configuration",
+    "source": "google",
+    "upstream_name": "agent-platform-alert-configuration",
+    "path": "skills/cloud/agent-platform-alert-configuration/SKILL.md",
+    "native_name": "agent-platform-alert-configuration"
+  },
+  {
+    "name": "google-agent-platform-architecture",
+    "source": "google",
+    "upstream_name": "agent-platform-architecture",
+    "path": "skills/cloud/agent-platform-architecture/SKILL.md",
+    "native_name": "agent-platform-architecture"
+  },
+  {
+    "name": "google-agent-platform-autorater-customization",
+    "source": "google",
+    "upstream_name": "agent-platform-autorater-customization",
+    "path": "skills/cloud/agent-platform-autorater-customization/SKILL.md",
+    "native_name": "agent-platform-autorater-customization"
+  },
+  {
+    "name": "google-agent-platform-deploy",
+    "source": "google",
+    "upstream_name": "agent-platform-deploy",
+    "path": "skills/cloud/agent-platform-deploy/SKILL.md",
+    "native_name": "agent-platform-deploy"
+  },
+  {
+    "name": "google-agent-platform-endpoint-management",
+    "source": "google",
+    "upstream_name": "agent-platform-endpoint-management",
+    "path": "skills/cloud/agent-platform-endpoint-management/SKILL.md",
+    "native_name": "agent-platform-endpoint-management"
+  },
+  {
+    "name": "google-agent-platform-eval-flywheel",
+    "source": "google",
+    "upstream_name": "agent-platform-eval-flywheel",
+    "path": "skills/cloud/agent-platform-eval-flywheel/SKILL.md",
+    "native_name": "agent-platform-eval-flywheel"
+  },
+  {
+    "name": "google-agent-platform-inference",
+    "source": "google",
+    "upstream_name": "agent-platform-inference",
+    "path": "skills/cloud/agent-platform-inference/SKILL.md",
+    "native_name": "agent-platform-inference"
+  },
+  {
+    "name": "google-agent-platform-migrate-from-ai-studio",
+    "source": "google",
+    "upstream_name": "agent-platform-migrate-from-ai-studio",
+    "path": "skills/cloud/agent-platform-migrate-from-ai-studio/SKILL.md",
+    "native_name": "agent-platform-migrate-from-ai-studio"
+  },
+  {
+    "name": "google-agent-platform-model-registry",
+    "source": "google",
+    "upstream_name": "agent-platform-model-registry",
+    "path": "skills/cloud/agent-platform-model-registry/SKILL.md",
+    "native_name": "agent-platform-model-registry"
+  },
+  {
+    "name": "google-agent-platform-prompt-management",
+    "source": "google",
+    "upstream_name": "agent-platform-prompt-management",
+    "path": "skills/cloud/agent-platform-prompt-management/SKILL.md",
+    "native_name": "agent-platform-prompt-management"
+  },
+  {
+    "name": "google-agent-platform-rag-engine-management",
+    "source": "google",
+    "upstream_name": "agent-platform-rag-engine-management",
+    "path": "skills/cloud/agent-platform-rag-engine-management/SKILL.md",
+    "native_name": "agent-platform-rag-engine-management"
+  },
+  {
+    "name": "google-agent-platform-skill-registry",
+    "source": "google",
+    "upstream_name": "agent-platform-skill-registry",
+    "path": "skills/cloud/agent-platform-skill-registry/SKILL.md",
+    "native_name": "agent-platform-skill-registry"
+  },
+  {
+    "name": "google-agent-platform-troubleshooting",
+    "source": "google",
+    "upstream_name": "agent-platform-troubleshooting",
+    "path": "skills/cloud/agent-platform-troubleshooting/SKILL.md",
+    "native_name": "agent-platform-troubleshooting"
+  },
+  {
+    "name": "google-agent-platform-tuning",
+    "source": "google",
+    "upstream_name": "agent-platform-tuning",
+    "path": "skills/cloud/agent-platform-tuning/SKILL.md",
+    "native_name": "agent-platform-tuning"
+  },
+  {
+    "name": "google-agent-platform-tuning-management",
+    "source": "google",
+    "upstream_name": "agent-platform-tuning-management",
+    "path": "skills/cloud/agent-platform-tuning-management/SKILL.md",
+    "native_name": "agent-platform-tuning-management"
+  },
+  {
+    "name": "google-alloydb-basics",
+    "source": "google",
+    "upstream_name": "alloydb-basics",
+    "path": "skills/cloud/alloydb-basics/SKILL.md",
+    "native_name": "alloydb-basics"
+  },
+  {
+    "name": "google-api-gateway-backend-security-and-rate-limiting",
+    "source": "google",
+    "upstream_name": "api-gateway-backend-security-and-rate-limiting",
+    "path": "skills/cloud/api-gateway-backend-security-and-rate-limiting/SKILL.md",
+    "native_name": "api-gateway-backend-security-and-rate-limiting"
+  },
+  {
+    "name": "google-api-gateway-mcp-server",
+    "source": "google",
+    "upstream_name": "api-gateway-mcp-server",
+    "path": "skills/cloud/api-gateway-mcp-server/SKILL.md",
+    "native_name": "api-gateway-mcp-server"
+  },
+  {
+    "name": "google-api-gateway-openapi-spec-authoring",
+    "source": "google",
+    "upstream_name": "api-gateway-openapi-spec-authoring",
+    "path": "skills/cloud/api-gateway-openapi-spec-authoring/SKILL.md",
+    "native_name": "api-gateway-openapi-spec-authoring"
+  },
+  {
+    "name": "google-api-gateway-troubleshooting",
+    "source": "google",
+    "upstream_name": "api-gateway-troubleshooting",
+    "path": "skills/cloud/api-gateway-troubleshooting/SKILL.md",
+    "native_name": "api-gateway-troubleshooting"
+  },
+  {
+    "name": "google-apigee-agent-gateway-governance",
+    "source": "google",
+    "upstream_name": "apigee-agent-gateway-governance",
+    "path": "skills/cloud/apigee-agent-gateway-governance/SKILL.md",
+    "native_name": "apigee-agent-gateway-governance"
+  },
+  {
+    "name": "google-application-design-center-design-deploy",
+    "source": "google",
+    "upstream_name": "application-design-center-design-deploy",
+    "path": "skills/cloud/application-design-center-design-deploy/SKILL.md",
+    "native_name": "application-design-center-design-deploy"
+  },
+  {
+    "name": "google-application-integration-authoring",
+    "source": "google",
+    "upstream_name": "application-integration-authoring",
+    "path": "skills/cloud/application-integration-authoring/SKILL.md",
+    "native_name": "application-integration-authoring"
+  },
+  {
+    "name": "google-application-integration-basics",
+    "source": "google",
+    "upstream_name": "application-integration-basics",
+    "path": "skills/cloud/application-integration-basics/SKILL.md",
+    "native_name": "application-integration-basics"
+  },
+  {
+    "name": "google-application-integration-troubleshooting",
+    "source": "google",
+    "upstream_name": "application-integration-troubleshooting",
+    "path": "skills/cloud/application-integration-troubleshooting/SKILL.md",
+    "native_name": "application-integration-troubleshooting"
+  },
+  {
+    "name": "google-assured-workloads-basics",
+    "source": "google",
+    "upstream_name": "assured-workloads-basics",
+    "path": "skills/cloud/assured-workloads-basics/SKILL.md",
+    "native_name": "assured-workloads-basics"
+  },
+  {
+    "name": "google-assuredworkloads-environment-assessor",
+    "source": "google",
+    "upstream_name": "assuredworkloads-environment-assessor",
+    "path": "skills/cloud/assuredworkloads-environment-assessor/SKILL.md",
+    "native_name": "assuredworkloads-environment-assessor"
+  },
+  {
+    "name": "google-assuredworkloads-frameworks-author",
+    "source": "google",
+    "upstream_name": "assuredworkloads-frameworks-author",
+    "path": "skills/cloud/assuredworkloads-frameworks-author/SKILL.md",
+    "native_name": "assuredworkloads-frameworks-author"
+  },
+  {
+    "name": "google-assuredworkloads-frameworks-navigator",
+    "source": "google",
+    "upstream_name": "assuredworkloads-frameworks-navigator",
+    "path": "skills/cloud/assuredworkloads-frameworks-navigator/SKILL.md",
+    "native_name": "assuredworkloads-frameworks-navigator"
+  },
+  {
+    "name": "google-bigquery-ai-ml",
+    "source": "google",
+    "upstream_name": "bigquery-ai-ml",
+    "path": "skills/cloud/bigquery-ai-ml/SKILL.md",
+    "native_name": "bigquery-ai-ml"
+  },
+  {
+    "name": "google-bigquery-basics",
+    "source": "google",
+    "upstream_name": "bigquery-basics",
+    "path": "skills/cloud/bigquery-basics/SKILL.md",
+    "native_name": "bigquery-basics"
+  },
+  {
+    "name": "google-bigquery-bigframes",
+    "source": "google",
+    "upstream_name": "bigquery-bigframes",
+    "path": "skills/cloud/bigquery-bigframes/SKILL.md",
+    "native_name": "bigquery-bigframes"
+  },
+  {
+    "name": "google-bigquery-migration-data-exporter",
+    "source": "google",
+    "upstream_name": "bigquery-migration-data-exporter",
+    "path": "skills/cloud/bigquery-migration-data-exporter/SKILL.md",
+    "native_name": "bigquery-migration-data-exporter"
+  },
+  {
+    "name": "google-bigquery-migration-data-loader",
+    "source": "google",
+    "upstream_name": "bigquery-migration-data-loader",
+    "path": "skills/cloud/bigquery-migration-data-loader/SKILL.md",
+    "native_name": "bigquery-migration-data-loader"
+  },
+  {
+    "name": "google-bigquery-migration-metadata-extractor",
+    "source": "google",
+    "upstream_name": "bigquery-migration-metadata-extractor",
+    "path": "skills/cloud/bigquery-migration-metadata-extractor/SKILL.md",
+    "native_name": "bigquery-migration-metadata-extractor"
+  },
+  {
+    "name": "google-bigquery-migration-sql-translator",
+    "source": "google",
+    "upstream_name": "bigquery-migration-sql-translator",
+    "path": "skills/cloud/bigquery-migration-sql-translator/SKILL.md",
+    "native_name": "bigquery-migration-sql-translator"
+  },
+  {
+    "name": "google-bigquery-migration-validator",
+    "source": "google",
+    "upstream_name": "bigquery-migration-validator",
+    "path": "skills/cloud/bigquery-migration-validator/SKILL.md",
+    "native_name": "bigquery-migration-validator"
+  },
+  {
+    "name": "google-bigquery-observability",
+    "source": "google",
+    "upstream_name": "bigquery-observability",
+    "path": "skills/cloud/bigquery-observability/SKILL.md",
+    "native_name": "bigquery-observability"
+  },
+  {
+    "name": "google-bigquery-optimization",
+    "source": "google",
+    "upstream_name": "bigquery-optimization",
+    "path": "skills/cloud/bigquery-optimization/SKILL.md",
+    "native_name": "bigquery-optimization"
+  },
+  {
+    "name": "google-bigquery-troubleshooting",
+    "source": "google",
+    "upstream_name": "bigquery-troubleshooting",
+    "path": "skills/cloud/bigquery-troubleshooting/SKILL.md",
+    "native_name": "bigquery-troubleshooting"
+  },
+  {
+    "name": "google-bigquery-udfs",
+    "source": "google",
+    "upstream_name": "bigquery-udfs",
+    "path": "skills/cloud/bigquery-udfs/SKILL.md",
+    "native_name": "bigquery-udfs"
+  },
+  {
+    "name": "google-bigtable-basics",
+    "source": "google",
+    "upstream_name": "bigtable-basics",
+    "path": "skills/cloud/bigtable-basics/SKILL.md",
+    "native_name": "bigtable-basics"
+  },
+  {
+    "name": "google-cloud-armor-crs-rule-upgrader",
+    "source": "google",
+    "upstream_name": "cloud-armor-crs-rule-upgrader",
+    "path": "skills/cloud/cloud-armor-crs-rule-upgrader/SKILL.md",
+    "native_name": "cloud-armor-crs-rule-upgrader"
+  },
+  {
+    "name": "google-cloud-build-basics",
+    "source": "google",
+    "upstream_name": "cloud-build-basics",
+    "path": "skills/cloud/cloud-build-basics/SKILL.md",
+    "native_name": "cloud-build-basics"
+  },
+  {
+    "name": "google-cloud-databases-onboarding",
+    "source": "google",
+    "upstream_name": "cloud-databases-onboarding",
+    "path": "skills/cloud/cloud-databases-onboarding/SKILL.md",
+    "native_name": "cloud-databases-onboarding"
+  },
+  {
+    "name": "google-cloud-logging-configuration-basics",
+    "source": "google",
+    "upstream_name": "cloud-logging-configuration-basics",
+    "path": "skills/cloud/cloud-logging-configuration-basics/SKILL.md",
+    "native_name": "cloud-logging-configuration-basics"
+  },
+  {
+    "name": "google-cloud-logging-cross-project-configuration",
+    "source": "google",
+    "upstream_name": "cloud-logging-cross-project-configuration",
+    "path": "skills/cloud/cloud-logging-cross-project-configuration/SKILL.md",
+    "native_name": "cloud-logging-cross-project-configuration"
+  },
+  {
+    "name": "google-cloud-logging-finops",
+    "source": "google",
+    "upstream_name": "cloud-logging-finops",
+    "path": "skills/cloud/cloud-logging-finops/SKILL.md",
+    "native_name": "cloud-logging-finops"
+  },
+  {
+    "name": "google-cloud-logging-query-generation",
+    "source": "google",
+    "upstream_name": "cloud-logging-query-generation",
+    "path": "skills/cloud/cloud-logging-query-generation/SKILL.md",
+    "native_name": "cloud-logging-query-generation"
+  },
+  {
+    "name": "google-cloud-monitoring-alert-configuration",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-alert-configuration",
+    "path": "skills/cloud/cloud-monitoring-alert-configuration/SKILL.md",
+    "native_name": "cloud-monitoring-alert-configuration"
+  },
+  {
+    "name": "google-cloud-monitoring-chart-generation",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-chart-generation",
+    "path": "skills/cloud/cloud-monitoring-chart-generation/SKILL.md",
+    "native_name": "cloud-monitoring-chart-generation"
+  },
+  {
+    "name": "google-cloud-monitoring-list-time-series-request",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-list-time-series-request",
+    "path": "skills/cloud/cloud-monitoring-list-time-series-request/SKILL.md",
+    "native_name": "cloud-monitoring-list-time-series-request"
+  },
+  {
+    "name": "google-cloud-monitoring-metric-selection",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-metric-selection",
+    "path": "skills/cloud/cloud-monitoring-metric-selection/SKILL.md",
+    "native_name": "cloud-monitoring-metric-selection"
+  },
+  {
+    "name": "google-cloud-monitoring-notification-channels-configuration",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-notification-channels-configuration",
+    "path": "skills/cloud/cloud-monitoring-notification-channels-configuration/SKILL.md",
+    "native_name": "cloud-monitoring-notification-channels-configuration"
+  },
+  {
+    "name": "google-cloud-monitoring-promql-query",
+    "source": "google",
+    "upstream_name": "cloud-monitoring-promql-query",
+    "path": "skills/cloud/cloud-monitoring-promql-query/SKILL.md",
+    "native_name": "cloud-monitoring-promql-query"
+  },
+  {
+    "name": "google-cloud-network-insights",
+    "source": "google",
+    "upstream_name": "cloud-network-insights",
+    "path": "skills/cloud/cloud-network-insights/SKILL.md",
+    "native_name": "cloud-network-insights"
+  },
+  {
+    "name": "google-cloud-operator",
+    "source": "google",
+    "upstream_name": "cloud-operator",
+    "path": "skills/cloud/cloud-operator/SKILL.md",
+    "native_name": "cloud-operator"
+  },
+  {
+    "name": "google-cloud-operator-admin-setup",
+    "source": "google",
+    "upstream_name": "cloud-operator-admin-setup",
+    "path": "skills/cloud/cloud-operator-admin-setup/SKILL.md",
+    "native_name": "cloud-operator-admin-setup"
+  },
+  {
+    "name": "google-cloud-operator-setup",
+    "source": "google",
+    "upstream_name": "cloud-operator-setup",
+    "path": "skills/cloud/cloud-operator-setup/SKILL.md",
+    "native_name": "cloud-operator-setup"
+  },
+  {
+    "name": "google-cloud-operator-share-context",
+    "source": "google",
+    "upstream_name": "cloud-operator-share-context",
+    "path": "skills/cloud/cloud-operator-share-context/SKILL.md",
+    "native_name": "cloud-operator-share-context"
+  },
+  {
+    "name": "google-cloud-run-alert-configuration",
+    "source": "google",
+    "upstream_name": "cloud-run-alert-configuration",
+    "path": "skills/cloud/cloud-run-alert-configuration/SKILL.md",
+    "native_name": "cloud-run-alert-configuration"
+  },
+  {
+    "name": "google-cloud-run-basics",
+    "source": "google",
+    "upstream_name": "cloud-run-basics",
+    "path": "skills/cloud/cloud-run-basics/SKILL.md",
+    "native_name": "cloud-run-basics"
+  },
+  {
+    "name": "google-cloud-sql-basics",
+    "source": "google",
+    "upstream_name": "cloud-sql-basics",
+    "path": "skills/cloud/cloud-sql-basics/SKILL.md",
+    "native_name": "cloud-sql-basics"
+  },
+  {
+    "name": "google-cloud-trace-querying",
+    "source": "google",
+    "upstream_name": "cloud-trace-querying",
+    "path": "skills/cloud/cloud-trace-querying/SKILL.md",
+    "native_name": "cloud-trace-querying"
+  },
+  {
+    "name": "google-compute-future-reservations",
+    "source": "google",
+    "upstream_name": "compute-future-reservations",
+    "path": "skills/cloud/compute-future-reservations/SKILL.md",
+    "native_name": "compute-future-reservations"
+  },
+  {
+    "name": "google-compute-host-events-troubleshooting",
+    "source": "google",
+    "upstream_name": "compute-host-events-troubleshooting",
+    "path": "skills/cloud/compute-host-events-troubleshooting/SKILL.md",
+    "native_name": "compute-host-events-troubleshooting"
+  },
+  {
+    "name": "google-compute-mig-autoscaling-troubleshooting",
+    "source": "google",
+    "upstream_name": "compute-mig-autoscaling-troubleshooting",
+    "path": "skills/cloud/compute-mig-autoscaling-troubleshooting/SKILL.md",
+    "native_name": "compute-mig-autoscaling-troubleshooting"
+  },
+  {
+    "name": "google-compute-on-demand-reservations",
+    "source": "google",
+    "upstream_name": "compute-on-demand-reservations",
+    "path": "skills/cloud/compute-on-demand-reservations/SKILL.md",
+    "native_name": "compute-on-demand-reservations"
+  },
+  {
+    "name": "google-compute-resource-availability-troubleshooting",
+    "source": "google",
+    "upstream_name": "compute-resource-availability-troubleshooting",
+    "path": "skills/cloud/compute-resource-availability-troubleshooting/SKILL.md",
+    "native_name": "compute-resource-availability-troubleshooting"
+  },
+  {
+    "name": "google-compute-spot-capacity-advice",
+    "source": "google",
+    "upstream_name": "compute-spot-capacity-advice",
+    "path": "skills/cloud/compute-spot-capacity-advice/SKILL.md",
+    "native_name": "compute-spot-capacity-advice"
+  },
+  {
+    "name": "google-compute-vm-creation",
+    "source": "google",
+    "upstream_name": "compute-vm-creation",
+    "path": "skills/cloud/compute-vm-creation/SKILL.md",
+    "native_name": "compute-vm-creation"
+  },
+  {
+    "name": "google-datalineage-bigquery-asset-impact-analysis",
+    "source": "google",
+    "upstream_name": "datalineage-bigquery-asset-impact-analysis",
+    "path": "skills/cloud/datalineage-bigquery-asset-impact-analysis/SKILL.md",
+    "native_name": "datalineage-bigquery-asset-impact-analysis"
+  },
+  {
+    "name": "google-datalineage-summary",
+    "source": "google",
+    "upstream_name": "datalineage-summary",
+    "path": "skills/cloud/datalineage-summary/SKILL.md",
+    "native_name": "datalineage-summary"
+  },
+  {
+    "name": "google-dbt-sf-to-bq-translator",
+    "source": "google",
+    "upstream_name": "dbt-sf-to-bq-translator",
+    "path": "skills/cloud/dbt-sf-to-bq-translator/SKILL.md",
+    "native_name": "dbt-sf-to-bq-translator"
+  },
+  {
+    "name": "google-detection-engineering-coverage-evaluation",
+    "source": "google",
+    "upstream_name": "detection-engineering-coverage-evaluation",
+    "path": "skills/cloud/detection-engineering-coverage-evaluation/SKILL.md",
+    "native_name": "detection-engineering-coverage-evaluation"
+  },
+  {
+    "name": "google-developer-device-platform-basics",
+    "source": "google",
+    "upstream_name": "developer-device-platform-basics",
+    "path": "skills/cloud/developer-device-platform-basics/SKILL.md",
+    "native_name": "developer-device-platform-basics"
+  },
+  {
+    "name": "google-developer-device-platform-device-run",
+    "source": "google",
+    "upstream_name": "developer-device-platform-device-run",
+    "path": "skills/cloud/developer-device-platform-device-run/SKILL.md",
+    "native_name": "developer-device-platform-device-run"
+  },
+  {
+    "name": "google-developing-genkit-dart",
+    "source": "google",
+    "upstream_name": "developing-genkit-dart",
+    "path": "skills/cloud/developing-genkit-dart/SKILL.md",
+    "native_name": "developing-genkit-dart"
+  },
+  {
+    "name": "google-developing-genkit-go",
+    "source": "google",
+    "upstream_name": "developing-genkit-go",
+    "path": "skills/cloud/developing-genkit-go/SKILL.md",
+    "native_name": "developing-genkit-go"
+  },
+  {
+    "name": "google-developing-genkit-js",
+    "source": "google",
+    "upstream_name": "developing-genkit-js",
+    "path": "skills/cloud/developing-genkit-js/SKILL.md",
+    "native_name": "developing-genkit-js"
+  },
+  {
+    "name": "google-developing-genkit-python",
+    "source": "google",
+    "upstream_name": "developing-genkit-python",
+    "path": "skills/cloud/developing-genkit-python/SKILL.md",
+    "native_name": "developing-genkit-python"
+  },
+  {
+    "name": "google-firebase-basics",
+    "source": "google",
+    "upstream_name": "firebase-basics",
+    "path": "skills/cloud/firebase-basics/SKILL.md",
+    "native_name": "firebase-basics"
+  },
+  {
+    "name": "google-gcloud",
+    "source": "google",
+    "upstream_name": "gcloud",
+    "path": "skills/cloud/gcloud/SKILL.md",
+    "native_name": "gcloud"
+  },
+  {
+    "name": "google-gemini-agents-api",
+    "source": "google",
+    "upstream_name": "gemini-agents-api",
+    "path": "skills/cloud/gemini-agents-api/SKILL.md",
+    "native_name": "gemini-agents-api"
+  },
+  {
+    "name": "google-gemini-api",
+    "source": "google",
+    "upstream_name": "gemini-api",
+    "path": "skills/cloud/gemini-api/SKILL.md",
+    "native_name": "gemini-api"
+  },
+  {
+    "name": "google-gemini-interactions-api",
+    "source": "google",
+    "upstream_name": "gemini-interactions-api",
+    "path": "skills/cloud/gemini-interactions-api/SKILL.md",
+    "native_name": "gemini-interactions-api"
+  },
+  {
+    "name": "google-gemini-live-api",
+    "source": "google",
+    "upstream_name": "gemini-live-api",
+    "path": "skills/cloud/gemini-live-api/SKILL.md",
+    "native_name": "gemini-live-api"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-handle-disruption-gpu-tpu",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-handle-disruption-gpu-tpu",
+    "path": "skills/cloud/gke-ai-troubleshooting-handle-disruption-gpu-tpu/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-handle-disruption-gpu-tpu"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-jobset-interruption",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-jobset-interruption",
+    "path": "skills/cloud/gke-ai-troubleshooting-jobset-interruption/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-jobset-interruption"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-node-unresponsive-timeout",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-node-unresponsive-timeout",
+    "path": "skills/cloud/gke-ai-troubleshooting-node-unresponsive-timeout/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-node-unresponsive-timeout"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-dynamic-slices-monitoring",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-dynamic-slices-monitoring",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-dynamic-slices-monitoring/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-dynamic-slices-monitoring"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-metrics-monitoring",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-metrics-monitoring",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-metrics-monitoring/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-metrics-monitoring"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-mxla-hang",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-mxla-hang",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-mxla-hang/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-mxla-hang"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-partition-overlap",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-partition-overlap",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-partition-overlap/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-partition-overlap"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-performance-degradation",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-performance-degradation",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-performance-degradation/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-performance-degradation"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-reservation-stockout",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-reservation-stockout",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-reservation-stockout/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-reservation-stockout"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-slice-mig-stuck-updating",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-slice-mig-stuck-updating",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-slice-mig-stuck-updating/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-slice-mig-stuck-updating"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-vbar-oom",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-vbar-oom",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-vbar-oom/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-vbar-oom"
+  },
+  {
+    "name": "google-gke-ai-troubleshooting-tpu-vm-repair-stuck",
+    "source": "google",
+    "upstream_name": "gke-ai-troubleshooting-tpu-vm-repair-stuck",
+    "path": "skills/cloud/gke-ai-troubleshooting-tpu-vm-repair-stuck/SKILL.md",
+    "native_name": "gke-ai-troubleshooting-tpu-vm-repair-stuck"
+  },
+  {
+    "name": "google-gke-alert-configuration",
+    "source": "google",
+    "upstream_name": "gke-alert-configuration",
+    "path": "skills/cloud/gke-alert-configuration/SKILL.md",
+    "native_name": "gke-alert-configuration"
+  },
+  {
+    "name": "google-gke-app-onboarding",
+    "source": "google",
+    "upstream_name": "gke-app-onboarding",
+    "path": "skills/cloud/gke-app-onboarding/SKILL.md",
+    "native_name": "gke-app-onboarding"
+  },
+  {
+    "name": "google-gke-backup-dr",
+    "source": "google",
+    "upstream_name": "gke-backup-dr",
+    "path": "skills/cloud/gke-backup-dr/SKILL.md",
+    "native_name": "gke-backup-dr"
+  },
+  {
+    "name": "google-gke-basics",
+    "source": "google",
+    "upstream_name": "gke-basics",
+    "path": "skills/cloud/gke-basics/SKILL.md",
+    "native_name": "gke-basics"
+  },
+  {
+    "name": "google-gke-batch-hpc",
+    "source": "google",
+    "upstream_name": "gke-batch-hpc",
+    "path": "skills/cloud/gke-batch-hpc/SKILL.md",
+    "native_name": "gke-batch-hpc"
+  },
+  {
+    "name": "google-gke-capacity-triage",
+    "source": "google",
+    "upstream_name": "gke-capacity-triage",
+    "path": "skills/cloud/gke-capacity-triage/SKILL.md",
+    "native_name": "gke-capacity-triage"
+  },
+  {
+    "name": "google-gke-cluster-autoscaler",
+    "source": "google",
+    "upstream_name": "gke-cluster-autoscaler",
+    "path": "skills/cloud/gke-cluster-autoscaler/SKILL.md",
+    "native_name": "gke-cluster-autoscaler"
+  },
+  {
+    "name": "google-gke-cluster-creation",
+    "source": "google",
+    "upstream_name": "gke-cluster-creation",
+    "path": "skills/cloud/gke-cluster-creation/SKILL.md",
+    "native_name": "gke-cluster-creation"
+  },
+  {
+    "name": "google-gke-compute-classes",
+    "source": "google",
+    "upstream_name": "gke-compute-classes",
+    "path": "skills/cloud/gke-compute-classes/SKILL.md",
+    "native_name": "gke-compute-classes"
+  },
+  {
+    "name": "google-gke-cost-analysis",
+    "source": "google",
+    "upstream_name": "gke-cost-analysis",
+    "path": "skills/cloud/gke-cost-analysis/SKILL.md",
+    "native_name": "gke-cost-analysis"
+  },
+  {
+    "name": "google-gke-cost-optimization",
+    "source": "google",
+    "upstream_name": "gke-cost-optimization",
+    "path": "skills/cloud/gke-cost-optimization/SKILL.md",
+    "native_name": "gke-cost-optimization"
+  },
+  {
+    "name": "google-gke-custom-golden-image-discovery",
+    "source": "google",
+    "upstream_name": "gke-custom-golden-image-discovery",
+    "path": "skills/cloud/gke-custom-golden-image-discovery/SKILL.md",
+    "native_name": "gke-custom-golden-image-discovery"
+  },
+  {
+    "name": "google-gke-golden-path",
+    "source": "google",
+    "upstream_name": "gke-golden-path",
+    "path": "skills/cloud/gke-golden-path/SKILL.md",
+    "native_name": "gke-golden-path"
+  },
+  {
+    "name": "google-gke-inference",
+    "source": "google",
+    "upstream_name": "gke-inference",
+    "path": "skills/cloud/gke-inference/SKILL.md",
+    "native_name": "gke-inference"
+  },
+  {
+    "name": "google-gke-kueue-troubleshooting",
+    "source": "google",
+    "upstream_name": "gke-kueue-troubleshooting",
+    "path": "skills/cloud/gke-kueue-troubleshooting/SKILL.md",
+    "native_name": "gke-kueue-troubleshooting"
+  },
+  {
+    "name": "google-gke-manifest-generation",
+    "source": "google",
+    "upstream_name": "gke-manifest-generation",
+    "path": "skills/cloud/gke-manifest-generation/SKILL.md",
+    "native_name": "gke-manifest-generation"
+  },
+  {
+    "name": "google-gke-multitenancy",
+    "source": "google",
+    "upstream_name": "gke-multitenancy",
+    "path": "skills/cloud/gke-multitenancy/SKILL.md",
+    "native_name": "gke-multitenancy"
+  },
+  {
+    "name": "google-gke-networking",
+    "source": "google",
+    "upstream_name": "gke-networking",
+    "path": "skills/cloud/gke-networking/SKILL.md",
+    "native_name": "gke-networking"
+  },
+  {
+    "name": "google-gke-node-notready",
+    "source": "google",
+    "upstream_name": "gke-node-notready",
+    "path": "skills/cloud/gke-node-notready/SKILL.md",
+    "native_name": "gke-node-notready"
+  },
+  {
+    "name": "google-gke-observability",
+    "source": "google",
+    "upstream_name": "gke-observability",
+    "path": "skills/cloud/gke-observability/SKILL.md",
+    "native_name": "gke-observability"
+  },
+  {
+    "name": "google-gke-platform-security",
+    "source": "google",
+    "upstream_name": "gke-platform-security",
+    "path": "skills/cloud/gke-platform-security/SKILL.md",
+    "native_name": "gke-platform-security"
+  },
+  {
+    "name": "google-gke-productionize",
+    "source": "google",
+    "upstream_name": "gke-productionize",
+    "path": "skills/cloud/gke-productionize/SKILL.md",
+    "native_name": "gke-productionize"
+  },
+  {
+    "name": "google-gke-reliability",
+    "source": "google",
+    "upstream_name": "gke-reliability",
+    "path": "skills/cloud/gke-reliability/SKILL.md",
+    "native_name": "gke-reliability"
+  },
+  {
+    "name": "google-gke-service-networking",
+    "source": "google",
+    "upstream_name": "gke-service-networking",
+    "path": "skills/cloud/gke-service-networking/SKILL.md",
+    "native_name": "gke-service-networking"
+  },
+  {
+    "name": "google-gke-statefulset-without-probes",
+    "source": "google",
+    "upstream_name": "gke-statefulset-without-probes",
+    "path": "skills/cloud/gke-statefulset-without-probes/SKILL.md",
+    "native_name": "gke-statefulset-without-probes"
+  },
+  {
+    "name": "google-gke-storage",
+    "source": "google",
+    "upstream_name": "gke-storage",
+    "path": "skills/cloud/gke-storage/SKILL.md",
+    "native_name": "gke-storage"
+  },
+  {
+    "name": "google-gke-storage-troubleshooting",
+    "source": "google",
+    "upstream_name": "gke-storage-troubleshooting",
+    "path": "skills/cloud/gke-storage-troubleshooting/SKILL.md",
+    "native_name": "gke-storage-troubleshooting"
+  },
+  {
+    "name": "google-gke-unprotected-statefulset",
+    "source": "google",
+    "upstream_name": "gke-unprotected-statefulset",
+    "path": "skills/cloud/gke-unprotected-statefulset/SKILL.md",
+    "native_name": "gke-unprotected-statefulset"
+  },
+  {
+    "name": "google-gke-upgrades",
+    "source": "google",
+    "upstream_name": "gke-upgrades",
+    "path": "skills/cloud/gke-upgrades/SKILL.md",
+    "native_name": "gke-upgrades"
+  },
+  {
+    "name": "google-gke-workload-identity",
+    "source": "google",
+    "upstream_name": "gke-workload-identity",
+    "path": "skills/cloud/gke-workload-identity/SKILL.md",
+    "native_name": "gke-workload-identity"
+  },
+  {
+    "name": "google-gke-workload-scaling",
+    "source": "google",
+    "upstream_name": "gke-workload-scaling",
+    "path": "skills/cloud/gke-workload-scaling/SKILL.md",
+    "native_name": "gke-workload-scaling"
+  },
+  {
+    "name": "google-gke-workload-scaling-troubleshooting",
+    "source": "google",
+    "upstream_name": "gke-workload-scaling-troubleshooting",
+    "path": "skills/cloud/gke-workload-scaling-troubleshooting/SKILL.md",
+    "native_name": "gke-workload-scaling-troubleshooting"
+  },
+  {
+    "name": "google-gke-workload-security",
+    "source": "google",
+    "upstream_name": "gke-workload-security",
+    "path": "skills/cloud/gke-workload-security/SKILL.md",
+    "native_name": "gke-workload-security"
+  },
+  {
+    "name": "google-gke-workload-troubleshooting",
+    "source": "google",
+    "upstream_name": "gke-workload-troubleshooting",
+    "path": "skills/cloud/gke-workload-troubleshooting/SKILL.md",
+    "native_name": "gke-workload-troubleshooting"
+  },
+  {
+    "name": "google-google-agents-cli-onboarding",
+    "source": "google",
+    "upstream_name": "google-agents-cli-onboarding",
+    "path": "skills/cloud/google-agents-cli-onboarding/SKILL.md",
+    "native_name": "agents-cli-onboarding"
+  },
+  {
+    "name": "google-google-cicd-deploy",
+    "source": "google",
+    "upstream_name": "google-cicd-deploy",
+    "path": "skills/cloud/google-cicd-deploy/SKILL.md",
+    "native_name": "cicd-deploy"
+  },
+  {
+    "name": "google-google-cicd-pipeline-design",
+    "source": "google",
+    "upstream_name": "google-cicd-pipeline-design",
+    "path": "skills/cloud/google-cicd-pipeline-design/SKILL.md",
+    "native_name": "cicd-pipeline-design"
+  },
+  {
+    "name": "google-google-cicd-release-orchestration",
+    "source": "google",
+    "upstream_name": "google-cicd-release-orchestration",
+    "path": "skills/cloud/google-cicd-release-orchestration/SKILL.md",
+    "native_name": "cicd-release-orchestration"
+  },
+  {
+    "name": "google-google-cicd-terraform",
+    "source": "google",
+    "upstream_name": "google-cicd-terraform",
+    "path": "skills/cloud/google-cicd-terraform/SKILL.md",
+    "native_name": "cicd-terraform"
+  },
+  {
+    "name": "google-google-cloud-filestore-auditing",
+    "source": "google",
+    "upstream_name": "google-cloud-filestore-auditing",
+    "path": "skills/cloud/google-cloud-filestore-auditing/SKILL.md",
+    "native_name": "cloud-filestore-auditing"
+  },
+  {
+    "name": "google-google-cloud-filestore-autoscale",
+    "source": "google",
+    "upstream_name": "google-cloud-filestore-autoscale",
+    "path": "skills/cloud/google-cloud-filestore-autoscale/SKILL.md",
+    "native_name": "cloud-filestore-autoscale"
+  },
+  {
+    "name": "google-google-cloud-filestore-log-troubleshooting",
+    "source": "google",
+    "upstream_name": "google-cloud-filestore-log-troubleshooting",
+    "path": "skills/cloud/google-cloud-filestore-log-troubleshooting/SKILL.md",
+    "native_name": "cloud-filestore-log-troubleshooting"
+  },
+  {
+    "name": "google-google-cloud-filestore-nfs-browser",
+    "source": "google",
+    "upstream_name": "google-cloud-filestore-nfs-browser",
+    "path": "skills/cloud/google-cloud-filestore-nfs-browser/SKILL.md",
+    "native_name": "cloud-filestore-nfs-browser"
+  },
+  {
+    "name": "google-google-cloud-global-frontend-configuration",
+    "source": "google",
+    "upstream_name": "google-cloud-global-frontend-configuration",
+    "path": "skills/cloud/google-cloud-global-frontend-configuration/SKILL.md",
+    "native_name": "cloud-global-frontend-configuration"
+  },
+  {
+    "name": "google-google-cloud-networking-observability",
+    "source": "google",
+    "upstream_name": "google-cloud-networking-observability",
+    "path": "skills/cloud/google-cloud-networking-observability/SKILL.md",
+    "native_name": "cloud-networking-observability"
+  },
+  {
+    "name": "google-google-cloud-recipe-auth",
+    "source": "google",
+    "upstream_name": "google-cloud-recipe-auth",
+    "path": "skills/cloud/google-cloud-recipe-auth/SKILL.md",
+    "native_name": "cloud-recipe-auth"
+  },
+  {
+    "name": "google-google-cloud-recipe-foundation-builder",
+    "source": "google",
+    "upstream_name": "google-cloud-recipe-foundation-builder",
+    "path": "skills/cloud/google-cloud-recipe-foundation-builder/SKILL.md",
+    "native_name": "cloud-recipe-foundation-builder"
+  },
+  {
+    "name": "google-google-cloud-recipe-onboarding",
+    "source": "google",
+    "upstream_name": "google-cloud-recipe-onboarding",
+    "path": "skills/cloud/google-cloud-recipe-onboarding/SKILL.md",
+    "native_name": "cloud-recipe-onboarding"
+  },
+  {
+    "name": "google-google-cloud-release-radar",
+    "source": "google",
+    "upstream_name": "google-cloud-release-radar",
+    "path": "skills/cloud/google-cloud-release-radar/SKILL.md",
+    "native_name": "cloud-release-radar"
+  },
+  {
+    "name": "google-google-cloud-scc-query",
+    "source": "google",
+    "upstream_name": "google-cloud-scc-query",
+    "path": "skills/cloud/google-cloud-scc-query/SKILL.md",
+    "native_name": "cloud-scc-query"
+  },
+  {
+    "name": "google-google-cloud-scc-remediation",
+    "source": "google",
+    "upstream_name": "google-cloud-scc-remediation",
+    "path": "skills/cloud/google-cloud-scc-remediation/SKILL.md",
+    "native_name": "cloud-scc-remediation"
+  },
+  {
+    "name": "google-google-cloud-slo-alert-configuration",
+    "source": "google",
+    "upstream_name": "google-cloud-slo-alert-configuration",
+    "path": "skills/cloud/google-cloud-slo-alert-configuration/SKILL.md",
+    "native_name": "cloud-slo-alert-configuration"
+  },
+  {
+    "name": "google-google-cloud-solution-agentic-ai-bidirectional-streaming",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-agentic-ai-bidirectional-streaming",
+    "path": "skills/cloud/google-cloud-solution-agentic-ai-bidirectional-streaming/SKILL.md",
+    "native_name": "cloud-solution-agentic-ai-bidirectional-streaming"
+  },
+  {
+    "name": "google-cloud-solution-agentic-ai-data-lakehouse",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-agentic-ai-borderless-data-lakehouse",
+    "path": "skills/cloud/google-cloud-solution-agentic-ai-borderless-data-lakehouse/SKILL.md",
+    "native_name": "cloud-solution-agentic-ai-data-lakehouse"
+  },
+  {
+    "name": "google-google-cloud-solution-agentic-ai-data-science-workflow",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-agentic-ai-data-science-workflow",
+    "path": "skills/cloud/google-cloud-solution-agentic-ai-data-science-workflow/SKILL.md",
+    "native_name": "cloud-solution-agentic-ai-data-science-workflow"
+  },
+  {
+    "name": "google-cloud-solution-spark-knowledge-catalog",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-agentic-analytics-spark-knowledge-catalog",
+    "path": "skills/cloud/google-cloud-solution-agentic-analytics-spark-knowledge-catalog/SKILL.md",
+    "native_name": "cloud-solution-spark-knowledge-catalog"
+  },
+  {
+    "name": "google-google-cloud-solution-architecture",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-architecture",
+    "path": "skills/cloud/google-cloud-solution-architecture/SKILL.md",
+    "native_name": "cloud-solution-architecture"
+  },
+  {
+    "name": "google-google-cloud-solution-build-deploy-agents",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-build-deploy-agents",
+    "path": "skills/cloud/google-cloud-solution-build-deploy-agents/SKILL.md",
+    "native_name": "cloud-solution-build-deploy-agents"
+  },
+  {
+    "name": "google-google-cloud-solution-event-driven-decoupling",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-event-driven-decoupling",
+    "path": "skills/cloud/google-cloud-solution-event-driven-decoupling/SKILL.md",
+    "native_name": "cloud-solution-event-driven-decoupling"
+  },
+  {
+    "name": "google-google-cloud-solution-guided-gke-ai-migration",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-guided-gke-ai-migration",
+    "path": "skills/cloud/google-cloud-solution-guided-gke-ai-migration/SKILL.md",
+    "native_name": "cloud-solution-guided-gke-ai-migration"
+  },
+  {
+    "name": "google-google-cloud-solution-hybrid-search-alloydb",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-hybrid-search-alloydb",
+    "path": "skills/cloud/google-cloud-solution-hybrid-search-alloydb/SKILL.md",
+    "native_name": "cloud-solution-hybrid-search-alloydb"
+  },
+  {
+    "name": "google-google-cloud-solution-multi-agent-security",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-multi-agent-security",
+    "path": "skills/cloud/google-cloud-solution-multi-agent-security/SKILL.md",
+    "native_name": "cloud-solution-multi-agent-security"
+  },
+  {
+    "name": "google-google-cloud-solution-n-tier-serverless-web-app",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-n-tier-serverless-web-app",
+    "path": "skills/cloud/google-cloud-solution-n-tier-serverless-web-app/SKILL.md",
+    "native_name": "cloud-solution-n-tier-serverless-web-app"
+  },
+  {
+    "name": "google-google-cloud-solution-rag-enterprise-search-gke-sqldb",
+    "source": "google",
+    "upstream_name": "google-cloud-solution-rag-enterprise-search-gke-sqldb",
+    "path": "skills/cloud/google-cloud-solution-rag-enterprise-search-gke-sqldb/SKILL.md",
+    "native_name": "cloud-solution-rag-enterprise-search-gke-sqldb"
+  },
+  {
+    "name": "google-google-cloud-storage-basics",
+    "source": "google",
+    "upstream_name": "google-cloud-storage-basics",
+    "path": "skills/cloud/google-cloud-storage-basics/SKILL.md",
+    "native_name": "cloud-storage-basics"
+  },
+  {
+    "name": "google-google-cloud-storage-bucket-architect",
+    "source": "google",
+    "upstream_name": "google-cloud-storage-bucket-architect",
+    "path": "skills/cloud/google-cloud-storage-bucket-architect/SKILL.md",
+    "native_name": "cloud-storage-bucket-architect"
+  },
+  {
+    "name": "google-google-cloud-storage-diagnostic",
+    "source": "google",
+    "upstream_name": "google-cloud-storage-diagnostic",
+    "path": "skills/cloud/google-cloud-storage-diagnostic/SKILL.md",
+    "native_name": "cloud-storage-diagnostic"
+  },
+  {
+    "name": "google-google-cloud-storage-fuse",
+    "source": "google",
+    "upstream_name": "google-cloud-storage-fuse",
+    "path": "skills/cloud/google-cloud-storage-fuse/SKILL.md",
+    "native_name": "cloud-storage-fuse"
+  },
+  {
+    "name": "google-google-cloud-waf-cost-optimization",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-cost-optimization",
+    "path": "skills/cloud/google-cloud-waf-cost-optimization/SKILL.md",
+    "native_name": "cloud-waf-cost-optimization"
+  },
+  {
+    "name": "google-google-cloud-waf-operational-excellence",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-operational-excellence",
+    "path": "skills/cloud/google-cloud-waf-operational-excellence/SKILL.md",
+    "native_name": "cloud-waf-operational-excellence"
+  },
+  {
+    "name": "google-google-cloud-waf-performance-optimization",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-performance-optimization",
+    "path": "skills/cloud/google-cloud-waf-performance-optimization/SKILL.md",
+    "native_name": "cloud-waf-performance-optimization"
+  },
+  {
+    "name": "google-google-cloud-waf-reliability",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-reliability",
+    "path": "skills/cloud/google-cloud-waf-reliability/SKILL.md",
+    "native_name": "cloud-waf-reliability"
+  },
+  {
+    "name": "google-google-cloud-waf-security",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-security",
+    "path": "skills/cloud/google-cloud-waf-security/SKILL.md",
+    "native_name": "cloud-waf-security"
+  },
+  {
+    "name": "google-google-cloud-waf-sustainability",
+    "source": "google",
+    "upstream_name": "google-cloud-waf-sustainability",
+    "path": "skills/cloud/google-cloud-waf-sustainability/SKILL.md",
+    "native_name": "cloud-waf-sustainability"
+  },
+  {
+    "name": "google-iam-helper-for-policy-management",
+    "source": "google",
+    "upstream_name": "iam-helper-for-policy-management",
+    "path": "skills/cloud/iam-helper-for-policy-management/SKILL.md",
+    "native_name": "iam-helper-for-policy-management"
+  },
+  {
+    "name": "google-iam-helper-for-policy-simulator",
+    "source": "google",
+    "upstream_name": "iam-helper-for-policy-simulator",
+    "path": "skills/cloud/iam-helper-for-policy-simulator/SKILL.md",
+    "native_name": "iam-helper-for-policy-simulator"
+  },
+  {
+    "name": "google-iam-helper-for-privileged-access-management",
+    "source": "google",
+    "upstream_name": "iam-helper-for-privileged-access-management",
+    "path": "skills/cloud/iam-helper-for-privileged-access-management/SKILL.md",
+    "native_name": "iam-helper-for-privileged-access-management"
+  },
+  {
+    "name": "google-iam-helper-for-troubleshooting",
+    "source": "google",
+    "upstream_name": "iam-helper-for-troubleshooting",
+    "path": "skills/cloud/iam-helper-for-troubleshooting/SKILL.md",
+    "native_name": "iam-helper-for-troubleshooting"
+  },
+  {
+    "name": "google-iap-agent-platform-troubleshooting",
+    "source": "google",
+    "upstream_name": "iap-agent-platform-troubleshooting",
+    "path": "skills/cloud/iap-agent-platform-troubleshooting/SKILL.md",
+    "native_name": "iap-agent-platform-troubleshooting"
+  },
+  {
+    "name": "google-managed-airflow-dag-authoring",
+    "source": "google",
+    "upstream_name": "managed-airflow-dag-authoring",
+    "path": "skills/cloud/managed-airflow-dag-authoring/SKILL.md",
+    "native_name": "managed-airflow-dag-authoring"
+  },
+  {
+    "name": "google-managed-airflow-dag-troubleshooting",
+    "source": "google",
+    "upstream_name": "managed-airflow-dag-troubleshooting",
+    "path": "skills/cloud/managed-airflow-dag-troubleshooting/SKILL.md",
+    "native_name": "managed-airflow-dag-troubleshooting"
+  },
+  {
+    "name": "google-managed-airflow-migrations",
+    "source": "google",
+    "upstream_name": "managed-airflow-migrations",
+    "path": "skills/cloud/managed-airflow-migrations/SKILL.md",
+    "native_name": "managed-airflow-migrations"
+  },
+  {
+    "name": "google-managed-airflow-recommendations",
+    "source": "google",
+    "upstream_name": "managed-airflow-recommendations",
+    "path": "skills/cloud/managed-airflow-recommendations/SKILL.md",
+    "native_name": "managed-airflow-recommendations"
+  },
+  {
+    "name": "google-pathways-workload",
+    "source": "google",
+    "upstream_name": "pathways-workload",
+    "path": "skills/cloud/pathways-workload/SKILL.md",
+    "native_name": "pathways-workload"
+  },
+  {
+    "name": "google-secops-cases",
+    "source": "google",
+    "upstream_name": "secops-cases",
+    "path": "skills/cloud/secops-cases/SKILL.md",
+    "native_name": "secops-cases"
+  },
+  {
+    "name": "google-secops-detection-engineering",
+    "source": "google",
+    "upstream_name": "secops-detection-engineering",
+    "path": "skills/cloud/secops-detection-engineering/SKILL.md",
+    "native_name": "secops-detection-engineering"
+  },
+  {
+    "name": "google-secops-hunt",
+    "source": "google",
+    "upstream_name": "secops-hunt",
+    "path": "skills/cloud/secops-hunt/SKILL.md",
+    "native_name": "secops-hunt"
+  },
+  {
+    "name": "google-secops-investigate",
+    "source": "google",
+    "upstream_name": "secops-investigate",
+    "path": "skills/cloud/secops-investigate/SKILL.md",
+    "native_name": "secops-investigate"
+  },
+  {
+    "name": "google-secops-triage",
+    "source": "google",
+    "upstream_name": "secops-triage",
+    "path": "skills/cloud/secops-triage/SKILL.md",
+    "native_name": "secops-triage"
+  },
+  {
+    "name": "google-servicehealth-incident-correlation",
+    "source": "google",
+    "upstream_name": "servicehealth-incident-correlation",
+    "path": "skills/cloud/servicehealth-incident-correlation/SKILL.md",
+    "native_name": "servicehealth-incident-correlation"
+  },
+  {
+    "name": "google-spanner-basics",
+    "source": "google",
+    "upstream_name": "spanner-basics",
+    "path": "skills/cloud/spanner-basics/SKILL.md",
+    "native_name": "spanner-basics"
+  },
+  {
+    "name": "google-spanner-graph-query-tuning",
+    "source": "google",
+    "upstream_name": "spanner-graph-query-tuning",
+    "path": "skills/cloud/spanner-graph-query-tuning/SKILL.md",
+    "native_name": "spanner-graph-query-tuning"
+  },
+  {
+    "name": "google-spanner-graph-schema-best-practices",
+    "source": "google",
+    "upstream_name": "spanner-graph-schema-best-practices",
+    "path": "skills/cloud/spanner-graph-schema-best-practices/SKILL.md",
+    "native_name": "spanner-graph-schema-best-practices"
+  },
+  {
+    "name": "google-spanner-relational-to-graph",
+    "source": "google",
+    "upstream_name": "spanner-relational-to-graph",
+    "path": "skills/cloud/spanner-relational-to-graph/SKILL.md",
+    "native_name": "spanner-relational-to-graph"
+  },
+  {
+    "name": "google-workload-manager-basics",
+    "source": "google",
+    "upstream_name": "workload-manager-basics",
+    "path": "skills/cloud/workload-manager-basics/SKILL.md",
+    "native_name": "workload-manager-basics"
+  },
+  {
+    "name": "google-finding-google-skills",
+    "source": "google",
+    "upstream_name": "finding-google-skills",
+    "path": "skills/developers/finding-google-skills/SKILL.md",
+    "native_name": "finding-google-skills"
+  },
+  {
+    "name": "google-gerrit-code-review",
+    "source": "google",
+    "upstream_name": "gerrit-code-review",
+    "path": "skills/developers/gerrit-code-review/SKILL.md",
+    "native_name": "gerrit-code-review"
+  },
+  {
+    "name": "google-migrate-to-rust",
+    "source": "google",
+    "upstream_name": "migrate-to-rust",
+    "path": "skills/developers/migrate-to-rust/SKILL.md",
+    "native_name": "migrate-to-rust"
+  },
+  {
+    "name": "google-retrieving-developer-knowledge",
+    "source": "google",
+    "upstream_name": "retrieving-developer-knowledge",
+    "path": "skills/developers/retrieving-developer-knowledge/SKILL.md",
+    "native_name": "retrieving-developer-knowledge"
+  },
+  {
+    "name": "google-dpop-adoption",
+    "source": "google",
+    "upstream_name": "dpop-adoption",
+    "path": "skills/identity/dpop-adoption/SKILL.md",
+    "native_name": "dpop-adoption"
+  },
+  {
+    "name": "google-sign-in-with-google-web",
+    "source": "google",
+    "upstream_name": "sign-in-with-google-web",
+    "path": "skills/identity/sign-in-with-google-web/SKILL.md",
+    "native_name": "sign-in-with-google-web"
+  },
+  {
+    "name": "google-litert-google-tensor",
+    "source": "google",
+    "upstream_name": "litert-google-tensor",
+    "path": "skills/platform-devices/litert-google-tensor/SKILL.md",
+    "native_name": "litert-google-tensor"
+  }
+]

@@ -1,6 +1,6 @@
 {
   "name": "odestroyero-skills-workspace",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "private": true,
   "license": "MIT",
   "pi": {
@@ -12,7 +12,9 @@
     "plugins/pstack",
     "plugins/tstack",
     "plugins/cc",
-    "plugins/mongodb"
+    "plugins/mongodb",
+    "plugins/google",
+    "plugins/postgres"
   ],
   "devDependencies": {
     "@opencode/plugin": "2.2.5",

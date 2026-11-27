@@ -103,6 +103,43 @@
         "testing",
         "tools"
       ]
+    },
+    "google": {
+      "repository": "https://github.com/google/skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "6dc0d53303b9f96f166ac72d7f8f1920cb260f24",
+      "sha256": "733bcfba587c41ba56d75422aba4fdd3c93020b1c55b85af9163d71203a1975b",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        ".gitmodules",
+        ".lycheeignore",
+        "CONTRIBUTING.md",
+        "lychee.toml",
+        "plugins"
+      ]
+    },
+    "postgres": {
+      "repository": "https://github.com/microsoft/postgres-skills.git",
+      "ref": "main",
+      "root": ".",
+      "commit": "b7908c0b53b2a292fb8286d4d4bdba7ea4690291",
+      "sha256": "d0388ee99b0fdbd43c1820b533c5aa129483f2cf4d005de3833fc89073cb3869",
+      "exclude_paths": [
+        ".agents",
+        ".claude-plugin",
+        ".github",
+        ".gitignore",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "SUPPORT.md",
+        "plugin/tests",
+        "tests"
+      ]
     }
   }
 }
