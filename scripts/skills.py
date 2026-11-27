@@ -18,6 +18,7 @@ import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+STANDALONE_SKILLS_DIR = "standalone-skills"
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 T3_AGENTS = ("codex", "claude-code", "pi", "antigravity", "opencode", "cursor")
 GLOBAL_DIRS = {
@@ -293,16 +294,18 @@ def skill_roots(source, package):
     return roots
 
 
-def render_skill(name, source_id, fields, source_file, library, adapter):
-    header = ["name: " + name, fields["description"]]
+def render_skill(name, skill_prefix, fields, source_file, library, adapter):
+    description = "\n".join(line.rstrip() for line in fields["description"].splitlines())
+    header = ["name: " + name, description]
     for field in ("disable-model-invocation", "user-invocable"):
         if field in fields:
             header.append(fields[field])
     body = (
+        "Resolve this entry point to its real path before following its links.\n\n"
         "Read the complete [upstream skill](" + source_file + ") before doing the task.\n\n"
         "Resolve `" + source_file + "` to its real path. Resolve the workflow's relative file "
         "references from that upstream file, so its scripts, references, and sibling skills stay together.\n\n"
-        "When it names another skill from this collection, use `" + source_id + "-<name>` "
+        "When it names another skill from this collection, use `" + skill_prefix + "<name>` "
         "or read that skill directly in [the upstream library](" + library + "). Keep this collection's "
         "skills together when names overlap with another collection.\n\n"
         "For harness-specific tools, delegation, models, or settings, read the "
@@ -350,7 +353,7 @@ def plugin_skills():
     from package_skills import configuration
     entries = {}
     for plugin in configuration(ROOT)["plugins"]:
-        directory = ROOT / "plugins" / plugin["name"] / "skills"
+        directory = ROOT / "plugins" / plugin["name"] / STANDALONE_SKILLS_DIR
         for entry in read_json(directory / "catalog.json"):
             name = entry["name"]
             if not SLUG.fullmatch(name) or name in entries:
@@ -395,7 +398,7 @@ def sync(locked=False):
         protect_generated(lock)
         distribution = preflight_package(ROOT)
         plugins = {plugin["source"]: plugin["name"] for plugin in distribution["plugins"]}
-        prospective = {entry["name"]: ROOT / "plugins" / plugins[entry["source"]] / "skills" / entry["name"]
+        prospective = {entry["name"]: ROOT / "plugins" / plugins[entry["source"]] / STANDALONE_SKILLS_DIR / entry["name"]
                        for entry in catalog}
         remembered = [Path(path) for path in read_json(ROOT / ".cache/installations.json", [])]
         installation_changes(remembered, prospective, previous_plugins)
@@ -477,7 +480,14 @@ def owned_skill_link(file, plugins):
         parts = target.relative_to(ROOT / "plugins").parts
     except ValueError:
         return False
-    return len(parts) == 3 and parts[0] in plugins and parts[1] == "skills" and parts[2] == file.name
+    if len(parts) != 3 or parts[0] not in plugins or parts[2] != file.name:
+        return False
+    if parts[1] == STANDALONE_SKILLS_DIR:
+        return True
+    standalone = ROOT / "plugins" / parts[0] / STANDALONE_SKILLS_DIR
+    return parts[1] == "skills" and (
+        not standalone.is_dir() or not target.exists() or (standalone / file.name).is_dir()
+    )
 
 
 def installation_changes(directories, entries, plugins):

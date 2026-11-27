@@ -2,9 +2,9 @@
 
 Resolve this adapter file to its real path before following its relative links.
 
-Each entry point lives under `plugins/<collection>/skills/` and opens the original workflow under that plugin's `upstream/` directory. Folder installations link to the same entry points. Resolve the entry point to its real path before following its links. Read the original workflow before acting, and resolve its file references from its real location. For example, `pstack-poteto-mode` opens the plugin's `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
+Native plugin entries live in `skills/`, and folder installations link to entries in `standalone-skills/`. Both open the original workflow under the plugin's `upstream/` directory. Resolve the entry point to its real path before following its links. Read the original workflow before acting, and resolve its file references from its real location. For example, `pstack:poteto-mode` opens `upstream/pstack/skills/poteto-mode/SKILL.md`; its sibling skills, playbooks, docs, and agent prompts remain in their original layout.
 
-The entry point's collection prefix resolves name collisions. A reference to `tdd` inside a pstack workflow means `pstack-tdd`; inside Matt's workflow it means `mattpocock-tdd`. tstack's references follow the same rule: `full-send` means `tstack-full-send`, for example. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata are in each plugin's `skills/catalog.json`.
+Native Codex and Claude Code use the plugin namespace. A reference to `tdd` inside a pstack workflow means `pstack:tdd`; inside Matt's workflow it means `mattpocock:tdd`. Folder installs use `pstack-tdd` and `mattpocock-tdd`. Read a related skill's source file directly when a harness has no way to invoke it by name. Paths and metadata are in each plugin's `standalone-skills/catalog.json`.
 
 ## Shared capabilities
 
@@ -26,11 +26,11 @@ The `cc` plugin includes Anthropic skills with approved Apache 2.0 license files
 
 Use the current provider's equivalent tools when an upstream workflow names Claude-specific tools. Some helpers require additional software: Python and Playwright for web testing, Node/npm tooling for web artifacts, Python imaging libraries and FFmpeg for GIF workflows, and the Claude CLI for skill-creator's description optimization. Follow the selected workflow's dependency instructions. The packaged helper archive and font files are resources for those workflows. Adapt example paths such as `/mnt/user-data/outputs/` to the current environment.
 
-The `claude-api` skill documents Anthropic's API and SDKs. It does not add a provider connection or API credentials to the current environment. Native Claude commands use names such as `/cc:anthropic-frontend-design`; folder installs use `/anthropic-frontend-design`. See the [upstream overview](https://github.com/anthropics/skills#readme).
+The `claude-api` skill documents Anthropic's API and SDKs. It does not add a provider connection or API credentials to the current environment. Native Claude commands use names such as `/cc:frontend-design`. Folder installs use `/anthropic-frontend-design`. See the [upstream overview](https://github.com/anthropics/skills#readme).
 
 ## MongoDB workflows
 
-The `mongodb` plugin mirrors the skills in [mongodb/agent-skills](https://github.com/mongodb/agent-skills) under Apache 2.0. Upstream names already start with `mongodb-`, so the collection prefix produces names such as `mongodb-mongodb-query-optimizer` and `mongodb-mongodb-schema-design`. Native Claude commands use `/mongodb:mongodb-mongodb-query-optimizer`; folder installs use `/mongodb-mongodb-query-optimizer`.
+The `mongodb` plugin mirrors the skills in [mongodb/agent-skills](https://github.com/mongodb/agent-skills) under Apache 2.0. Native plugin names omit the redundant upstream `mongodb-` prefix, as in `mongodb:query-optimizer`. Folder installs use names such as `mongodb-mongodb-query-optimizer`.
 
 These packages register skills only. MongoDB's upstream plugins also configure an MCP server, but this mirror does not. Configure the server separately for skills that need MongoDB tools. The [upstream installation guide](https://github.com/mongodb/agent-skills#installing-the-skills-directly) covers hosted Atlas and self-managed deployments. Read each skill's required tools and setup instructions before invoking it.
 
@@ -50,7 +50,7 @@ Use native Codex tools and available delegate roles. Cursor `Task` model identif
 
 ## Claude Code
 
-When using pstack, read `docs/harness/claude-code.md` inside the upstream library linked by the entry point. The [upstream Claude adapter](https://github.com/cursor/plugins/blob/main/pstack/docs/harness/claude-code.md) maps Cursor tools and model settings. Shared folder installs use `/pstack-poteto-mode`; the native plugin uses `/pstack:pstack-poteto-mode`. Matt's native commands use `/mattpocock:mattpocock-<name>`, and tstack uses `/tstack:tstack-<name>`, such as `/tstack:tstack-full-stop`. Related skills keep the same plugin and collection prefixes. Bundled agent prompts must be supplied to available delegates because these packages register skills only. See [Claude's skill documentation](https://code.claude.com/docs/en/skills).
+When using pstack, read `docs/harness/claude-code.md` inside the upstream library linked by the entry point. The [upstream Claude adapter](https://github.com/cursor/plugins/blob/main/pstack/docs/harness/claude-code.md) maps Cursor tools and model settings. Native plugin commands use `/pstack:poteto-mode`, `/mattpocock:code-review`, or `/tstack:full-stop`. Shared folder installations use commands such as `/pstack-poteto-mode`. Bundled agent prompts must be supplied to available delegates because these packages register skills only. See [Claude's skill documentation](https://code.claude.com/docs/en/skills).
 
 ## Pi
 

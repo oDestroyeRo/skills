@@ -11,7 +11,10 @@ import tarfile
 import tempfile
 import zipfile
 
-from skills import SkillError, SLUG, copy_agent_metadata, copy_materialized, discover_skills, metadata, read_json, render_skill, tree_hash, write_json
+from skills import (
+    SLUG, STANDALONE_SKILLS_DIR, SkillError, copy_agent_metadata, copy_materialized,
+    discover_skills, metadata, read_json, render_skill, tree_hash, write_json,
+)
 
 
 PORTABLE_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
@@ -97,11 +100,11 @@ def npm_manifest(config, version):
             "./locale/*.json": "./locale/*.json",
             "./package.json": "./package.json",
         },
-        "pi": {"skills": ["./skills"]},
+        "pi": {"skills": ["./" + STANDALONE_SKILLS_DIR]},
         "dsh": {"bundle": {"patch": "./cordis.patch.yml"}},
         "files": [
             "plugin.json", ".claude-plugin", ".codex-plugin", ".cursor-plugin",
-            ".antigravity-plugin", "skills", "upstream", "docs",
+            ".antigravity-plugin", "skills", STANDALONE_SKILLS_DIR, "upstream", "docs",
             "assets", "locale", "opencode.mjs", "dsh.mjs", "cordis.patch.yml",
             "sources.lock.json", "LICENSE", "THIRD_PARTY_NOTICES.md",
         ],
@@ -126,17 +129,18 @@ def plugin_manifests(config, version):
         "repository": config["repository"],
         "license": config["license"],
     }
+    standalone_skills = "./" + STANDALONE_SKILLS_DIR + "/"
     return {
         "plugin.json": {"$schema": PORTABLE_SCHEMA, **identity},
         ".claude-plugin/plugin.json": identity,
         ".codex-plugin/plugin.json": {**identity, "skills": "./skills/"},
         ".cursor-plugin/plugin.json": {
-            **identity, "displayName": config["display_name"], "skills": "./skills/",
+            **identity, "displayName": config["display_name"], "skills": standalone_skills,
             "logo": "assets/logo.svg", "keywords": ["skills", "engineering"],
         },
         ".antigravity-plugin/plugin.json": {
             "$schema": "https://antigravity.google/schemas/v1/plugin.json", **identity,
-            "displayName": config["display_name"], "skills": "./skills/",
+            "displayName": config["display_name"], "skills": standalone_skills,
             "logo": "assets/logo.svg",
             "suggestedPrompts": config["suggested_prompts"],
             "keywords": ["skills", "engineering"],
@@ -175,25 +179,32 @@ def populate_bundle(root, bundle, config, version, snapshot):
     copy_materialized(snapshot, bundle / "upstream" / source_id)
     source = next(source for source in read_json(root / "sources.json")["sources"] if source["id"] == source_id)
     catalog = discover_skills({source_id: snapshot}, [source])
+    upstream_names = {entry["upstream_name"] for entry in catalog}
+    source_prefix = source_id + "-"
+    plugin_prefix = config["name"] + ":"
+    standalone = bundle / STANDALONE_SKILLS_DIR
     for entry in catalog:
-        library = "upstream/" + entry["source"]
+        library = "../../upstream/" + source_id
         original = snapshot / entry["path"]
+        original_name = entry["upstream_name"]
         _, fields = metadata(original)
-        description = source.get("description_overrides", {}).get(entry["upstream_name"])
+        description = source.get("description_overrides", {}).get(original_name)
         if description is not None:
             fields["description"] = "description: " + json.dumps(description, ensure_ascii=False)
-        folder = bundle / "skills" / entry["name"]
-        folder.mkdir(parents=True)
-        text = render_skill(entry["name"], entry["source"], fields,
-                            "../../" + library + "/" + entry["path"],
-                            "../../" + library, "../../docs/harnesses.md")
-        marker = text.index("\n---\n") + len("\n---\n")
-        text = text[:marker] + "\nResolve this entry point to its real path before following its links.\n" + text[marker:]
-        (folder / "SKILL.md").write_text(text)
-        if (original.parent / "agents").is_dir():
-            copy_agent_metadata(original.parent / "agents", folder / "agents", entry["upstream_name"],
-                                entry["name"])
-    write_json(bundle / "skills/catalog.json", catalog)
+        short_name = original_name.removeprefix(source_prefix)
+        native_name = original_name if short_name in upstream_names else short_name
+        for directory, name, prefix, invocation in (
+            (standalone, entry["name"], source_prefix, entry["name"]),
+            (bundle / "skills", native_name, plugin_prefix, plugin_prefix + native_name),
+        ):
+            folder = directory / name
+            folder.mkdir(parents=True)
+            text = render_skill(name, prefix, fields, library + "/" + entry["path"],
+                                library, "../../docs/harnesses.md")
+            (folder / "SKILL.md").write_text(text)
+            if (original.parent / "agents").is_dir():
+                copy_agent_metadata(original.parent / "agents", folder / "agents", original_name, invocation)
+    write_json(standalone / "catalog.json", catalog)
     shutil.copy2(root / "adapters/opencode.mjs", bundle / "opencode.mjs")
     shutil.copy2(root / "adapters/dsh.mjs", bundle / "dsh.mjs")
     (bundle / "cordis.patch.yml").write_text(

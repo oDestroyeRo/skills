@@ -10,7 +10,7 @@ plugins/cc/     Anthropic's redistributable skills
 plugins/mongodb/           MongoDB's query, schema, search, and Atlas skills
 ```
 
-Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Skill names retain their collection prefixes across harnesses, such as `mattpocock-tdd` and `pstack-tdd`.
+Each plugin contains its own workflows, resources, native manifests, and upstream license notices. The repository root is a private development workspace. Codex and Claude Code use names such as `pstack:how` for native plugins. Folder installations use prefixed names such as `pstack-how`.
 
 If you installed the Anthropic collection under its previous plugin name, reinstall it as `cc` using your harness's instructions below. The plugin identity changed. Skill names and the npm package `@odestroyero/anthropic-skills` stay the same.
 
@@ -37,7 +37,7 @@ For local testing, use `claude plugin marketplace add /absolute/path/to/skills` 
 
 Open `/plugin`, select **Marketplaces**, select `odestroyero-skills`, then select **Enable auto-update**. Third-party marketplaces have automatic updates disabled by default. Updated files load in the next session, or after `/reload-plugins` in a running session.
 
-Invoke a skill as `/mattpocock:mattpocock-code-review`, `/pstack:pstack-poteto-mode`, `/tstack:tstack-full-stop`, `/cc:anthropic-frontend-design`, or `/mongodb:mongodb-mongodb-query-optimizer`. For manual updates:
+Invoke a skill as `/mattpocock:code-review`, `/pstack:how`, `/tstack:full-stop`, `/cc:frontend-design`, or `/mongodb:query-optimizer`. For manual updates run:
 
 ```sh
 claude plugin update mattpocock@odestroyero-skills
@@ -64,7 +64,7 @@ codex plugin add mongodb@odestroyero-skills
 
 Use `codex plugin marketplace add /absolute/path/to/skills` for local testing. The catalog at `.agents/plugins/marketplace.json` points to each generated folder. Each has a portable `plugin.json` and a Codex compatibility manifest.
 
-Run `/plugins` to inspect the installation, then start a new session. Select the skill shown by its plugin or skill picker. Refresh the Git marketplace explicitly with:
+Run `/plugins` to inspect the installation, then start a new session. Select the skill by its qualified name, such as `pstack:how` or `mattpocock:code-review`. To refresh the Git marketplace, run:
 
 ```sh
 codex plugin marketplace upgrade odestroyero-skills
@@ -172,7 +172,7 @@ agy plugin install /absolute/path/to/skills/plugins/mongodb
 agy plugin list
 ```
 
-Each folder has the Antigravity manifest, logo, suggested prompt, skills, and resources for that collection. Its standalone ZIP or tar.gz can also be extracted and installed as a local plugin.
+Each folder has the Antigravity manifest, logo, suggested prompt, skills, and resources for that collection. Antigravity loads the default skill directory and the additional prefixed entries, such as `/pstack-how`. Use the prefixed names to distinguish workflows with the same short name. Its standalone ZIP or tar.gz can also be extracted and installed as a local plugin.
 
 After refreshing the checkout, re-run the local install and check the version with `agy plugin list`. Automatic updates for arbitrary Git or local installs have not been verified. Use folder installs with a scheduled repository updater when you need the existing automatic-refresh path.
 
@@ -216,4 +216,4 @@ T3's provider integration determines native plugin discovery. If it does not exp
 python3 scripts/skills.py install --agent t3 --global
 ```
 
-Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. The folder installer links directly to each plugin's `skills/` directory. Custom collections use their own source and plugin entries.
+Keep the [T3 runtime adapter](harnesses.md#t3-code) for delegation and model settings, and read the [tstack runtime requirements](harnesses.md#tstack-workflows) before invoking its PR workflows. The folder installer links into each plugin's `standalone-skills/` directory. If you linked skills from an older checkout, run `git pull --ff-only` before `python3 scripts/skills.py update` to refresh the saved links using the new installer. Custom collections use their own source and plugin entries.

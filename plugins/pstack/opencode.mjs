@@ -8,9 +8,9 @@ const manifest = JSON.parse(await readFile(new URL("./plugin.json", import.meta.
 export default Plugin.define({
   id: manifest.name,
   async setup(ctx) {
-    const catalog = JSON.parse(await readFile(new URL("./skills/catalog.json", import.meta.url), "utf8"));
+    const catalog = JSON.parse(await readFile(new URL("./standalone-skills/catalog.json", import.meta.url), "utf8"));
     const definitions = await Promise.all(catalog.map(async ({ name }) => {
-      const url = new URL(`./skills/${name}/SKILL.md`, import.meta.url);
+      const url = new URL(`./standalone-skills/${name}/SKILL.md`, import.meta.url);
       const text = await readFile(url, "utf8");
       const match = /^---\n([\s\S]*?)\n---\n/.exec(text);
       if (!match) throw new Error(`Missing skill frontmatter: ${name}`);

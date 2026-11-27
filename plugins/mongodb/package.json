@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/mongodb-skills",
-  "version": "1.0.35",
+  "version": "1.0.37",
   "description": "Community mirror of MongoDB's query, schema, search, and Atlas skills, with upstream updates.",
   "type": "module",
   "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
@@ -32,7 +32,7 @@
   },
   "pi": {
     "skills": [
-      "./skills"
+      "./standalone-skills"
     ]
   },
   "dsh": {
@@ -47,6 +47,7 @@
     ".cursor-plugin",
     ".antigravity-plugin",
     "skills",
+    "standalone-skills",
     "upstream",
     "docs",
     "assets",
