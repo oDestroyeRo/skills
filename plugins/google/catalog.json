@@ -133,13 +133,6 @@
     "native_name": "agent-platform-agent-registry"
   },
   {
-    "name": "google-agent-platform-alert-configuration",
-    "source": "google",
-    "upstream_name": "agent-platform-alert-configuration",
-    "path": "skills/cloud/agent-platform-alert-configuration/SKILL.md",
-    "native_name": "agent-platform-alert-configuration"
-  },
-  {
     "name": "google-agent-platform-architecture",
     "source": "google",
     "upstream_name": "agent-platform-architecture",
@@ -252,13 +245,6 @@
     "native_name": "api-gateway-backend-security-and-rate-limiting"
   },
   {
-    "name": "google-api-gateway-mcp-server",
-    "source": "google",
-    "upstream_name": "api-gateway-mcp-server",
-    "path": "skills/cloud/api-gateway-mcp-server/SKILL.md",
-    "native_name": "api-gateway-mcp-server"
-  },
-  {
     "name": "google-api-gateway-openapi-spec-authoring",
     "source": "google",
     "upstream_name": "api-gateway-openapi-spec-authoring",
@@ -306,13 +292,6 @@
     "upstream_name": "application-integration-troubleshooting",
     "path": "skills/cloud/application-integration-troubleshooting/SKILL.md",
     "native_name": "application-integration-troubleshooting"
-  },
-  {
-    "name": "google-assured-workloads-basics",
-    "source": "google",
-    "upstream_name": "assured-workloads-basics",
-    "path": "skills/cloud/assured-workloads-basics/SKILL.md",
-    "native_name": "assured-workloads-basics"
   },
   {
     "name": "google-assuredworkloads-environment-assessor",
@@ -376,13 +355,6 @@
     "upstream_name": "bigquery-migration-metadata-extractor",
     "path": "skills/cloud/bigquery-migration-metadata-extractor/SKILL.md",
     "native_name": "bigquery-migration-metadata-extractor"
-  },
-  {
-    "name": "google-bigquery-migration-sql-translator",
-    "source": "google",
-    "upstream_name": "bigquery-migration-sql-translator",
-    "path": "skills/cloud/bigquery-migration-sql-translator/SKILL.md",
-    "native_name": "bigquery-migration-sql-translator"
   },
   {
     "name": "google-bigquery-migration-validator",
@@ -462,25 +434,11 @@
     "native_name": "cloud-logging-cross-project-configuration"
   },
   {
-    "name": "google-cloud-logging-finops",
-    "source": "google",
-    "upstream_name": "cloud-logging-finops",
-    "path": "skills/cloud/cloud-logging-finops/SKILL.md",
-    "native_name": "cloud-logging-finops"
-  },
-  {
     "name": "google-cloud-logging-query-generation",
     "source": "google",
     "upstream_name": "cloud-logging-query-generation",
     "path": "skills/cloud/cloud-logging-query-generation/SKILL.md",
     "native_name": "cloud-logging-query-generation"
-  },
-  {
-    "name": "google-cloud-monitoring-alert-configuration",
-    "source": "google",
-    "upstream_name": "cloud-monitoring-alert-configuration",
-    "path": "skills/cloud/cloud-monitoring-alert-configuration/SKILL.md",
-    "native_name": "cloud-monitoring-alert-configuration"
   },
   {
     "name": "google-cloud-monitoring-chart-generation",
@@ -642,13 +600,6 @@
     "upstream_name": "datalineage-summary",
     "path": "skills/cloud/datalineage-summary/SKILL.md",
     "native_name": "datalineage-summary"
-  },
-  {
-    "name": "google-dbt-sf-to-bq-translator",
-    "source": "google",
-    "upstream_name": "dbt-sf-to-bq-translator",
-    "path": "skills/cloud/dbt-sf-to-bq-translator/SKILL.md",
-    "native_name": "dbt-sf-to-bq-translator"
   },
   {
     "name": "google-detection-engineering-coverage-evaluation",
@@ -1120,13 +1071,6 @@
     "native_name": "cloud-filestore-log-troubleshooting"
   },
   {
-    "name": "google-google-cloud-filestore-nfs-browser",
-    "source": "google",
-    "upstream_name": "google-cloud-filestore-nfs-browser",
-    "path": "skills/cloud/google-cloud-filestore-nfs-browser/SKILL.md",
-    "native_name": "cloud-filestore-nfs-browser"
-  },
-  {
     "name": "google-google-cloud-global-frontend-configuration",
     "source": "google",
     "upstream_name": "google-cloud-global-frontend-configuration",
@@ -1498,13 +1442,6 @@
     "native_name": "finding-google-skills"
   },
   {
-    "name": "google-gerrit-code-review",
-    "source": "google",
-    "upstream_name": "gerrit-code-review",
-    "path": "skills/developers/gerrit-code-review/SKILL.md",
-    "native_name": "gerrit-code-review"
-  },
-  {
     "name": "google-migrate-to-rust",
     "source": "google",
     "upstream_name": "migrate-to-rust",
@@ -1531,12 +1468,5 @@
     "upstream_name": "sign-in-with-google-web",
     "path": "skills/identity/sign-in-with-google-web/SKILL.md",
     "native_name": "sign-in-with-google-web"
-  },
-  {
-    "name": "google-litert-google-tensor",
-    "source": "google",
-    "upstream_name": "litert-google-tensor",
-    "path": "skills/platform-devices/litert-google-tensor/SKILL.md",
-    "native_name": "litert-google-tensor"
   }
 ]

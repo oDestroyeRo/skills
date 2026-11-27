@@ -1,19 +1,19 @@
 {
   "version": 2,
-  "package_version": "1.0.42",
-  "input_sha256": "532b9ac6d1101ff35c1655a4b71433e8982f4c8744d23d0fa6de0bb61f0bbabf",
+  "package_version": "1.0.43",
+  "input_sha256": "9233e066c6c48e998d029ff25a1df49282fc959ad5ad3525d6e2d68bf4733a29",
   "bundle_hashes": {
-    "mattpocock": "62ffa1239356220653a139c250239a09ae5f4b2eaceefd27099b210d182cd098",
-    "pstack": "293c41d9cffa4fe58650651c1809475fef9e0b7c0083764855914894d4f80a6b",
-    "tstack": "e7cb8cc4ca0c6573653ca0deb98fb127e85f4d53f0eaa8bc11a0add6566a01a0",
-    "cc": "2f9e04f0f5174cb1fce0997bc7c56fb4e99b82cb054b955f5db787ab7b7a6e03",
-    "mongodb": "c8898999d90088902c971ef135366584a5cc35bb1799988c857546a8534cd7c2",
-    "google": "9e417a6b470fa8656ca09137ac0e41c484d0da85672cbfc16161dcd12cf1e0b4",
-    "postgres": "88fd06ad756631a2dfde553681b1c29cb277670afc938e0f89bc0df38da2a67f"
+    "mattpocock": "f09af4fd2cc4c66deb72c336a1a003268ea5b2c8011c2e225243f49151ac031f",
+    "pstack": "342960e0d9e9dd6ea8c8c578b881133cac681709a2e076823fef724aa53bb0c3",
+    "tstack": "3f3de5411b20d82eeefc70715b5835d1b4853d73f94dbfa370530195e050853e",
+    "cc": "c9db025da06665469cefb0b78d23c8107e1444a8c0aa19601d43a02c613cc0eb",
+    "mongodb": "b8a116e84920f12bbb3f9868c8b507dda53422bf1ebac6702825130250eeadc8",
+    "google": "ece24fc8d59c49bcf7882a2b3227704f9bccf28535c36a1d5262afd8c7dda7dd",
+    "postgres": "6df467c385b46917312f9b3275664743ace23742714c522820310bcd48e13016"
   },
   "generated_files": {
-    ".claude-plugin/marketplace.json": "482c1f1d0534a079f60b05fc7d34fbf0a1c98b07a7da1f3efb13de39faf731f3",
+    ".claude-plugin/marketplace.json": "0b1ebc560f35a591e4ed9592b4e002cee379dc6e4e0e0221addd0c7c11807e75",
     ".agents/plugins/marketplace.json": "27cd0676ec0e97f9228d6271b14f309dc672b341eb85db9b06a476bd0a67d3b0",
-    "package.json": "7ca075dc6070d03c49c4f95864ddaf82b52f680c5ae75ac9a70cf72e8c44ef44"
+    "package.json": "61a9fc9e849c92a949d4014617e9fec0ca8cb786ae3309167bba44846136ecd9"
   }
 }

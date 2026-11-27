@@ -98,7 +98,17 @@
         ".lycheeignore",
         "CONTRIBUTING.md",
         "lychee.toml",
-        "plugins"
+        "plugins",
+        "skills/cloud/agent-platform-alert-configuration",
+        "skills/cloud/api-gateway-mcp-server",
+        "skills/cloud/assured-workloads-basics",
+        "skills/cloud/bigquery-migration-sql-translator",
+        "skills/cloud/cloud-logging-finops",
+        "skills/cloud/cloud-monitoring-alert-configuration",
+        "skills/cloud/dbt-sf-to-bq-translator",
+        "skills/cloud/google-cloud-filestore-nfs-browser",
+        "skills/developers/gerrit-code-review",
+        "skills/platform-devices/litert-google-tensor"
       ]
     },
     {
@@ -116,6 +126,7 @@
         "CONTRIBUTING.md",
         "SECURITY.md",
         "SUPPORT.md",
+        "plugin/skills/migrate-oracle-app",
         "plugin/tests",
         "tests"
       ]

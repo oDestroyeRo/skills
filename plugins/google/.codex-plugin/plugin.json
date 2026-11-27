@@ -1,6 +1,6 @@
 {
   "name": "google",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Community mirror of Google's agent skills for Google products and technologies, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",

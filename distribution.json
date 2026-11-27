@@ -67,7 +67,7 @@
       "name": "postgres",
       "npm_name": "@odestroyero/postgres-skills",
       "display_name": "Microsoft PostgreSQL Skills (Community Mirror)",
-      "description": "Community mirror of Microsoft's PostgreSQL best practices, graph, and Oracle migration skills, with upstream updates.",
+      "description": "Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.",
       "suggested_prompts": ["Use postgres-postgresql-best-practices to review a PostgreSQL schema."]
     }
   ]

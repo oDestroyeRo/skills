@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "postgres",
-  "version": "1.0.42",
-  "description": "Community mirror of Microsoft's PostgreSQL best practices, graph, and Oracle migration skills, with upstream updates.",
+  "version": "1.0.43",
+  "description": "Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.",
   "author": {
     "name": "oDestroyeRo",
     "url": "https://github.com/oDestroyeRo"

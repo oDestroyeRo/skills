@@ -38,9 +38,11 @@ The source snapshot retains the skill tree, references, scripts, README files, a
 
 ## Google and Microsoft PostgreSQL workflows
 
-The `google` plugin mirrors the Apache-2.0 skills in Google's top-level `skills/` directory. For separately hosted plugins and service integrations, use [Google's marketplace](https://github.com/google/skills).
+The `google` plugin mirrors Apache-2.0 skills from Google's top-level `skills/` directory. For separately hosted plugins and service integrations, use [Google's marketplace](https://github.com/google/skills).
 
-The `postgres` plugin mirrors Microsoft's MIT-licensed PostgreSQL best practices, graph, and Oracle migration skills. Use a qualified name such as `postgres:postgresql-best-practices` in native plugins. Skills that need live database tools use the connection setup described by the [upstream plugin](https://github.com/microsoft/postgres-skills).
+The `postgres` plugin mirrors Microsoft's MIT-licensed PostgreSQL best practices and graph skills. Use a qualified name such as `postgres:postgresql-best-practices` in native plugins. Skills that need live database tools use the connection setup described by the [upstream plugin](https://github.com/microsoft/postgres-skills).
+
+`sources.json` records the workflow folders excluded from both mirrors after CodeQL review, including Microsoft's Oracle migration skill. The sync applies these exclusions to every snapshot.
 
 ## T3 Code
 

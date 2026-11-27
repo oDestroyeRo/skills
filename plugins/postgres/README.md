@@ -1,8 +1,8 @@
 # Microsoft PostgreSQL Skills (Community Mirror)
 
-Community mirror of Microsoft's PostgreSQL best practices, graph, and Oracle migration skills, with upstream updates.
+Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.
 
-Version 1.0.42. This bundle contains 3 namespaced skills.
+Version 1.0.43. This bundle contains 2 namespaced skills.
 
 Install in Claude Code with `claude plugin install postgres --marketplace oDestroyeRo/skills`.
 

@@ -1,12 +1,5 @@
 [
   {
-    "name": "postgres-migrate-oracle-app",
-    "source": "postgres",
-    "upstream_name": "migrate-oracle-app",
-    "path": "plugin/skills/migrate-oracle-app/SKILL.md",
-    "native_name": "migrate-oracle-app"
-  },
-  {
     "name": "postgres-pg-graph",
     "source": "postgres",
     "upstream_name": "pg-graph",
