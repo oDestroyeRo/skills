@@ -5,8 +5,8 @@
       "repository": "https://github.com/mattpocock/skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "6f7f7831a625f040a8e06a0e7954826b87ce775a",
-      "sha256": "784fec9e81253ec113b533642230bab8256b8b5a163f681b73975a84b1491a7d",
+      "commit": "bbadaa631c37af594e5a05c9cefacd9956136b18",
+      "sha256": "4ca28ba5f6a368421115de4c69dbb0e1bddf25c3b2f86e6e3dedb7e92f514627",
       "exclude_paths": [
         ".agents",
         ".changeset",
@@ -108,8 +108,8 @@
       "repository": "https://github.com/google/skills.git",
       "ref": "main",
       "root": ".",
-      "commit": "6dc0d53303b9f96f166ac72d7f8f1920cb260f24",
-      "sha256": "c0780f5312803a783c98fa90ddd6439b4e182f4957776a3d8840ac28556e1579",
+      "commit": "10c799ee69bcdb10b82836403d1531bfcc3d9d24",
+      "sha256": "345cd5c09736f2a2f331e6f3cdc3d6092870ec8767e229e1556c406dfc70c2c4",
       "exclude_paths": [
         ".agents",
         ".claude-plugin",

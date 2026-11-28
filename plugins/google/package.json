@@ -1,6 +1,6 @@
 {
   "name": "@odestroyero/google-skills",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "description": "Community mirror of Google's agent skills for Google products and technologies, with upstream updates.",
   "type": "module",
   "license": "SEE LICENSE IN THIRD_PARTY_NOTICES.md",

@@ -2,7 +2,7 @@
 
 Community mirror of Google's agent skills for Google products and technologies, with upstream updates.
 
-Version 1.0.43. This bundle contains 210 namespaced skills.
+Version 1.0.44. This bundle contains 210 namespaced skills.
 
 Install in Claude Code with `claude plugin install google --marketplace oDestroyeRo/skills`.
 

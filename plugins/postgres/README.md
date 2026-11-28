@@ -2,7 +2,7 @@
 
 Community mirror of Microsoft's PostgreSQL best practices and graph skills, with upstream updates.
 
-Version 1.0.43. This bundle contains 2 namespaced skills.
+Version 1.0.44. This bundle contains 2 namespaced skills.
 
 Install in Claude Code with `claude plugin install postgres --marketplace oDestroyeRo/skills`.
 
